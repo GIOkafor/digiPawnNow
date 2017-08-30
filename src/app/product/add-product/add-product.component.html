@@ -1,0 +1,20 @@
+<div class="add-product">
+	<div class="container">
+
+		<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+			<input type="text" name="search" id="search" placeholder="Enter Barcode name or UPC" ngModel>
+
+			<button class="btn" type="submit">Search Product</button>
+		</form>
+
+		<div class="product-info">
+			<md-spinner *ngIf="searching"></md-spinner>
+
+			<div class="product" *ngIf="product && !searching">
+				<h4>{{product.product.itemName}}</h4>
+				<img [src]="product.product.imageUrl">
+				<p>Category: {{product.category.categoryName}}</p>
+			</div>
+		</div>
+	</div>
+</div>
