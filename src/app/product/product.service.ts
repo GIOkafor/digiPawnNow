@@ -21,7 +21,7 @@ export class ProductService {
   	*/
 	
 	//{headers: header}
-  	return this.http.get(this.testUrl + '/' + productId)
+  	return this.http.get(this.productUrl + '/' + productId)
   		.toPromise()
   		.then(response => response.json())
   		.catch(this.handleError);

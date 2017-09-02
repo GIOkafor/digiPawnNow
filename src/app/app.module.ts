@@ -7,13 +7,20 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdProgressSpinnerModule } from '@angular/material';
+import { MdProgressSpinnerModule, MdDialogModule } from '@angular/material';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
 
 import { ProductService } from './product/product.service';
+import { AuthenticationService } from './auth/authentication.service';
 import { AddProductComponent } from './product/add-product/add-product.component';
 import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
+import { ErrorComponent } from './auth/authenticate/error/error.component';
 
 const routes: Routes = [
+	{path: 'auth', component: AuthenticateComponent},
 	{path: 'add-product', component: AddProductComponent},
 	{path: '', redirectTo: '/add-product', pathMatch: 'full'}
 ];
@@ -22,7 +29,11 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     AddProductComponent,
-    AuthenticateComponent
+    AuthenticateComponent,
+    ErrorComponent
+  ],
+  entryComponents: [
+  	ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -31,10 +42,15 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MdProgressSpinnerModule
+    MdProgressSpinnerModule,
+    MdDialogModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   providers: [
-  	ProductService
+  	ProductService,
+  	AuthenticationService
   ],
   bootstrap: [AppComponent]
 })
