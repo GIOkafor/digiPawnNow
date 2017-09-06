@@ -18,11 +18,15 @@ import { AuthenticationService } from './auth/authentication.service';
 import { AddProductComponent } from './product/add-product/add-product.component';
 import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
 import { ErrorComponent } from './auth/authenticate/error/error.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
-	{path: 'add-product', component: AddProductComponent},
-	{path: '', redirectTo: '/add-product', pathMatch: 'full'}
+  {path: 'home', component: HomeComponent},
+	{path: 'sell-item', component: AddProductComponent},
+	{path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -30,7 +34,10 @@ const routes: Routes = [
     AppComponent,
     AddProductComponent,
     AuthenticateComponent,
-    ErrorComponent
+    ErrorComponent,
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent
   ],
   entryComponents: [
   	ErrorComponent

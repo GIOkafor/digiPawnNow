@@ -1,0 +1,57 @@
+.home-component{
+	.hero-image{
+	    display: flex;
+	    flex-direction: column;
+	    
+		background: rgba(3,134,248,1);
+		background: -moz-linear-gradient(left, rgba(3,134,248,1) 0%, rgba(89,162,208,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(3,134,248,1)), color-stop(100%, rgba(89,162,208,1)));
+		background: -webkit-linear-gradient(left, rgba(3,134,248,1) 0%, rgba(89,162,208,1) 100%);
+		background: -o-linear-gradient(left, rgba(3,134,248,1) 0%, rgba(89,162,208,1) 100%);
+		background: -ms-linear-gradient(left, rgba(3,134,248,1) 0%, rgba(89,162,208,1) 100%);
+		background: linear-gradient(to right, rgba(3,134,248,1) 0%, rgba(89,162,208,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0386f8', endColorstr='#59a2d0', GradientType=1 );
+
+	    .title{
+	    	color: #ffffff;
+	    	text-align: center;
+	    	padding: 10px;
+	    }
+
+	    img{
+			width: 70%;
+    		margin: 0 auto;
+    		padding-bottom: 40px;
+	    }
+
+	    .cta{
+	    	text-align: center;
+
+	    	.sell-btn{
+	    		width: 150px;
+	    		color: #ffffff;
+			    border: 1px solid;
+			    margin: 10px;
+			    background-color: #14D863;
+			    cursor: pointer;
+	    	}
+	    }
+	}
+
+	.steps{
+		display: flex;
+		flex-direction: column;
+
+		span{
+			font-weight: 600;
+			margin: 10px 120px 0px 182px;
+			font-size: larger;
+		}
+
+		img{
+			width: 75%;
+			margin: 0 auto;
+			margin-bottom: 70px;
+		}
+	}
+}

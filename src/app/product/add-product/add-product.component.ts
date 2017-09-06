@@ -38,4 +38,8 @@ export class AddProductComponent implements OnInit {
   	console.log(val.search);
   	this.getProduct(val.search);
   }
+
+  getPrice(){
+    this.productService.getPrice();
+  }
 }

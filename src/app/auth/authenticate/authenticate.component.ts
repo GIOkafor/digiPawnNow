@@ -26,7 +26,7 @@ export class AuthenticateComponent implements OnInit {
   }
 
   login(val){
-  	this.authService.emailSignIn(val.email, val.password);
+    this.authService.emailSignIn(val.email, val.password);
   }
 
   logout(){

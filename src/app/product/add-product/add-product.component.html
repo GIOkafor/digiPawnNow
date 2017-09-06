@@ -5,8 +5,11 @@
 			<input type="text" name="search" id="search" placeholder="Enter Barcode name or UPC" ngModel>
 
 			<button class="btn" type="submit">Search Product</button>
-		</form>
 
+		</form>
+<!--
+<button class="btn" (click)="getPrice();">Test</button>
+-->
 		<div class="product-info">
 			<md-spinner *ngIf="searching"></md-spinner>
 

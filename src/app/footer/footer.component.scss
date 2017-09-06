@@ -1,0 +1,26 @@
+.footer-component{
+	background-color: #F2EDEA;
+	color: #55504D;
+	padding: 20px;
+
+	h4{
+		font-weight: 200;
+	}
+
+	.company{
+		.items{
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	.social-icons{
+		span{
+			margin-right: 30px;
+
+			i{
+				cursor: pointer;
+			}
+		}
+	}
+}
