@@ -2,7 +2,7 @@
 	display: flex;
     justify-content: space-between;
     align-items: center;
-	background-color: #f2edea;
+	background-color: #ecebec;
 	padding-left: 20px;
 	padding-right: 20px;
 
@@ -14,5 +14,9 @@
     	a{
     		padding-left: 10px;
     	}
+
+        .active{
+            color: #00a651;
+        }
     }
 }

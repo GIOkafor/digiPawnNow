@@ -1,60 +1,81 @@
 <div class="authenticate-component">
 	<div class="container">
-	  <!-- New User sign up form -->
-		<form class="newUser" *ngIf="signup" #signUpForm="ngForm" (ngSubmit)="signUp(signUpForm.value);">
-			<h3>Sign Up</h3>
 
-			<div class="form-group">
-				<input type="text" name="name" placeholder="Full Name" ngModel>
-			</div>
+		<div class="auth-header">
+			<span [ngClass]="{'active': signup}" (click)="signup = !signup">SIGN-UP</span>
+			<span [ngClass]="{'active': !signup}" (click)="signup = !signup">LOGIN</span>
+		</div>
 
-			<div class="form-group">
-				<input type="email" name="email" placeholder="Email" ngModel>
-			</div>
+		<div class="auth-forms">
+		  	<!-- New User sign up form -->
+			<form class="newUser" *ngIf="signup && !forgotPassword" #signUpForm="ngForm" (ngSubmit)="signUp(signUpForm.value);">
 
-			<div class="form-group">
-				<input type="tel" name="phoneNumber" placeholder="Phone #" ngModel>
-			</div>
+				<div class="form-group">
+					<input type="text" name="name" placeholder="Full Name" ngModel>
+				</div>
 
-			<div class="form-group">
-				<input type="date" name="dateOfBirth" placeholder="D.O.B" ngModel>
-			</div>
+				<div class="form-group">
+					<input type="email" name="email" placeholder="Email" ngModel>
+				</div>
 
-			<div class="form-group">
-				<input type="text" name="username" placeholder="Username" ngModel>
-			</div>
+				<div class="form-group">
+					<input type="tel" name="phoneNumber" placeholder="Phone #" ngModel>
+				</div>
 
-			<div class="form-group">
-				<input type="password" name="password" placeholder="Password" ngModel>
-			</div>
+				<div class="form-group">
+					<input type="date" name="dateOfBirth" placeholder="D.O.B" ngModel>
+				</div>
 
-			<div class="form-group">
-				<input type="password" name="confirm-password" placeholder="Confirm password" ngModel>
-			</div>
+				<div class="form-group">
+					<input type="text" name="username" placeholder="Username" ngModel>
+				</div>
 
-			<button class="btn" type="submit">Sign Up</button>
+				<div class="form-group">
+					<input type="password" name="password" placeholder="Password" ngModel>
+				</div>
 
-			<br />
+				<div class="form-group">
+					<input type="password" name="confirm-password" placeholder="Confirm password" ngModel>
+				</div>
 
-			<a class="toggleAuth" (click)="signup = !signup">Returning user? Login instead</a>
-		</form>
+				<button class="btn" type="submit">Sign Up</button>
 
-		<form class="login" *ngIf="!signup" #loginForm="ngForm" (ngSubmit)="login(loginForm.value);">
-			<h3>Log In</h3>
+			</form>
 
-			<div class="form-group">
-				<input type="email" name="email" placeholder="Email" ngModel>
-			</div>
 
-			<div class="form-group">
-				<input type="password" name="password" placeholder="Password" ngModel>
-			</div>
+			<!-- Login form starts -->
+			<form class="login" *ngIf="!signup && !forgotPassword" #loginForm="ngForm" (ngSubmit)="login(loginForm.value);">
 
-			<button class="btn" type="submit">Login</button>
+				<div class="form-group">
+					<input type="email" name="email" placeholder="Email" ngModel>
+				</div>
 
-			<br />
+				<div class="form-group">
+					<input type="password" name="password" placeholder="Password" ngModel>
+				</div>
 
-			<a class="toggleAuth" (click)="signup = !signup">New user? Sign up now</a>
-		</form>
+				<a class="forgotPassword" (click)="forgotPassword = true">Forgot password?</a>
+
+				<br />
+
+				<button class="btn" type="submit">Login</button>
+
+			</form>
+			<!-- Login form ends -->
+
+			<!-- Forgot password form -->
+			<form class="forgot-password-form" *ngIf="forgotPassword" #passwordResetForm="ngForm" (ngSubmit)="resetPassword(passwordResetForm.value);">
+
+				<h3>Password Reset</h3>
+
+				<div class="form-group">
+					<input type="email" name="email" placeholder="Email" ngModel>
+				</div>
+
+				<button class="btn" (click)="forgotPassword=!forgotPassword">Cancel</button>
+				<button class="btn" type="submit">Reset Password</button>
+			</form>
+			<!-- forgot password form ends -->
+		</div>
 	</div>
 </div>

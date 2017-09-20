@@ -1,6 +1,49 @@
 .authenticate-component{
-	.toggleAuth{
+	text-align: center;
+	margin-bottom: 180px;
+	
+	.container{
+		padding-top: 60px;
+    	padding-bottom: 60px;
+	}
+
+	.toggleAuth, .forgotPassword{
 		color: #007bff;
 		cursor: pointer;
+	}
+
+	.btn{
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	.auth-header{
+	    display: flex;
+	    justify-content: space-around;
+
+	    .active{
+	    	color: #ffffff;
+			background-color: #0076a3;
+	    }
+
+	    span{
+	    	width: 50%;
+		    padding: 5px;
+		    border: 1px solid black;
+		    background-color: rgba(236, 235, 236, 1);
+		    cursor: pointer;
+	    }
+	}
+
+	.auth-forms{
+	    border: 1px solid grey;
+	    padding: 20px;
+	}
+}
+
+@media only screen and (min-width: 768px){
+	.auth-header,.auth-forms{
+		margin-left: 30%;
+	    margin-right: 30%;
 	}
 }

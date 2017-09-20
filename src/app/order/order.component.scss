@@ -1,0 +1,83 @@
+.order-component{
+	margin-top: 50px;
+
+	.shopping-cart{
+
+		.item-list{
+			border-bottom: 1px solid #9f9793;
+
+			.item{
+			    display: flex;
+    			justify-content: space-between;
+			
+    			.item-info{
+    			    display: flex;
+				    width: 100%;
+				    justify-content: space-between;
+    			}
+
+    			.fa{
+    			    padding: 5px;
+    				margin-left: 15px;
+    				cursor: pointer;
+    			}
+			}
+		}
+
+		.total-value-container{
+		    display: flex;
+		    justify-content: flex-end;
+		    align-items: center;
+		    margin-top: 10px;
+
+		    .total-value{
+		        margin-left: 15px;
+			    padding: 5px 20px;
+			    background-color: #0076a3;
+			    color: #ffffff;
+			    border-radius: 6px;
+		    }
+		}
+	}
+
+	.payment-method{
+		display: flex;
+	    flex-direction: column;
+	    align-items: center;
+
+	    #text{
+	    	font-weight: bold;
+	    }
+
+	    .payment-options{
+	    	display: flex;
+
+	    	.amount-div{
+	    		padding-bottom: 0px;
+	    	}
+	    }
+
+	    .btn{
+	    	color: #ffffff;
+	    	background-color: #0076a3;
+	    }
+	}
+}
+
+@media screen and (min-width: 768px){
+	.payment-options{
+		width: 60%;
+    	justify-content: space-between;
+
+    	div{
+    		text-align: center;
+
+	    	.amount-div{
+	    		border: 1px solid grey;
+	    		border-radius: 5px;
+	    		padding: 5px 10px;
+	    		cursor: pointer;
+	    	}
+	    }
+	}
+}

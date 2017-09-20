@@ -1,0 +1,71 @@
+<div class="container order-component">
+	<div class="shopping-cart">
+
+		<div class="item-list">
+			<!-- Repeat these items below -->
+			 
+				<div class="item" *ngFor="let item of cartItems">
+					<div class="item-info">
+						<span>{{item.product.itemName}}</span>
+						<span>$1.00</span>
+					</div>
+
+					<i class="fa fa-times fa-lg" aria-hidden="true" (click)="remove(item)"></i>
+
+				</div>
+			
+
+			<!--
+				<div *ngFor="let item of cartItems">{{item}}</div>
+			-->
+		</div>
+
+		<div class="total-value-container">
+			Total Value <span class="total-value">$1.00</span>
+		</div>
+
+	</div>
+
+	<div class="payment-method">
+		<span class="text" id="text">Pay me with</span>
+
+		<md-radio-group class="payment-options" [(ngModel)]="currency">
+			<div class="cash">
+				<div class="amount-div">
+					<md-radio-button value="cash" name="currency">$1.00</md-radio-button>
+				</div>
+
+				<span id="text">Cash</span>
+			</div>
+
+			<div class="bitcoin">
+				<div class="amount-div">
+					<md-radio-button value="bitcoin">BTC 0.05</md-radio-button>
+				</div>
+
+				<span id="text">Bitcoin</span>
+			</div>
+
+			<div class="litecoin">
+				<div class="amount-div">
+					<md-radio-button value="litecoin">LTC 0.05</md-radio-button>
+				</div>
+
+				<span id="text">Litecoin</span>
+			</div>
+
+			<div class="ethereum">
+				<div class="amount-div">
+					<md-radio-button value="ethereum">ETH 0.05</md-radio-button>
+				</div>
+
+				<span id="text">Ethereum</span>
+			</div>
+		</md-radio-group>
+
+		<!-- Change 'test' below to cartItems --> 
+		<button class="btn" (click)="createOrder('test')">Place Order</button>
+		<button class="btn" (click)="test(cartItems)">Test</button>
+	</div>
+
+</div>

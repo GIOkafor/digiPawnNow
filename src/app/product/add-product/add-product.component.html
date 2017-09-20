@@ -1,23 +1,62 @@
 <div class="add-product">
 	<div class="container">
+		<h2>DIGIBUYNOW</h2>
 
 		<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
-			<input type="text" name="search" id="search" placeholder="Enter Barcode name or UPC" ngModel>
+			<nav class="nav">
+			  <a class="nav-link" [class.active]="productType === 'dvd'" (click)="setType('dvd')">DVDs, Blu-Rays, CDs</a>
+			  <a class="nav-link" [class.active]="productType === 'cell-phone'" (click)="setType('cell-phone')">Cell Phones</a>
+			  <a class="nav-link" [class.active]="productType === 'electronics'" (click)="setType('electronics')">Electronics</a>
+			</nav>
 
-			<button class="btn" type="submit">Search Product</button>
+			<div class="search-container">
+				<span class="help-text">To start selling, just enter a barcode (e.g 1234667890123) without spaces or dashes into the box below</span>
+
+				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" ngModel>
+
+				<a class="help-link">Need Help?</a>
+			</div>
 
 		</form>
-<!--
-<button class="btn" (click)="getPrice();">Test</button>
--->
-		<div class="product-info">
+
+		<a class="btn search-btn" (click)="onSubmit(f.value)"  [class.disabled]="productType === 'empty'">SEARCH</a>
+
+		<div class="product-info row">
 			<md-spinner *ngIf="searching"></md-spinner>
 
 			<div class="product" *ngIf="product && !searching">
-				<h4>{{product.product.itemName}}</h4>
-				<img [src]="product.product.imageUrl">
-				<p>Category: {{product.category.categoryName}}</p>
+				<div class="col-12 col-md-4">
+					<img [src]="product.product.imageUrl">
+				</div>
+
+				<div class="product-details col-12 col-md-8">
+					<h5 class="product-name">{{product.product.itemName}}</h5>
+					
+					<div class="condition-container" *ngIf="productType != 'dvd'">
+						<span class="condition-text">Please select item condition</span>
+
+						<md-radio-group class="condition" [(ngModel)]="condition">
+							<md-radio-button class="value" value="good">Good</md-radio-button>		
+							<md-radio-button class="value" value="poor">Poor</md-radio-button>		
+							<md-radio-button class="value" value="faulty">Faulty</md-radio-button>		
+						</md-radio-group>
+					</div>
+					<div>
+						<span>We'll pay you: </span> <span class="payout">x amount</span>
+					</div>
+
+					<button class="btn add-to-cart" (click)="addToCart(product)">ADD TO CART</button>
+				</div>
+
 			</div>
 		</div>
 	</div>
+
+	<div class="steps">
+		<span>4 Easy Steps</span>
+
+		<img src="assets/steps.png">
+	</div>
 </div>
+
+<router-outlet></router-outlet>

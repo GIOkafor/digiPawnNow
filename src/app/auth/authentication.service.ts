@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthenticationService {
 
-  user: Observable<firebase.User>;
+  user: firebase.User;
   profileInfo: FirebaseObjectObservable<any>;
 
   constructor(
@@ -19,7 +19,7 @@ export class AuthenticationService {
   	private router: Router,
   	public dialog: MdDialog
   	) { 
-  		this.user = afAuth.authState;
+  		this.user = afAuth.auth.currentUser;
   		//this.profileInfo = db.object('/users');
   }
 
@@ -27,19 +27,23 @@ export class AuthenticationService {
   	this.afAuth.auth.createUserWithEmailAndPassword(val.email, val.password)
   		.then(_=> {
   			//add user info to profile
-  			console.log("Created user is : " + this.afAuth.auth.currentUser.uid);
 
-  			this.profileInfo = this.db.object('/user' + this.afAuth.auth.currentUser.uid);
+        this.profileInfo = this.db.object(this.afAuth.auth.currentUser.uid);
   			this.profileInfo.set({userInfo: val});
 
-  			this.redirect();
+        this.sendEmailVerification();
+
+  			//redirect to home page
+        this.redirect();
   		})
   		.catch(err => this.handleError(err.message));
   }
 
   emailSignIn(email, password){
   	this.afAuth.auth.signInWithEmailAndPassword(email, password)
-  		.then(_=> this.redirect())
+  		.then(_=> {
+        this.redirect();
+      })
   		.catch(err => this.handleError(err.message));
   }
 
@@ -53,13 +57,32 @@ export class AuthenticationService {
   }
  */
 
+ sendEmailVerification(){
+   this.afAuth.auth.currentUser.sendEmailVerification()
+     .then(_=> {
+       console.log("Email sent successfully");
+     }).catch(error => {
+       console.log(error + " happened");
+     });
+ }
+
+  passwordReset(email){
+    this.afAuth.auth.sendPasswordResetEmail(email)
+      .then(_=> {
+        //TODO: add alert 
+        console.log("Email sent");
+      }).catch(error => {
+        console.log(error);
+      })
+  }
+
   logout(){
   	this.afAuth.auth.signOut()
   		.then(_=> this.router.navigate(['/auth']));
   }
 
   redirect(){
-  	this.router.navigate(['']);
+  	this.router.navigate(['dashboard']);
   }
 
   handleError(errMessage){
@@ -76,6 +99,11 @@ export class AuthenticationService {
 			}
 		})
 		.catch(err => this.handleError(err.message));
+  }
+
+  getUserUid(){
+    //console.log(this.afAuth.auth.currentUser.uid);
+    return this.afAuth.auth.currentUser.uid;
   }
 
 }

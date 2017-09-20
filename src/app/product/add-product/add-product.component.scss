@@ -1,0 +1,129 @@
+.add-product{
+	text-align: center;
+
+	.container{
+		h2{
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+		.nav{
+			border: 1px solid #cccccc;
+    		border-radius: 5px;
+    		margin-bottom: -2px;
+    		display: flex;
+    		justify-content: space-around;
+
+    		.nav-link{
+				color: #515655;
+				cursor: pointer;
+				width: 33%;
+				font-weight: bold;
+			}
+
+			.nav-link.active{
+				color: #ffffff;
+				background-color: #0076a3;
+				font-weight: 700;
+			}
+		}
+		
+		.search-container{
+			border: 1px solid #cccccc;
+			display: flex;
+			padding: 50px;
+    		flex-direction: column;
+    		margin-bottom: 40px;
+    		border-radius: 3px;
+
+    		.help-text, .help-link{
+    		    font-weight: bold;
+			    font-size: 14px;
+    		}
+
+    		.help-text{
+    			margin-bottom: 10px;
+    		}
+
+    		input{
+    		    text-align: center;
+    		}
+
+    		.help-link{
+    			margin-top: 25px;
+    			cursor: pointer;
+    			color: #00a0ff;
+    		}
+    	}
+
+		.search-btn{
+			width: 200px;
+			margin: 0px auto;
+			color: #ffffff;
+			background-color: #00a651;
+			border-radius: 8px;
+			cursor: pointer;
+			margin-bottom: 20px;
+		}
+
+		.product-info{
+			justify-content: center;
+		    padding-bottom: 50px;
+		    padding-top: 50px;
+
+			.product{
+				display: flex;
+
+				.product-details{
+					text-align: left;
+
+					.product-name{
+						color: #0076a3;
+					}
+
+					.condition{
+						display: inline-flex;
+					    justify-content: space-between;
+					    width: 80%;
+					    margin-top: 15px;
+					    margin-bottom: 15px;
+
+						.value{
+							cursor: pointer;
+							border: 1px solid #cccccc;
+						    padding: 10px 15px 5px;
+						    border-radius: 10px;
+						}
+					}
+
+					.payout{
+						color: #0076a3;
+					}
+
+					.add-to-cart{
+						color: #ffffff;
+						background-color: #00a651;
+						cursor: pointer;
+						margin-top: 15px;
+					}
+				}
+			}
+		}
+	}
+
+	.steps{
+		display: flex;
+		flex-direction: column;
+
+		span{
+			font-weight: 600;
+			margin: 10px 120px 0px 182px;
+			font-size: larger;
+		}
+
+		img{
+			width: 75%;
+			margin: 0 auto;
+			margin-bottom: 70px;
+		}
+	}
+}

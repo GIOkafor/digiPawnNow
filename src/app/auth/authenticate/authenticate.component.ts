@@ -12,6 +12,7 @@ import { AuthenticationService } from '../authentication.service';
 export class AuthenticateComponent implements OnInit {
   
   signup: boolean = false;
+  forgotPassword: boolean = false;
   user: Observable<firebase.User>;
 
   constructor(
@@ -31,6 +32,10 @@ export class AuthenticateComponent implements OnInit {
 
   logout(){
   	this.authService.logout();
+  }
+
+  resetPassword(val){
+    this.authService.passwordReset(val.email);
   }
 
   sub(val){

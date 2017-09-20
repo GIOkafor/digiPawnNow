@@ -1,0 +1,17 @@
+nav{
+	display: flex;
+	width: 101%;
+
+	.link{
+		padding: 5px;
+	    border: 1px solid #aba9a9;
+	  	color: black;
+	  	width: 33%;
+	  	text-align: center;
+	}
+
+	.active{
+		color: #ffffff;
+		background-color: #0076a3;
+	}
+}

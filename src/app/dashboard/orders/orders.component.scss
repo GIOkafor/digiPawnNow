@@ -1,0 +1,34 @@
+.orders-component{
+	margin-bottom: 500px;
+	
+	.order-info-container{
+		display: flex;
+		flex-direction: column;
+
+		.order-name{
+			color: #0076a3;
+			font-weight: bold;
+		}
+
+		div{
+			display: flex;
+			flex-direction: column;
+		}
+
+		#text{
+			color: #4C4C45;
+			font-weight: 600;
+		}
+
+		#value{
+			color: #0076a3;
+		}
+
+		.btn{
+			color: #ffffff;
+			background-color: #0076a3;
+			width: 250px;
+			cursor: pointer;
+		}
+	}
+}

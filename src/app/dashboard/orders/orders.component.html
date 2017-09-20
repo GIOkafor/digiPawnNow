@@ -1,0 +1,26 @@
+<div class="container orders-component">
+	
+	<!-- Repeat for all orders --> 
+	<div class="row">
+		<div class="col-12 col-md-4">
+			<img src="//img03.static-nextag.com/image/Bethesda_Softworks_Fallout_4/10/000/074/819/500/7481950083.jpg">
+		</div>
+
+		<div class="col-12 col-md-8 order-info-container">
+			<span class="order-name">Avatar Blu-Ray + DVD</span>
+
+			<div class="condition">
+				<span id="text">Item condition</span>
+				<md-radio-button id="value">Good</md-radio-button>
+			</div>
+
+			<div class="payment-method">
+				<span id="text">Payment Method</span>
+				<md-radio-button id="value">$1.00</md-radio-button>
+				<span id="text">Cash</span>
+			</div>
+
+			<button class="btn" (click)="getOrders()">Print Shipping Label</button>
+		</div>
+	</div>
+</div>
