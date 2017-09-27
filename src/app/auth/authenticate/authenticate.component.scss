@@ -15,6 +15,10 @@
 	.btn{
 		margin-top: 5px;
 		margin-bottom: 5px;
+		background-color: #0076a3;
+	    color: #ffffff;
+	    width: 50%;
+	    cursor: pointer;
 	}
 
 	.auth-header{
@@ -38,12 +42,43 @@
 	.auth-forms{
 	    border: 1px solid grey;
 	    padding: 20px;
+	    background-color: #ecebec;
+
+	    .form-group{
+	    	display: flex;
+	    	justify-content: space-between;
+
+	    	span{
+	    	    display: flex;
+			    flex-direction: column;
+			    text-align: start;
+	    	}
+
+	    	span#two-col{
+	    		width: 48%;
+	    	}
+	    }
+
+	    .form-group.single-col {
+		    flex-direction: column;
+		    text-align: start;
+		}
+
+		.login{
+			.form-group{
+				span{
+				    margin: 0 auto;
+    				width: 300px;
+				}
+			}
+		}
+
 	}
 }
 
 @media only screen and (min-width: 768px){
 	.auth-header,.auth-forms{
-		margin-left: 30%;
-	    margin-right: 30%;
+		margin-left: 20%;
+	    margin-right: 20%;
 	}
 }

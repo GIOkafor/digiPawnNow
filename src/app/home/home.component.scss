@@ -1,4 +1,16 @@
 .home-component{
+	.secondary-nav{
+		background-color: rgb(124, 124, 124);
+		color: #ffffff;
+		display: flex;
+		justify-content: space-around;
+		padding: 5px;
+
+		.link{
+			cursor: pointer;
+			color: #ffffff;
+		}
+	}
 	.hero-image{
 	    display: flex;
 	    flex-direction: column;
@@ -12,16 +24,26 @@
 		background: linear-gradient(to right, rgba(3,134,248,1) 0%, rgba(89,162,208,1) 100%);
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0386f8', endColorstr='#59a2d0', GradientType=1 );
 
-	    .title{
+	    .title-div{
 	    	color: #ffffff;
 	    	text-align: center;
-	    	padding: 10px;
+	    	margin-top: 20px;
 	    }
 
-	    img{
-			width: 70%;
-    		margin: 0 auto;
-    		padding-bottom: 40px;
+	    .hero-content{
+	    	display: flex;
+	    	justify-content: space-around;
+    		align-items: center;
+
+    		#text{
+    			color: #ffffff;
+    		}
+	    
+    		.old, .for, .cash{
+    			display: flex;
+    			flex-direction: column;
+    			align-items: center;
+    		}
 	    }
 
 	    .cta{
@@ -41,6 +63,8 @@
 	.steps{
 		display: flex;
 		flex-direction: column;
+		border-top: 7px solid rgb(234,185,47);
+		border-bottom: 7px solid rgb(234,185,47);
 
 		span{
 			font-weight: 600;
@@ -53,5 +77,15 @@
 			margin: 0 auto;
 			margin-bottom: 70px;
 		}
+	}
+}
+
+@media only screen and (min-width: 768px){
+	.for{
+		padding-right: 80px;
+	}
+	.cash{
+	    padding-left: 40px;
+    	padding-right: 50px;
 	}
 }

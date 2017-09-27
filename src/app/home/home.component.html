@@ -1,11 +1,64 @@
 <div class="home-component">
-	<div class="hero-image">
-		<h3 class="title">DIGIBUYNOW</h3>
+	<div class="secondary-nav dropdown">
+		<div class="dropdown">
+			<a class="link btn dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sell DVDs Blu-Rays & Games</a>
+			
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			    <a class="dropdown-item" routerLink="/sell-item/dvd">Sell DVDs</a>
+			    <a class="dropdown-item" routerLink="/sell-item/dvd">Sell Blu-Rays</a>
+			    <a class="dropdown-item" routerLink="/sell-item/dvd">Sell Video Games</a>
+			</div>
+		</div>
 
-		<img src="assets/digibuynow-hero-image-v4.png">
+		<div class="dropdown">
+			<a class="link btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sell Your Cell Phone</a>
+
+			<div class="dropdown-menu">
+				<a class="dropdown-item" routerLink="/sell-item/cell-phone">Sell iPhone</a>
+				<a class="dropdown-item" routerLink="/sell-item/cell-phone">Sell Samsung Galaxy</a>
+				<a class="dropdown-item" routerLink="/sell-item/cell-phone">Sell Android Phone</a>
+			</div>
+		</div>
+		
+		<div class="dropdown">
+			<a class="link btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sell Electronics</a>
+
+			<div class="dropdown-menu">
+				<a class="dropdown-item" routerLink="/sell-item/electronics">Sell Apple Products</a>
+				<a class="dropdown-item" routerLink="/sell-item/electronics">Sell Kindles</a>
+				<a class="dropdown-item" routerLink="/sell-item/electronics">Sell Tablets</a>
+				<a class="dropdown-item" routerLink="/sell-item/electronics">Sell Games Consoles</a>
+				<a class="dropdown-item" routerLink="/sell-item/electronics">Sell Wearables</a>
+				<a class="dropdown-item" routerLink="/sell-item/electronics">Sell Headphones</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="hero-image">
+		<div class="title-div">
+			<h1 class="title">DigiPawnNow</h1>
+			<span class="text">World's First Goods-to-Crypto Exchange</span>
+		</div>
+
+		<div class="hero-content">
+			<div class="old">
+				<img src="assets/your_old.png">
+				<span id="text">Sell DVDs, Games & Electronics Like Cell Phones & Game Consoles</span>
+			</div>
+
+			<div class="for">
+				<img src="assets/equals.png">
+				<span id="text">FOR</span>
+			</div>
+
+			<div class="cash">
+				<img src="assets/cash.png">
+				<span id="text">Cash, Bitcoin, LiteCoin & Ethereum</span>
+			</div>
+		</div>
 
 		<span class="cta">
-			<button class="btn sell-btn" routerLink="/sell-item">SELL</button>
+			<button class="btn sell-btn" routerLink="/sell-item/dvd">SELL</button>
 		</span>
 	</div>
 

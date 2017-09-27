@@ -12,7 +12,13 @@ export class ProductService {
   private cookie = 'nxtgPubId=29; visitorId=-8718248126980238995; rvd=WlhYW11bXltdUEQfDQgdDFhUWFxZWlFeWFhZWl1bW08fDQgdDAdUWFxZWlFeWFhZWl1bW08KBx1UWE8CHg1YVAAHGgAOBwAITFtZHR9PGQANWFRbUA%3D%3D; cookieview=list; emlTgFird=true; nxtg.session=s%3AnSzD9dL2aLZN07rSPQ9nlxECLUfR07iE; ntSessInfo=1503873278832%7CnSzD9dL2aLZN07rSPQ9nlxECLUfR07iE';
   private cookie2 = '_ga=GA1.1.334540275.1501008925';
   private testUrl = 'http://localhost:3000/api/search';
+  private testUrl2 = 'https://digipawnnow.herokuapp.com/api/search';
   private coinbaseClient = new Coinbase.Client({'apiKey': 'i5PcPrnBN90c4SGa','apiSecret': 'xn0Q5lY5fUDXP2HawOK2lAEPXeS1rmUb'});
+
+  //barcode lookup key
+  private blKey = '88axq70slu372k0tmnnjikhpg3d82h';
+  //barcode lookup url by barcode
+  private blURL = 'https://www.barcodelookup.com/restapi?barcode=';
 
   constructor(
       private http: Http) {}
@@ -20,7 +26,7 @@ export class ProductService {
   //get ("/api/product:id)
   getProduct(productId: String): Promise<void | any>{
 
-  	return this.http.get(this.productUrl + '/' + productId)
+  	return this.http.get(this.blURL + productId + '&key=' + this.blKey)
   		.toPromise()
   		.then(response => response.json())
   		.catch(this.handleError);
@@ -28,9 +34,9 @@ export class ProductService {
 
 //search by UPC using 3rd party service
   findProduct(id: string): Promise<void|any>{
-    return this.http.get(this.testUrl + '/' + id)
+    return this.http.get(this.testUrl2 + '/' + id + '&key=' + this.blKey)
       .toPromise()
-      .then(res => res)
+      .then(res => res.json())
       .catch(this.handleError);
   }
 

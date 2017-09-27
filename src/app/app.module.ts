@@ -36,7 +36,7 @@ const routes: Routes = [
     {path: 'settings', component: SettingsComponent},
     {path: '', redirectTo: '/dashboard/orders', pathMatch: 'full'}
   ]},
-	{path: 'sell-item', component: AddProductComponent, children: [
+	{path: 'sell-item/:id', component: AddProductComponent, children: [
       { path: 'order-page', component: OrderComponent },    
   ]},
 	{path: '', redirectTo: '/home', pathMatch: 'full'}

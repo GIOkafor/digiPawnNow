@@ -113,6 +113,8 @@
 	.steps{
 		display: flex;
 		flex-direction: column;
+		border-top: 7px solid rgb(234,185,47);
+		border-bottom: 7px solid rgb(234,185,47);
 
 		span{
 			font-weight: 600;

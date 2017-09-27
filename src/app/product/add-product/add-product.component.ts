@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
 import { ProductService } from '../product.service';
 import { CartService } from '../../cart.service';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-add-product',
@@ -16,18 +18,21 @@ export class AddProductComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private cart: CartService
+    private cart: CartService,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
+    let id = this.route.snapshot.paramMap.get('id');
+    this.productType = id;
   }
 
   getProduct(prod){
   	this.searching = true;
 
-  	this.productService.getProduct(prod)
+  	this.productService.findProduct(prod)
   		.then(prod => {
-  			this.product = prod;
+  			this.product = prod.result[0];
   			this.searching = false;
   			this.showDetails();
   		})
@@ -35,7 +40,8 @@ export class AddProductComponent implements OnInit {
 
   //debug code
   showDetails(){
-    console.log("Product is: "+this.product);
+    console.log("Product is: "+this.product.details.product_name);
+    //console.log("Product is: "+this.product.result.details.product_name);
   /*	
     console.log("Product name is : "+this.product.product.itemName);
   	console.log("Product imageUrl is : "+this.product.product.imageUrl);

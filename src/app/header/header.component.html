@@ -1,10 +1,13 @@
 <div class="header-component">
-	<img class="logo" src="assets/Digibuynow logo 1.jpg" routerLink=''/>
+	<img class="logo" src="assets/logo.jpg" routerLink=''/>
 
 	<div class="navigation">
-		<a routerLink='/sell-item' routerLinkActive="active">Sell Item(s)</a>
+		<a routerLink='/sell-item' routerLinkActive="active" (click)="redirect();">Sell Item(s)</a>
+		<a routerLink='/how-it-works' routerLinkActive="active">How It Works</a>
 		<a routerLink='/about' routerLinkActive="active">About</a>
 		<a routerLink='/contact' routerLinkActive="active">Contact</a>
-		<a routerLink='/auth' routerLinkActive="active">Sign-up/Login</a>
+		<a *ngIf="!(user | async)?.uid" routerLink='/auth' routerLinkActive="active">Sign-up/Login</a>
+		<a *ngIf="(user | async)?.uid" routerLink='/dashboard' routerLinkActive="active">My Dashboard</a>
+		<a *ngIf="(user | async)?.uid" (click)="logout()" routerLink='/auth'>Logout</a>
 	</div>
 </div>

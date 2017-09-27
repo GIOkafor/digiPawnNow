@@ -1,6 +1,6 @@
 <div class="add-product">
 	<div class="container">
-		<h2>DIGIBUYNOW</h2>
+		<h2>DigiPawnNow</h2>
 
 		<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
 			<nav class="nav">
@@ -26,11 +26,11 @@
 
 			<div class="product" *ngIf="product && !searching">
 				<div class="col-12 col-md-4">
-					<img [src]="product.product.imageUrl">
+					<img [src]="product.images[0]">
 				</div>
 
 				<div class="product-details col-12 col-md-8">
-					<h5 class="product-name">{{product.product.itemName}}</h5>
+					<h5 class="product-name">{{product.details.product_name}}</h5>
 					
 					<div class="condition-container" *ngIf="productType != 'dvd'">
 						<span class="condition-text">Please select item condition</span>
