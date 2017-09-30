@@ -43,7 +43,6 @@
 	.payment-method{
 		display: flex;
 	    flex-direction: column;
-	    align-items: center;
 
 	    #text{
 	    	font-weight: bold;
@@ -60,6 +59,8 @@
 	    .btn{
 	    	color: #ffffff;
 	    	background-color: #0076a3;
+	    	margin: 30px auto;
+	    	width: 200px;
 	    }
 	}
 }
@@ -71,6 +72,7 @@
 
     	div{
     		text-align: center;
+    		margin: 0 5px;
 
 	    	.amount-div{
 	    		border: 1px solid grey;
@@ -79,5 +81,12 @@
 	    		cursor: pointer;
 	    	}
 	    }
+	}
+
+	.payment-method{
+		.btn{
+			width: 200px;
+			margin: 50px auto;
+		}
 	}
 }

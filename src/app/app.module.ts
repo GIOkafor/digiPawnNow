@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule } from '@angular/material';
+import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -15,15 +15,16 @@ import { environment } from '../environments/environment';
 
 import { ProductService } from './product/product.service';
 import { AuthenticationService } from './auth/authentication.service';
+import { OrderComponent } from './order/order.component';
 import { CartService } from './cart.service';
 import { OrdersService } from './dashboard/orders/orders.service';
+import { PaymentService } from './services/payment.service';
 import { AddProductComponent } from './product/add-product/add-product.component';
 import { AuthenticateComponent } from './auth/authenticate/authenticate.component';
 import { ErrorComponent } from './auth/authenticate/error/error.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
-import { OrderComponent } from './order/order.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrdersComponent } from './dashboard/orders/orders.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
@@ -36,9 +37,7 @@ const routes: Routes = [
     {path: 'settings', component: SettingsComponent},
     {path: '', redirectTo: '/dashboard/orders', pathMatch: 'full'}
   ]},
-	{path: 'sell-item/:id', component: AddProductComponent, children: [
-      { path: 'order-page', component: OrderComponent },    
-  ]},
+	{path: 'sell-item/:id', component: AddProductComponent},
 	{path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -57,7 +56,8 @@ const routes: Routes = [
     SettingsComponent
   ],
   entryComponents: [
-  	ErrorComponent
+  	ErrorComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +69,7 @@ const routes: Routes = [
     MdProgressSpinnerModule,
     MdDialogModule,
     MdRadioModule,
+    MdSnackBarModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule
@@ -77,7 +78,8 @@ const routes: Routes = [
   	ProductService,
   	AuthenticationService,
     CartService,
-    OrdersService
+    OrdersService,
+    PaymentService
   ],
   bootstrap: [AppComponent]
 })

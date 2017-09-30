@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../dashboard/orders/orders.service';
+import { PaymentService } from '../services/payment.service';
 
 @Component({
   selector: 'app-order',
@@ -9,25 +10,57 @@ import { OrdersService } from '../dashboard/orders/orders.service';
 })
 export class OrderComponent implements OnInit {
 
-	currency: any;
+	currency: any; //selected payment method of user
 	cartItems: any;
-	order: any;
+	order: any; //cart items + selected payment method + rates
+  rates: any; //exchange rates object
+  itemPrice: any; //listed price for particular item (in USD) set by admin
+  checkingRates: any; //variable for starting and stopping rate checking
 	
   constructor(private cart: CartService,
-  			private orders: OrdersService) { 
+  			private orders: OrdersService,
+        private pay: PaymentService) { 
   	//on initialize get cart contents
   	this.cartItems = this.cart.getCart();
+
+    //get current rates 
+    this.getRates();
+
+    //temporarily set item price to $1 
+    //in future check list of set prices by admin
+    this.itemPrice = 1;
+
+    //start interval loop for constantly getting values
+    this.constGetRates();
   }
 
   ngOnInit() {
   }
 
   
-  //for test purposes alone
+  //for testing cart and order functionality purposes alone
   test(){
-  	this.cartItems = [{itemName: 'product1'}, {itemName: 'product2'}];
-  	console.log("Cart items are: "+this.cartItems);
-  	console.log("Currency selected is: "+this.currency);
+  	var tempVal;
+
+    if (this.currency == 'USD')
+          tempVal = this.itemPrice;
+        else
+          tempVal = this.getConversionRate(this.currency);
+
+    var orderDetails = {
+      orderItems: this.cartItems, 
+      payment: {
+        currency: this.currency,
+        value: tempVal
+      }
+    }
+
+  	for(var i = 0; i < this.cartItems.length; i++){
+      console.log("Cart item is: "+this.cartItems[i].details.product_name);
+    }
+    
+    console.log("Currency selected is: "+ orderDetails.payment.currency);
+  	console.log("Currency value is: "+ orderDetails.payment.value);
   }
   
 
@@ -42,10 +75,59 @@ export class OrderComponent implements OnInit {
   	this.cart.remove(item);
   }
 
-  //place order and save details tp database under user uid
-  createOrder(order){
-  	this.orders.createOrder(order);
+  //format order object and save details to database under user uid
+  createOrder(){
+    var tempVal;
+
+    this.getRates()
+      .then(_=>{
+        
+        if (this.currency == 'USD')
+          tempVal = this.itemPrice;
+        else
+          tempVal = this.getConversionRate(this.currency);
+
+        var orderDetails = {
+          orderItems: this.cartItems, 
+          payment: {
+            currency: this.currency,
+            value: tempVal
+          }
+        }
+
+        //charge user based on selected payment via the payment service
+        //then
+        this.orders.createOrder(orderDetails);//save order info to database
+
+        //then show success popup
+
+        clearInterval(this.checkingRates);
+      })
   }
 
+  //get rate in realtime 
+  getRates(){
+    return this.pay.getRates()
+      .then(res => {
+        this.rates = res;
+        console.log(this.rates);    
+      })
+    
+  }
+
+  //constantly check for changes to exchange rates, every 60 seconds
+  constGetRates(){
+    this.checkingRates = setInterval(() => this.getRates(), 60000);
+  }
+
+  //get particular conversion rate based on variable passed
+  getConversionRate(curr){
+    if (curr == 'BTC')
+      return this.rates.BTC
+    else if(curr == 'LTC')
+      return this.rates.LTC
+    else if(curr == 'ETH')
+      return this.rates.ETH
+  }
 
 }

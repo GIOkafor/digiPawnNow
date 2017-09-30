@@ -6,7 +6,7 @@
 			 
 				<div class="item" *ngFor="let item of cartItems">
 					<div class="item-info">
-						<span>{{item.product.itemName}}</span>
+						<span>{{item.details.product_name}}</span>
 						<span>$1.00</span>
 					</div>
 
@@ -21,7 +21,7 @@
 		</div>
 
 		<div class="total-value-container">
-			Total Value <span class="total-value">$1.00</span>
+			Total Value <span class="total-value">${{itemPrice}}</span>
 		</div>
 
 	</div>
@@ -29,10 +29,10 @@
 	<div class="payment-method">
 		<span class="text" id="text">Pay me with</span>
 
-		<md-radio-group class="payment-options" [(ngModel)]="currency">
+		<md-radio-group class="payment-options" [(ngModel)]="currency" *ngIf="rates">
 			<div class="cash">
 				<div class="amount-div">
-					<md-radio-button value="cash" name="currency">$1.00</md-radio-button>
+					<md-radio-button value="USD" name="currency">${{itemPrice}}</md-radio-button>
 				</div>
 
 				<span id="text">Cash</span>
@@ -40,7 +40,7 @@
 
 			<div class="bitcoin">
 				<div class="amount-div">
-					<md-radio-button value="bitcoin">BTC 0.05</md-radio-button>
+					<md-radio-button value="BTC">BTC {{ itemPrice * rates.BTC }}</md-radio-button>
 				</div>
 
 				<span id="text">Bitcoin</span>
@@ -48,7 +48,7 @@
 
 			<div class="litecoin">
 				<div class="amount-div">
-					<md-radio-button value="litecoin">LTC 0.05</md-radio-button>
+					<md-radio-button value="LTC">LTC {{ itemPrice * rates.LTC }}</md-radio-button>
 				</div>
 
 				<span id="text">Litecoin</span>
@@ -56,16 +56,14 @@
 
 			<div class="ethereum">
 				<div class="amount-div">
-					<md-radio-button value="ethereum">ETH 0.05</md-radio-button>
+					<md-radio-button value="ETH">ETH {{ itemPrice * rates.ETH }}</md-radio-button>
 				</div>
 
 				<span id="text">Ethereum</span>
 			</div>
 		</md-radio-group>
 
-		<!-- Change 'test' below to cartItems --> 
-		<button class="btn" (click)="createOrder('test')">Place Order</button>
-		<button class="btn" (click)="test(cartItems)">Test</button>
+		<button class="btn" (click)="createOrder()">Place Order</button>
 	</div>
 
 </div>

@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { OrderComponent } from './order/order.component';
 
 @Injectable()
 export class CartService {
 	
 	items: any[] = [];
+  dialogRef: any;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private dialog: MdDialog ) { }
 
 
   getCart(){
@@ -14,16 +20,31 @@ export class CartService {
   }
 
   addToCart(item){
-  	console.log("Adding this item: " + item + " to shopping cart");
+  	console.log("Adding this item: " + item.details.product_name + " to shopping cart");
   	this.items.push(item);
-  	this.redirect();
+  	this.openOrderDialog();
+    //this.redirect();//change to dialog open
   }
 
   remove(item){
   	this.items.splice(item, 1)
   }
 
+  clearAll(){
+    this.items.length = 0;
+  }
+
+  //open order dialog(pop-up) 
+  openOrderDialog(): void{
+    this.dialogRef = this.dialog.open(OrderComponent);
+  }
+
+  closeDialog(): void{
+    this.dialogRef.close();
+  }
+
+//for now redirect to hardcoded url :id
   redirect(){
-  	this.router.navigate(['sell-item/order-page']);
+    this.router.navigate(['sell-item/dvd/order-page']);
   }
 }

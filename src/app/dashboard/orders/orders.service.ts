@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdSnackBar } from '@angular/material';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AuthenticationService } from '../../auth/authentication.service';
+import { CartService } from '../../cart.service';
 
 @Injectable()
 export class OrdersService {
@@ -9,8 +12,11 @@ export class OrdersService {
   userLoc: any;
 
   constructor(
-  	private db: AngularFireDatabase,
-  	private auth: AuthenticationService) { 
+  	private router: Router,
+    private snackBar: MdSnackBar,
+    private db: AngularFireDatabase,
+  	private auth: AuthenticationService,
+    private cart: CartService) { 
       //this.getOrders();
   }
 
@@ -29,6 +35,12 @@ export class OrdersService {
 
   createOrder(orderItems){
     this.getOrders();
-    this.orders.push(orderItems);
+    this.orders.push(orderItems)
+      .then(_=> {
+        this.cart.clearAll();
+        this.cart.closeDialog();
+        this.snackBar.open('Order created successfully', '', {duration: 3000});
+        this.router.navigate(['dashboard/orders']);
+      });
   }
 }
