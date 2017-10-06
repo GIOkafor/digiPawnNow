@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ErrorComponent } from './authenticate/error/error.component';
 import { Router } from '@angular/router';
 
@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
 
   user: firebase.User;
-  profileInfo: FirebaseObjectObservable<any>;
+  profileInfo: any;
 
   constructor(
   	private afAuth: AngularFireAuth,
   	private db: AngularFireDatabase,
   	private router: Router,
-  	public dialog: MdDialog
+  	public dialog: MatDialog
   	) { 
   		this.user = afAuth.auth.currentUser;
   		//this.profileInfo = db.object('/users');

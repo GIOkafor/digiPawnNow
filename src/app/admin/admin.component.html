@@ -8,13 +8,15 @@
 		</nav>
 	</div>
 
-	<header md-button [mdMenuTriggerFor]="menu">
+	<button md-button [matMenuTriggerFor]="menu">test
+		<!--
 		<span>admin</span>
 		<i class="fa fa-user" aria-hidden="true"></i>
-	</header>
+	-->
+	</button>
 
-	<md-menu #menu="mdMenu">
-	  <button md-menu-item>Log out</button>
+	<md-menu #menu="matMenu">
+	  <button mat-menu-item>Log out</button>
 	</md-menu>
 
 	<router-outlet></router-outlet>	

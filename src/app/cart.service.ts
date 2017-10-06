@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+//import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { OrderComponent } from './order/order.component';
 
 @Injectable()
@@ -11,8 +11,10 @@ export class CartService {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private dialog: MdDialog ) { }
+    private route: ActivatedRoute
+/*
+    ,
+    private dialog: MdDialog */) { }
 
 
   getCart(){
@@ -36,7 +38,7 @@ export class CartService {
 
   //open order dialog(pop-up) 
   openOrderDialog(): void{
-    this.dialogRef = this.dialog.open(OrderComponent);
+    //this.dialogRef = this.dialog.open(OrderComponent);
   }
 
   closeDialog(): void{
