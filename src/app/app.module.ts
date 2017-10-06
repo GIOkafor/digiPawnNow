@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModule, MatMenuModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatDialogModule, MatRadioModule, MatSnackBarModule, MatMenuModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -88,10 +88,10 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MdProgressSpinnerModule,
-    MdDialogModule,
-    MdRadioModule,
-    MdSnackBarModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatSnackBarModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule
