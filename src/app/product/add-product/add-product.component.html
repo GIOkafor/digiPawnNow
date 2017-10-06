@@ -1,6 +1,5 @@
 <div class="add-product">
 	<div class="container">
-		<h2>DigiPawnNow</h2>
 
 		<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
 			<nav class="nav">
@@ -15,14 +14,17 @@
 				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" ngModel>
 
 				<a class="help-link">Need Help?</a>
+
+				<a class="btn search-btn" (click)="onSubmit(f.value)"  [class.disabled]="productType === 'empty'">SEARCH</a>
 			</div>
 
 		</form>
 
-		<a class="btn search-btn" (click)="onSubmit(f.value)"  [class.disabled]="productType === 'empty'">SEARCH</a>
+		<div class="spinner-container">
+			<md-spinner class="spinner" *ngIf="searching"></md-spinner>
+		</div>
 
-		<div class="product-info row">
-			<md-spinner *ngIf="searching"></md-spinner>
+		<div class="product-info row" *ngIf="product && !searching">
 
 			<div class="product" *ngIf="product && !searching">
 				<div class="col-12 col-md-4">

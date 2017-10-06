@@ -1,0 +1,21 @@
+<div class="admin">
+	<div class="side-bar">
+		<nav>
+			<a routerLink="/admin/orders">ORDERS</a>
+			<a routerLink="/admin/payments">PAYMENTS</a>
+			<a routerLink="/admin/messages">MESSAGES</a>
+			<a routerLink="/admin/database">DATABASE</a>
+		</nav>
+	</div>
+
+	<header md-button [mdMenuTriggerFor]="menu">
+		<span>admin</span>
+		<i class="fa fa-user" aria-hidden="true"></i>
+	</header>
+
+	<md-menu #menu="mdMenu">
+	  <button md-menu-item>Log out</button>
+	</md-menu>
+
+	<router-outlet></router-outlet>	
+</div>

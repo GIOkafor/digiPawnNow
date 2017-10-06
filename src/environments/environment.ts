@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  stripeKey: 'pk_test_EaJpNBZas5WtFMDOyKIBV81i',
   firebase: {
     apiKey: "AIzaSyDMNxL5870BDmnJnEogAUljgNcmdysDrE0",
     authDomain: "digipawnnow.firebaseapp.com",

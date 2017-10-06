@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../dashboard/orders/orders.service';
 import { PaymentService } from '../services/payment.service';
+import { environment } from '../../environments/environment';//test environment change to prod prelaunch(TODO)
 
 @Component({
   selector: 'app-order',
@@ -16,6 +17,8 @@ export class OrderComponent implements OnInit {
   rates: any; //exchange rates object
   itemPrice: any; //listed price for particular item (in USD) set by admin
   checkingRates: any; //variable for starting and stopping rate checking
+  handler: any; //stripe payment handler
+  amount = 500;//test charge amount for stripe
 	
   constructor(private cart: CartService,
   			private orders: OrdersService,
@@ -35,7 +38,28 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.handler = StripeCheckout.configure({
+      key: environment.stripeKey,
+      image: 'assets/logo.jpg',
+      locale: 'auto',
+      token: token => {
+        this.pay.processPayment(token, this.amount)
+      }
+    });
   }
+
+  handlePayment(){
+    this.handler.open({
+      name: 'DigiPawnNow',
+      description: 'Pay now',//to be changed to enter card details to receive payment
+      amount: this.amount
+    });
+  }
+
+  @HostListener('window:popstate')
+    onPopstate(){
+      this.handler.close()
+    }
 
   
   //for testing cart and order functionality purposes alone

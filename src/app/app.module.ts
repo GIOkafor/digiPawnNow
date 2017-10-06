@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModule } from '@angular/material';
+import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModule, MatMenuModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -29,15 +29,31 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrdersComponent } from './dashboard/orders/orders.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
 
+import { AdminComponent } from './admin/admin.component';
+import { AdminOrdersComponent } from './admin/orders/orders.component';
+import { PaymentsComponent } from './admin/payments/payments.component';
+import { MessagesComponent } from './admin/messages/messages.component';
+import { DatabaseComponent } from './admin/database/database.component';
+import { UserComponent } from './user/user.component';
+
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'dashboard', component: DashboardComponent, children: [
-    {path: 'orders', component: OrdersComponent},
-    {path: 'settings', component: SettingsComponent},
-    {path: '', redirectTo: '/dashboard/orders', pathMatch: 'full'}
+  {path: 'home', component: UserComponent, children: [
+    {path: 'sell-item/:id', component: AddProductComponent},
+    {path: 'dashboard', component: DashboardComponent, children: [
+      {path: 'orders', component: OrdersComponent},
+      {path: 'settings', component: SettingsComponent},
+      {path: '', redirectTo: '/dashboard/orders', pathMatch: 'full'}
+    ]},
+
   ]},
-	{path: 'sell-item/:id', component: AddProductComponent},
+  {path: 'admin', component: AdminComponent, children: [
+      {path: 'orders', component: AdminOrdersComponent},
+      {path: 'payments', component: PaymentsComponent},
+      {path: 'messages', component: MessagesComponent},
+      {path: 'database', component: DatabaseComponent},
+      {path: '', redirectTo: '/admin/orders', pathMatch: 'full'}
+  ]},
 	{path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -53,7 +69,13 @@ const routes: Routes = [
     OrderComponent,
     DashboardComponent,
     OrdersComponent,
-    SettingsComponent
+    SettingsComponent,
+    AdminComponent,
+    AdminOrdersComponent,
+    PaymentsComponent,
+    MessagesComponent,
+    DatabaseComponent,
+    UserComponent
   ],
   entryComponents: [
   	ErrorComponent,
