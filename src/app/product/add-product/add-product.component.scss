@@ -2,16 +2,16 @@
 	text-align: center;
 
 	.container{
-		h2{
-			padding-top: 10px;
-			padding-bottom: 10px;
-		}
+		
+		margin-top: 50px;
+
 		.nav{
 			border: 1px solid #cccccc;
     		border-radius: 5px;
     		margin-bottom: -2px;
     		display: flex;
     		justify-content: space-around;
+    		background-color: #fafafb;
 
     		.nav-link{
 				color: #515655;
@@ -34,6 +34,7 @@
     		flex-direction: column;
     		margin-bottom: 40px;
     		border-radius: 3px;
+    		background-color: #fff;
 
     		.help-text, .help-link{
     		    font-weight: bold;
@@ -41,7 +42,9 @@
     		}
 
     		.help-text{
-    			margin-bottom: 10px;
+    			margin-bottom: 20px;
+     			color: #666;
+     			font-size: 1.125em;
     		}
 
     		input{
@@ -49,7 +52,7 @@
     		}
 
     		.help-link{
-    			margin-top: 25px;
+    			margin-top: 15px;
     			cursor: pointer;
     			color: #00a0ff;
     		}
@@ -62,7 +65,10 @@
 			background-color: #00a651;
 			border-radius: 8px;
 			cursor: pointer;
-			margin-bottom: 20px;
+			margin-top: 20px;
+			margin-bottom: 0px;
+			font-weight: 600;
+    		font-size: 1.125em;
 		}
 
 		.product-info{
@@ -115,10 +121,11 @@
 		flex-direction: column;
 		border-top: 7px solid rgb(234,185,47);
 		border-bottom: 7px solid rgb(234,185,47);
+		background-color: #fff;
 
 		span{
 			font-weight: 600;
-			margin: 10px 120px 0px 182px;
+			margin: 50px 120px 0px 182px;
 			font-size: larger;
 		}
 

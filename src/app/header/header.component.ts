@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   redirect(){
-  	this.router.navigate(['sell-item', 'dvd']);
+  	this.router.navigate(['home/sell-item', 'dvd']);
   }
 
   logout(){

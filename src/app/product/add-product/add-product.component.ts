@@ -25,6 +25,12 @@ export class AddProductComponent implements OnInit {
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
     this.productType = id;
+
+    console.log("Product type is: "+this.productType);
+
+    //check if productType is default
+    if(this.productType == null)
+      this.productType = 'dvd';
   }
 
   getProduct(prod){

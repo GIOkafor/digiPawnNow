@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import { MdDialog } from '@angular/material';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
 
   user: firebase.User;
-  profileInfo: FirebaseObjectObservable<any>;
+  profileInfo: any;
 
   constructor(
   	private afAuth: AngularFireAuth,
@@ -82,7 +82,7 @@ export class AuthenticationService {
   }
 
   redirect(){
-  	this.router.navigate(['dashboard']);
+  	this.router.navigate(['home/dashboard']);
   }
 
   handleError(errMessage){

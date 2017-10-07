@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { CartService } from '../../cart.service';
 
 @Injectable()
 export class OrdersService {
 
-  orders: FirebaseListObservable<any>;
+  orders: any;
   userLoc: any;
 
   constructor(

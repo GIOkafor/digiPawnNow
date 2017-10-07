@@ -28,16 +28,30 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrdersComponent } from './dashboard/orders/orders.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
+import { AdminPaymentsComponent } from './admin/admin-payments/admin-payments.component';
+import { AdminMessagesComponent } from './admin/admin-messages/admin-messages.component';
+import { AdminDatabaseComponent } from './admin/admin-database/admin-database.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'dashboard', component: DashboardComponent, children: [
-    {path: 'orders', component: OrdersComponent},
-    {path: 'settings', component: SettingsComponent},
-    {path: '', redirectTo: '/dashboard/orders', pathMatch: 'full'}
+
+  {path: 'admin', component: AdminComponent},
+
+  {path: 'welcome', component: HomeComponent},  
+
+  {path: 'home', component: UserComponent, children: [
+    {path: '', component: AddProductComponent},
+    {path: 'dashboard', component: DashboardComponent, children: [
+      {path: 'orders', component: OrdersComponent},
+      {path: 'settings', component: SettingsComponent},
+      {path: '', redirectTo: '/home/dashboard/orders', pathMatch: 'full'}
+    ]},
+  	{path: 'sell-item/:id', component: AddProductComponent}
   ]},
-	{path: 'sell-item/:id', component: AddProductComponent},
+
 	{path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -53,7 +67,13 @@ const routes: Routes = [
     OrderComponent,
     DashboardComponent,
     OrdersComponent,
-    SettingsComponent
+    SettingsComponent,
+    AdminComponent,
+    AdminOrdersComponent,
+    AdminPaymentsComponent,
+    AdminMessagesComponent,
+    AdminDatabaseComponent,
+    UserComponent
   ],
   entryComponents: [
   	ErrorComponent,
