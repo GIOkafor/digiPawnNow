@@ -38,7 +38,13 @@ import { UserComponent } from './user/user.component';
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
 
-  {path: 'admin', component: AdminComponent},
+  {path: 'admin', component: AdminComponent, children: [
+    { path: 'orders', component: AdminOrdersComponent },
+    { path: 'payments', component: AdminPaymentsComponent },
+    { path: 'messages', component: AdminMessagesComponent },
+    { path: 'database', component: AdminDatabaseComponent },
+    { path: '', redirectTo: '/admin/orders', pathMatch: 'full'}
+  ]},
 
   {path: 'welcome', component: HomeComponent},  
 

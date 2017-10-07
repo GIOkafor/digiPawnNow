@@ -1,0 +1,50 @@
+.admin{
+	background-color: #fff;
+
+	.admin-side-nav{
+		width: 200px;
+	    background-color: #2156ad;
+	    align-items: center;
+	    position: fixed;
+    	left: 0;
+    	z-index: 2;
+	    
+	    .nav-link{
+	    	color: #fff;
+	    	cursor: pointer;
+	    	font-weight: 200;
+	    }
+	}
+
+	.header{
+		background-color: #ebebeb;
+		display: flex;
+    	justify-content: flex-end;
+    	position: fixed;
+    	top: 0;
+    	width: 100vw;
+
+    	span{
+			padding: 10px;
+    		margin-right: 40px;
+    		cursor: pointer;
+    	}
+	}
+
+	.dynamic{
+		padding: 20px 40px;
+	}
+
+}
+
+
+@media (min-width: 768px) {
+	.admin-side-nav{
+		height: 100vh;
+	}
+
+	.dynamic{
+		height: 100vh;
+		margin-left: 200px;
+	}
+}
