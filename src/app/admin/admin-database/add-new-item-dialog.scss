@@ -1,0 +1,28 @@
+.dialog{
+	h2{
+		text-align: center;
+	}
+
+	form{
+		input{
+			float: right;
+		}
+
+		.save-button-container{
+			display: flex;
+			justify-content: space-around;
+
+			.btn{
+				background-color: #006699;
+				color: #fff;
+				border-radius: 3px;
+				width: 90px;
+			}
+
+			.cancel-btn{
+				background-color: #dc3545;
+				color: #fff;
+			}
+		}
+	}
+}

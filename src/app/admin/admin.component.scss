@@ -3,11 +3,13 @@
 
 	.admin-side-nav{
 		width: 200px;
-	    background-color: #2156ad;
+	    background-color: #006699;
 	    align-items: center;
 	    position: fixed;
     	left: 0;
     	z-index: 2;
+	    padding-top: 40px;
+	    visibility: hidden;
 	    
 	    .nav-link{
 	    	color: #fff;
@@ -32,7 +34,7 @@
 	}
 
 	.dynamic{
-		padding: 20px 40px;
+		padding: 50px 50px;
 	}
 
 }
@@ -40,11 +42,11 @@
 
 @media (min-width: 768px) {
 	.admin-side-nav{
+		visibility: visible !important;
 		height: 100vh;
 	}
 
 	.dynamic{
-		height: 100vh;
 		margin-left: 200px;
 	}
 }

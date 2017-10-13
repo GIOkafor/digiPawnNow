@@ -1,3 +1,94 @@
-<p>
-  admin-database works!
-</p>
+<div class="admin-database">
+	
+	<div class="categories">
+		
+		<div class="category dvd">
+			
+			<div class="header">
+				<span class="title">DVD</span>
+
+				<button class="btn" (click)="showDialog('', false, 'dvd');">ADD</button>
+			</div>
+
+			<div class="items">
+				<div class="item-info sub-header">
+					<span>Name</span>
+					<span>UPC</span>
+					<span>Price</span>
+				</div>
+
+				<div class="item" *ngFor="let item of cd | async">
+					<div class="item-info">
+						<span>{{item.data.id}}</span>
+						<span *ngIf="item.data.upc">{{item.data.upc}}</span>
+						<span>${{item.data.price}}</span>
+					</div>
+
+					<span class="actions">
+						<i (click)="editDialog(item, 'cd')">Edit</i>
+						<i>Delete</i> 
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="category cell-phones">
+			<div class="header">
+				<span class="title">Cell Phones</span>
+
+				<button class="btn" (click)="showDialog('', true, 'cell-phones');">ADD</button>
+			</div>
+
+			<div class="items">
+				<div class="item-info sub-header">
+					<span>Name</span>
+					<span>Condition</span>
+					<span>Price</span>
+				</div>
+
+				<div class="item" *ngFor="let cell of cellPhones | async">
+					<div class="item-info">
+						<span>{{cell.data.id}}</span>
+						<span>{{cell.data.condition}}</span>
+						<span>${{cell.data.price}}</span>
+					</div>
+
+					<span class="actions">
+						<i (click)="editDialog(cell, 'cell-phones')">Edit</i>
+						<i>Delete</i>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="category electronics">
+			<div class="header">
+				<span class="title">Electronics</span>
+
+				<button class="btn" (click)="showDialog('', true, 'electronics');">ADD</button>
+			</div>
+
+			<div class="items">
+				<div class="item-info sub-header">
+					<span>Name</span>
+					<span>Condition</span>
+					<span>Price</span>
+				</div>
+
+				<div class="item" *ngFor="let elec of electronics | async">
+					<div class="item-info">
+						<span>{{elec.data.id}}</span>
+						<span>{{elec.data.condition}}</span>
+						<span>${{elec.data.price}}</span>
+					</div>
+
+					<span class="actions">
+						<i (click)="editDialog(elec, 'electronics')">Edit</i>
+						<i>Delete</i>
+					</span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -11,6 +11,7 @@ import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModul
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 
 import { ProductService } from './product/product.service';
@@ -33,7 +34,10 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { AdminPaymentsComponent } from './admin/admin-payments/admin-payments.component';
 import { AdminMessagesComponent } from './admin/admin-messages/admin-messages.component';
 import { AdminDatabaseComponent } from './admin/admin-database/admin-database.component';
+import { AdminOrdersService } from './admin/services/orders.service';
+import { PricingDatabaseService } from './admin/services/pricing-database.service';
 import { UserComponent } from './user/user.component';
+import { AddNewItemDialog, EditItemDialog } from './admin/admin-database/admin-database.component';
 
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
@@ -79,11 +83,15 @@ const routes: Routes = [
     AdminPaymentsComponent,
     AdminMessagesComponent,
     AdminDatabaseComponent,
-    UserComponent
+    UserComponent,
+    AddNewItemDialog,
+    EditItemDialog
   ],
   entryComponents: [
   	ErrorComponent,
-    OrderComponent
+    OrderComponent,
+    AddNewItemDialog,
+    EditItemDialog
   ],
   imports: [
     BrowserModule,
@@ -98,14 +106,17 @@ const routes: Routes = [
     MdSnackBarModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [
   	ProductService,
   	AuthenticationService,
     CartService,
     OrdersService,
-    PaymentService
+    PaymentService,
+    AdminOrdersService,
+    PricingDatabaseService
   ],
   bootstrap: [AppComponent]
 })

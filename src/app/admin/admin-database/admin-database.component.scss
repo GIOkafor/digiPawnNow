@@ -1,0 +1,58 @@
+.admin-database{
+	margin-top: 20px;
+
+	.category{
+		margin-bottom: 20px; 
+
+		.header{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+		}
+
+		.item{
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.item-info{
+			border: 1px solid #ccc;
+			margin-bottom: .6px;
+			display: flex;
+		    justify-content: space-between;
+		    width: 70vw;
+		    padding: 0px 10px;
+		}
+
+		.sub-header{
+		    background-color: #ebebeb;
+    		color: #282c30;
+		}
+
+		.actions{
+			i{
+				cursor: pointer;
+			}
+		}
+	}
+	.title{
+		font-size: 1.5em;
+	}
+
+	.btn{
+		background-color: #006699;
+		color: #fff;
+		font-weight: 200;
+    	width: 100px;
+    	cursor: pointer;
+	}
+}
+
+@media (min-width: 768px){
+	.admin-database{
+		.btn{
+			margin-right: 80px;
+		}
+	}
+}

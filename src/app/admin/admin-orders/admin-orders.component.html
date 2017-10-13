@@ -1,3 +1,10 @@
-<p>
-  admin-orders works!
-</p>
+<div class="admin-orders">
+	<ul class="orders">
+		<li class="order-info" *ngFor="let order of orders | async">
+			<span>{{order.user}}</span>
+			<span>{{order.date}}</span>
+			<span>{{order.amount.currency}} {{order.amount.value}}</span>
+			<span>{{order.status}}</span>
+		</li>
+	</ul>
+</div>
