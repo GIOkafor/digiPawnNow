@@ -26,7 +26,7 @@
 
 					<span class="actions">
 						<i (click)="editDialog(item, 'cd')">Edit</i>
-						<i>Delete</i> 
+						<i (click)="delete('cd', item)">Delete</i> 
 					</span>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 
 					<span class="actions">
 						<i (click)="editDialog(cell, 'cell-phones')">Edit</i>
-						<i>Delete</i>
+						<i (click)="delete('cell-phones', cell)">Delete</i>
 					</span>
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 
 					<span class="actions">
 						<i (click)="editDialog(elec, 'electronics')">Edit</i>
-						<i>Delete</i>
+						<i (click)="delete('electronics', elec)">Delete</i>
 					</span>
 				</div>
 			</div>

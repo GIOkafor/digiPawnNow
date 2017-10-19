@@ -32,7 +32,6 @@ export class AdminDatabaseComponent implements OnInit {
   	});
 
   	dialogRef.afterClosed().subscribe(res => {
-		console.log(res);
   		
   		//this only gets called if user hits the save button
   		if(res != undefined){
@@ -51,7 +50,6 @@ export class AdminDatabaseComponent implements OnInit {
 
   	//add dialog closed ref action here
   	dialogRef.afterClosed().subscribe(res => {
-  		console.log(res);
 
   		if(res != undefined)
   			this.edit(category, item);
@@ -64,6 +62,11 @@ export class AdminDatabaseComponent implements OnInit {
 
   edit(category, item){
   	this.db.editCat(category, item);
+  }
+
+  delete(category, item){
+  	//this.db.deleteItem(category, item);
+  	this.db.showDeleteDialog(category, item);
   }
 }
 

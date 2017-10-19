@@ -1,9 +1,10 @@
 .add-product{
 	text-align: center;
 
-	.container{
+	.con{
 		
-		margin-top: 50px;
+		background-color: #2076a2;
+		padding: 50px;
 
 		.nav{
 			border: 1px solid #cccccc;
@@ -22,7 +23,7 @@
 
 			.nav-link.active{
 				color: #ffffff;
-				background-color: #0076a3;
+				background-color: #7c7c7c;
 				font-weight: 700;
 			}
 		}
@@ -56,6 +57,22 @@
     			cursor: pointer;
     			color: #00a0ff;
     		}
+
+    		.results{
+    			list-style: none;
+			    padding-left: 0px;
+			    border: 1px solid #ccc;
+
+    			li{
+    			    padding: 5px;
+    				border-bottom: 1px solid #2076a1;
+    				cursor: pointer;
+    			}
+
+    			li:last-child{
+    				border-bottom: none;
+    			}
+    		}
     	}
 
 		.search-btn{
@@ -70,47 +87,48 @@
 			font-weight: 600;
     		font-size: 1.125em;
 		}
+	}
 
-		.product-info{
-			justify-content: center;
-		    padding-bottom: 50px;
-		    padding-top: 50px;
+	.product-info{
+		justify-content: center;
+	    padding-bottom: 50px;
+	    padding-top: 50px;
+		background-color: #fff;
 
-			.product{
-				display: flex;
+		.product{
+			display: flex;
 
-				.product-details{
-					text-align: left;
+			.product-details{
+				text-align: left;
 
-					.product-name{
-						color: #0076a3;
-					}
+				.product-name{
+					color: #0076a3;
+				}
 
-					.condition{
-						display: inline-flex;
-					    justify-content: space-between;
-					    width: 80%;
-					    margin-top: 15px;
-					    margin-bottom: 15px;
+				.condition{
+					display: inline-flex;
+				    justify-content: space-between;
+				    width: 80%;
+				    margin-top: 15px;
+				    margin-bottom: 15px;
 
-						.value{
-							cursor: pointer;
-							border: 1px solid #cccccc;
-						    padding: 10px 15px 5px;
-						    border-radius: 10px;
-						}
-					}
-
-					.payout{
-						color: #0076a3;
-					}
-
-					.add-to-cart{
-						color: #ffffff;
-						background-color: #00a651;
+					.value{
 						cursor: pointer;
-						margin-top: 15px;
+						border: 1px solid #cccccc;
+					    padding: 10px 15px 5px;
+					    border-radius: 10px;
 					}
+				}
+
+				.payout{
+					color: #0076a3;
+				}
+
+				.add-to-cart{
+					color: #ffffff;
+					background-color: #00a651;
+					cursor: pointer;
+					margin-top: 15px;
 				}
 			}
 		}

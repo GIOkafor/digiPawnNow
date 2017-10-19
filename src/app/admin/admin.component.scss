@@ -21,20 +21,26 @@
 	.header{
 		background-color: #ebebeb;
 		display: flex;
-    	justify-content: flex-end;
+    	justify-content: space-between;
     	position: fixed;
     	top: 0;
     	width: 100vw;
 
     	span{
 			padding: 10px;
-    		margin-right: 40px;
+    		margin-right: 20px;
     		cursor: pointer;
+    	}
+
+    	.fa{
+    	    padding-left: 20px;
+    		padding-top: 7px;
     	}
 	}
 
 	.dynamic{
 		padding: 50px 50px;
+		height: 100vh;
 	}
 
 }
@@ -48,5 +54,17 @@
 
 	.dynamic{
 		margin-left: 200px;
+	}
+
+	.sidenav-toggle{
+		visibility: hidden;
+	}
+
+	.header{
+		justify-content: flex-end;
+
+		span{
+			margin-right: 40px;
+		}
 	}
 }

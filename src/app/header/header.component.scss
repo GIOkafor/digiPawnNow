@@ -13,10 +13,14 @@
 
     .navigation{
     	font-weight: 500;
+        color: #2076a2;
+
+        .fa{
+            cursor: pointer;
+        }
 
         a{
     		padding-left: 10px;
-            color: #54585f;
     	}
 
         .active{

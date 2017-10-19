@@ -1,4 +1,4 @@
-<div class="admin">
+<md-sidenav-container class="admin">
 	
 	<!-- side nav starts -->
 		<nav class="nav flex-column admin-side-nav">
@@ -11,6 +11,10 @@
 
 	<!-- Admin header starts -->
 		<div class="header">
+			<div class="sidenav-toggle">
+				<i class="fa fa-bars fa-2x" aria-hidden="true" (click)="sidenav.open()"></i>
+			</div>
+
 			<span>admin <i class="fa fa-user" aria-hidden="true"></i></span>
 		</div>
 	<!-- Admin header starts -->	
@@ -18,4 +22,12 @@
 	<div class="dynamic">
 		<router-outlet></router-outlet>
 	</div>
-</div>
+
+	<md-sidenav #sidenav class="nav flex-column admin-side-nav">
+    	<a class="nav-link active" routerLink="/admin/orders">ORDERS</a>
+		<a class="nav-link" routerLink="/admin/payments">PAYMENTS</a>
+		<a class="nav-link" routerLink="/admin/messages">MESSAGES</a>
+		<a class="nav-link" routerLink="/admin/database">DATABASE</a>
+  	</md-sidenav>
+
+</md-sidenav-container>

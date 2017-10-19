@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
+import { ConfirmDeleteDialog } from '../admin-database/confirm-delete-dialog.component';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
 
 @Injectable()
 export class PricingDatabaseService {
@@ -10,35 +12,38 @@ export class PricingDatabaseService {
 	phoneCat: any;
 	electronicCat: any;
 
-  constructor(private db: AngularFirestore) { 
-  	this.categoriesCollection = db.doc('pricing/categories');
-  	//this.cdCat = this.categoriesCollection.collection('cd').valueChanges();
-  	//this.phoneCat = this.categoriesCollection.collection('cellphones').valueChanges();
-  	//this.electronicCat = this.categoriesCollection.collection('electronics').valueChanges();
+  constructor(
+  		private db: AngularFirestore,
+  		private dialog: MdDialog,
+  		private snackBar: MdSnackBar) { 
+		  	this.categoriesCollection = db.doc('pricing/categories');
+		  	//this.cdCat = this.categoriesCollection.collection('cd').valueChanges();
+		  	//this.phoneCat = this.categoriesCollection.collection('cellphones').valueChanges();
+		  	//this.electronicCat = this.categoriesCollection.collection('electronics').valueChanges();
 
-  	this.cdCat = this.categoriesCollection.collection('cd').snapshotChanges().map(actions => {
-      return actions.map(a => {
-        const data = a.payload.doc.data() as any;
-        const id = a.payload.doc.id;
-        return { id, data };
-      });
-    });
+		  	this.cdCat = this.categoriesCollection.collection('cd').snapshotChanges().map(actions => {
+		      return actions.map(a => {
+		        const data = a.payload.doc.data() as any;
+		        const id = a.payload.doc.id;
+		        return { id, data };
+		      });
+		    });
 
-  	this.phoneCat = this.categoriesCollection.collection('cellphones').snapshotChanges().map(values => {
-  		return values.map(a => {
-  			const data = a.payload.doc.data() as any;
-  			const id = a.payload.doc.id;
-  			return { id, data };
-  		});
-  	});
+		  	this.phoneCat = this.categoriesCollection.collection('cellphones').snapshotChanges().map(values => {
+		  		return values.map(a => {
+		  			const data = a.payload.doc.data() as any;
+		  			const id = a.payload.doc.id;
+		  			return { id, data };
+		  		});
+		  	});
 
-  	this.electronicCat = this.categoriesCollection.collection('electronics').snapshotChanges().map(values => {
-  		return values.map(a => {
-  			const data = a.payload.doc.data() as any;
-  			const id = a.payload.doc.id;
-  			return { id, data };
-  		});
-  	});
+		  	this.electronicCat = this.categoriesCollection.collection('electronics').snapshotChanges().map(values => {
+		  		return values.map(a => {
+		  			const data = a.payload.doc.data() as any;
+		  			const id = a.payload.doc.id;
+		  			return { id, data };
+		  		});
+		  	});
   }
 
   getCdPrices(){
@@ -99,8 +104,6 @@ export class PricingDatabaseService {
   }
 
   editCat(category, item){
-  	console.log("item id is: "+item.id);
-
   	if (category == 'cd'){
   		this.categoriesCollection.collection('cd').doc(item.id).update(item.data);
   	}else if(category == 'cell-phones'){
@@ -111,6 +114,25 @@ export class PricingDatabaseService {
   }
 
   deleteItem(category, item){
+		if (category == 'cd'){
+	  		this.categoriesCollection.collection('cd').doc(item.id).delete()
+	  			.then(_=> this.snackBar.open("Item deleted successfully", "", { duration: 2000 }))
+	  	}else if(category == 'cell-phones'){
+	  		this.categoriesCollection.collection('cellphones').doc(item.id).delete()
+	  			.then(_=> this.snackBar.open("Item deleted successfully", "", { duration: 2000 }))
+	  	}else if(category == 'electronics'){
+	  		this.categoriesCollection.collection('electronics').doc(item.id).delete()
+	  			.then(_=> this.snackBar.open("Item deleted successfully", "", { duration: 2000 }))
+	  	}
+  }
 
+  showDeleteDialog(category, item){
+  		let dialogRef = this.dialog.open(ConfirmDeleteDialog, { width: '350px' });
+
+  		dialogRef.afterClosed().subscribe(res => {
+
+  			if (res == true)
+  				this.deleteItem(category, item);
+  		})
   }
 }

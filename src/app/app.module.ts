@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModule } from '@angular/material';
+import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModule, MdButtonModule, MdSidenavModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -38,6 +38,7 @@ import { AdminOrdersService } from './admin/services/orders.service';
 import { PricingDatabaseService } from './admin/services/pricing-database.service';
 import { UserComponent } from './user/user.component';
 import { AddNewItemDialog, EditItemDialog } from './admin/admin-database/admin-database.component';
+import { ConfirmDeleteDialog } from './admin/admin-database/confirm-delete-dialog.component';
 
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
@@ -85,13 +86,15 @@ const routes: Routes = [
     AdminDatabaseComponent,
     UserComponent,
     AddNewItemDialog,
-    EditItemDialog
+    EditItemDialog,
+    ConfirmDeleteDialog
   ],
   entryComponents: [
   	ErrorComponent,
     OrderComponent,
     AddNewItemDialog,
-    EditItemDialog
+    EditItemDialog,
+    ConfirmDeleteDialog
   ],
   imports: [
     BrowserModule,
@@ -104,6 +107,8 @@ const routes: Routes = [
     MdDialogModule,
     MdRadioModule,
     MdSnackBarModule,
+    MdButtonModule,
+    MdSidenavModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,

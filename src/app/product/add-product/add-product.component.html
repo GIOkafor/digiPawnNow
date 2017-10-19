@@ -1,5 +1,5 @@
 <div class="add-product">
-	<div class="container">
+	<div class="con">
 
 		<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
 			<nav class="nav">
@@ -11,7 +11,11 @@
 			<div class="search-container">
 				<span class="help-text">To start selling, just enter a barcode (e.g 1234667890123) without spaces or dashes into the box below</span>
 
-				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" ngModel>
+				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" (keyup)="searchTerm.next($event.target.value)" ngModel>
+
+				<ul *ngIf="results && !product" class="results">
+					<li *ngFor="let result of results | slice:0:9" (click)="getProductByName(result.details.product_name)">{{result.details.product_name}}</li>
+				</ul>
 
 				<a class="help-link">Need Help?</a>
 
@@ -23,38 +27,37 @@
 		<div class="row">
 			<md-spinner *ngIf="searching"></md-spinner>
 		</div>
+	</div>
 
-		<div class="product-info row" *ngIf="product && !searching">
+	<div class="product-info row" *ngIf="product && !searching">
 			
-			<div class="product" *ngIf="product && !searching">
-				<div class="col-12 col-md-4">
-					<img [src]="product.images[0]">
+		<div class="product" *ngIf="product && !searching">
+			<div class="col-12 col-md-4">
+				<img [src]="product.images[0]">
+			</div>
+
+			<div class="product-details col-12 col-md-8">
+				<h5 class="product-name">{{product.details.product_name}}</h5>
+				
+				<div class="condition-container" *ngIf="productType != 'dvd'">
+					<span class="condition-text">Please select item condition</span>
+
+					<md-radio-group class="condition" [(ngModel)]="condition">
+						<md-radio-button class="value" value="good">Good</md-radio-button>		
+						<md-radio-button class="value" value="poor">Poor</md-radio-button>		
+						<md-radio-button class="value" value="faulty">Faulty</md-radio-button>		
+					</md-radio-group>
+				</div>
+				<div>
+					<span>We'll pay you: </span> <span class="payout">x amount</span>
 				</div>
 
-				<div class="product-details col-12 col-md-8">
-					<h5 class="product-name">{{product.details.product_name}}</h5>
-					
-					<div class="condition-container" *ngIf="productType != 'dvd'">
-						<span class="condition-text">Please select item condition</span>
-
-						<md-radio-group class="condition" [(ngModel)]="condition">
-							<md-radio-button class="value" value="good">Good</md-radio-button>		
-							<md-radio-button class="value" value="poor">Poor</md-radio-button>		
-							<md-radio-button class="value" value="faulty">Faulty</md-radio-button>		
-						</md-radio-group>
-					</div>
-					<div>
-						<span>We'll pay you: </span> <span class="payout">x amount</span>
-					</div>
-
-					<button class="btn add-to-cart" (click)="addToCart(product)">ADD TO CART</button>
-				</div>
-
+				<button class="btn add-to-cart" (click)="addToCart(product)">ADD TO CART</button>
 			</div>
 		</div>
 	</div>
 
-	<div class="steps">
+	<div class="steps" *ngIf="!product && !searching">
 		<span>4 Easy Steps</span>
 
 		<img src="assets/steps.png">

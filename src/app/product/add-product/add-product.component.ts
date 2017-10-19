@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
 import { ProductService } from '../product.service';
 import { CartService } from '../../cart.service';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -15,12 +16,19 @@ export class AddProductComponent implements OnInit {
   searching: boolean = false;
   productType: string = 'empty';
   condition: string = '';
+  searchTerm = new Subject<string>();
+  results: Object;
 
   constructor(
     private productService: ProductService,
     private cart: CartService,
     private route: ActivatedRoute
-    ) { }
+    ) { 
+      this.productService.search(this.searchTerm)
+        .subscribe(results => {
+          this.results = results.result;
+        });
+  }
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -33,6 +41,7 @@ export class AddProductComponent implements OnInit {
       this.productType = 'dvd';
   }
 
+//get product by UPC
   getProduct(prod){
   	this.searching = true;
 
@@ -42,6 +51,18 @@ export class AddProductComponent implements OnInit {
   			this.searching = false;
   			this.showDetails();
   		})
+  }
+
+//get product by NAME
+  getProductByName(prod){
+    this.searching = true;
+
+    this.productService.findProductByName(prod)
+      .then(prod => {
+        this.product = prod.result[0];
+        this.searching = false;
+        this.showDetails();
+      })
   }
 
   //debug code
@@ -57,7 +78,10 @@ export class AddProductComponent implements OnInit {
 
   onSubmit(val){
   	console.log(val.search);
-  	this.getProduct(val.search);
+    if(this.productType == 'dvd')
+  	  this.getProduct(val.search);
+    else
+      this.getProductByName(val.search);
   }
 
   getPrice(){
