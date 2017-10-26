@@ -1,3 +1,4 @@
-<p>
-  admin-messages works!
-</p>
+<div class="admin-messages">
+	
+	<span class="message" *ngFor="let msg of messages">{{msg | async}}</span>
+</div>

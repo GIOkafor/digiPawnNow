@@ -42,7 +42,7 @@
 	.auth-forms{
 	    border: 1px solid grey;
 	    padding: 20px;
-	    background-color: #ecebec;
+	    background-color: #fff;
 
 	    .form-group{
 	    	display: flex;
@@ -70,6 +70,13 @@
 				    margin: 0 auto;
     				width: 300px;
 				}
+			}
+		}
+
+		.forgot-password-form{
+			input{
+				margin: 0 auto;
+				text-align: center;
 			}
 		}
 

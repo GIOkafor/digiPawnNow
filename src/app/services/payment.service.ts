@@ -5,14 +5,14 @@ import { Http, Headers, Response } from '@angular/http';
 export class PaymentService {
 
 	devURL = 'http://localhost:3000/api/price';
-	prodURL = '';
+	prodURL = 'https://digipawnnow.herokuapp.com/api/price';
 
   constructor(private http: Http) { 
   		
   }
 
   getRates(){
-  	return this.http.get(this.devURL)
+  	return this.http.get(this.prodURL)
   		.toPromise()
   		.then(res => res.json())
   		.catch(err => this.handleError(err));

@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="authenticate-component">
 	<div class="container">
 
@@ -119,6 +120,12 @@
 
 				<button class="btn" type="submit">Login</button>
 
+		<!-- Please delete afterwards, testing purposes only -->
+
+				<br />
+
+				<a class="admin-login" routerLink="/admin" style="color: #808080;">Login as ADMIN</a>
+
 			</form>
 			<!-- Login form ends -->
 
@@ -128,7 +135,7 @@
 				<h3>Password Reset</h3>
 
 				<div class="form-group">
-					<input type="email" name="email" placeholder="Email" ngModel>
+					<input type="email" name="email" placeholder="Enter email" ngModel>
 				</div>
 
 				<button class="btn" (click)="forgotPassword=!forgotPassword">Cancel</button>
@@ -138,3 +145,4 @@
 		</div>
 	</div>
 </div>
+<app-footer></app-footer>

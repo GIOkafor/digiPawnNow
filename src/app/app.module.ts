@@ -39,6 +39,7 @@ import { PricingDatabaseService } from './admin/services/pricing-database.servic
 import { UserComponent } from './user/user.component';
 import { AddNewItemDialog, EditItemDialog } from './admin/admin-database/admin-database.component';
 import { ConfirmDeleteDialog } from './admin/admin-database/confirm-delete-dialog.component';
+import { MessagingService } from './services/messaging.service';
 
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
@@ -63,7 +64,7 @@ const routes: Routes = [
   	{path: 'sell-item/:id', component: AddProductComponent}
   ]},
 
-	{path: '', redirectTo: '/home', pathMatch: 'full'}
+	{path: '', redirectTo: '/welcome', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -121,7 +122,8 @@ const routes: Routes = [
     OrdersService,
     PaymentService,
     AdminOrdersService,
-    PricingDatabaseService
+    PricingDatabaseService,
+    MessagingService
   ],
   bootstrap: [AppComponent]
 })

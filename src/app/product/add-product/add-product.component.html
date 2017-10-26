@@ -11,10 +11,10 @@
 			<div class="search-container">
 				<span class="help-text">To start selling, just enter a barcode (e.g 1234667890123) without spaces or dashes into the box below</span>
 
-				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" (keyup)="searchTerm.next($event.target.value)" ngModel>
+				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" autocomplete="off" (keyup)="sizeFilter$.next($event.target.value)" ngModel>
 
 				<ul *ngIf="results && !product" class="results">
-					<li *ngFor="let result of results | slice:0:9" (click)="getProductByName(result.details.product_name)">{{result.details.product_name}}</li>
+					<li *ngFor="let result of results | slice:0:9" (click)="getProductByName(result.details.product_name)">{{result.id}}</li>
 				</ul>
 
 				<a class="help-link">Need Help?</a>
@@ -29,15 +29,15 @@
 		</div>
 	</div>
 
-	<div class="product-info row" *ngIf="product && !searching">
+	<div class="product-info row" *ngIf="product | async; let products">
 			
 		<div class="product" *ngIf="product && !searching">
-			<div class="col-12 col-md-4">
-				<img [src]="product.images[0]">
+			<div class="col-12 col-md-4 image-container">
+				<img [src]="">
 			</div>
 
-			<div class="product-details col-12 col-md-8">
-				<h5 class="product-name">{{product.details.product_name}}</h5>
+			<div class="product-details col-12 col-md-8" *ngFor="let prod of products">
+				<h5 class="product-name">{{prod.id}}</h5>
 				
 				<div class="condition-container" *ngIf="productType != 'dvd'">
 					<span class="condition-text">Please select item condition</span>
@@ -47,9 +47,46 @@
 						<md-radio-button class="value" value="poor">Poor</md-radio-button>		
 						<md-radio-button class="value" value="faulty">Faulty</md-radio-button>		
 					</md-radio-group>
+
+					<div class="condition-description">
+						<div class="good" *ngIf="condition === 'good'">
+							<span class="sec-header">Don’t have a charger, accessories or the original box? Don’t worry: we’ll still buy your phone and the price won’t be affected!</span>
+
+							<ul>
+								<li>Fully functional and complete with working system software..</li>
+								<li>Turns on and off with working LCD</li>
+								<li>All buttons work</li>
+								<li>All features work e.g. touchscreen, Wi-Fi, camera, video etc</li>
+								<li>Complete with back cover and battery</li>
+								<li>No more than light wear and tear, no cracks, water damage or damage to screen</li>
+							</ul>
+						</div>
+
+						<div class="poor" *ngIf="condition === 'poor'">
+							<span class="sec-header">3 or more of the below faults render it Faulty</span>
+							
+							<ul>
+								<li>Fully functional - all parts inc. system software</li>
+								<li>Heavy wear and tear / scratches</li>
+								<li>Liquid damage indicator triggered</li>
+							</ul>
+						</div>
+
+						<div class="faulty" *ngIf="condition === 'faulty'">
+							<span class="sec-header">Each device should:</span>
+
+							<ul>
+								<li>Include its battery</li>
+								<li>Be intact - not bent, crushed or snapped in half</li>
+								<li>Not have any missing parts or components</li>
+								<li>Be removed from Find My iPhone (not activation locked)</li>
+								<li>Examples of faulty phones: Broken / bleeding LCD, water damaged, no power up, blank LCD etc.</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 				<div>
-					<span>We'll pay you: </span> <span class="payout">x amount</span>
+					<span>We'll pay you: </span> <span class="payout">${{ prod.price }}</span>
 				</div>
 
 				<button class="btn add-to-cart" (click)="addToCart(product)">ADD TO CART</button>
