@@ -6,7 +6,7 @@
 			 
 				<div class="item" *ngFor="let item of cartItems">
 					<div class="item-info">
-						<span>{{item.id}} <i>(Condition: {{item.condition}})</i></span>
+						<span>{{item.id}} <i *ngIf="item.condition">(Condition: {{item.condition}})</i></span>
 						<span>${{item.price}}</span>
 					</div>
 
@@ -28,6 +28,10 @@
 
 	<div class="payment-method">
 		<span class="text" id="text">Pay me with</span>
+
+		<div class="getting-rates" *ngIf="!rates">
+			<md-spinner></md-spinner>
+		</div>
 
 		<md-radio-group class="payment-options" [(ngModel)]="currency" *ngIf="rates">
 			<div class="cash">
@@ -63,7 +67,17 @@
 			</div>
 		</md-radio-group>
 
-		<button class="btn" (click)="createOrder()">Place Order</button>
+		<div class="error-message">
+			<div *ngIf="itemPrice < 5">
+				Please note that we cannot process orders less than $5
+			</div>
+
+			<div *ngIf="!currency">
+				Please select payment method
+			</div>
+		</div>
+
+		<button class="btn" [disabled]="itemPrice < 5 || !currency" (click)="createOrder()">Place Order</button>
 	</div>
 
 </div>

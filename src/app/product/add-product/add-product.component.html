@@ -1,7 +1,7 @@
 <div class="add-product">
 	<div class="con">
 
-		<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+		<form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value);">
 			<nav class="nav">
 			  <a class="nav-link" [class.active]="productType === 'dvd'" (click)="setType('dvd')">DVDs, Blu-Rays, CDs</a>
 			  <a class="nav-link" [class.active]="productType === 'cell-phone'" (click)="setType('cell-phone')">Cell Phones</a>
@@ -11,15 +11,16 @@
 			<div class="search-container">
 				<span class="help-text">To start selling, just enter a barcode (e.g 1234667890123) without spaces or dashes into the box below</span>
 
-				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" autocomplete="off" (keyup)="sizeFilter$.next($event.target.value)" ngModel>
-
-				<ul *ngIf="results && !product" class="results">
-					<li *ngFor="let result of results | slice:0:9" (click)="getProductByName(result.details.product_name)">{{result.id}}</li>
+				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" autocomplete="off" (keyup)="colorFilter$.next(null);sizeFilter$.next($event.target.value)" [formControl]="searchForm.controls['search']">
+			
+				<ul [hidden]="searchForm.controls['search'].pristine" *ngIf="product | async; let prods" class="results">
+					<li *ngFor="let result of prods | slice:0:9" (click)="searchByClick(result.id, result.condition)">{{result.id}}<i *ngIf="result.condition">(Condition: {{result.condition}})</i></li>
 				</ul>
+			
 
 				<a class="help-link">Need Help?</a>
 
-				<a class="btn search-btn" (click)="onSubmit(f.value)"  [class.disabled]="productType === 'empty'">SEARCH</a>
+				<a class="btn search-btn" (click)="onSubmit(searchForm.value);"  [class.disabled]="productType === 'empty'">SEARCH</a>
 			</div>
 
 		</form>
@@ -36,7 +37,7 @@
 				<img [src]="prod.imageUrl">
 			</div>
 
-			<div class="product-details col-12 col-md-8" *ngIf="product">
+			<div class="product-details col-12 col-md-8" *ngIf="product && products.length == 1">
 				<h5 class="product-name">{{prod.id}}</h5>
 				
 				<div class="condition-container" *ngIf="productType != 'dvd'">
@@ -91,6 +92,10 @@
 
 				<button class="btn add-to-cart" (click)="addToCart(prod)">ADD TO CART</button>
 			</div>
+		</div>
+
+		<div *ngIf="products.length == 0">
+			No products meet your search criteria, please review your search or try another
 		</div>
 	</div>
 

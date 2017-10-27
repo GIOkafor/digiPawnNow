@@ -48,12 +48,21 @@
 	    	font-weight: bold;
 	    }
 
+	    .getting-rates{
+	    	text-align: center;
+	    }
+
 	    .payment-options{
 	    	display: flex;
 
 	    	.amount-div{
 	    		padding-bottom: 0px;
 	    	}
+	    }
+
+	    .error-message{
+	    	text-align: center;
+	    	padding-top: 20px;
 	    }
 
 	    .btn{

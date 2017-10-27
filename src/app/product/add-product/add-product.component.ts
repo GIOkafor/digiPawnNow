@@ -13,6 +13,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import * as firebase from 'firebase';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add-product',
@@ -29,6 +30,9 @@ export class AddProductComponent implements OnInit {
   searchTerm = new Subject<string>();
   results: Object;
 
+  //search form
+  searchForm: FormGroup;
+
   //debug stuff
   items$: Observable<any>;
   sizeFilter$: BehaviorSubject<string|null>;
@@ -38,7 +42,8 @@ export class AddProductComponent implements OnInit {
     private productService: ProductService,
     private cart: CartService,
     private route: ActivatedRoute,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private fb: FormBuilder
     ) { 
       this.productService.search(this.searchTerm)
         .subscribe(results => {
@@ -61,6 +66,10 @@ export class AddProductComponent implements OnInit {
         }).valueChanges()
       );
     */
+
+    this.searchForm = fb.group({
+      'search': ['']
+    });
   }
 
   ngOnInit() {
@@ -101,15 +110,18 @@ export class AddProductComponent implements OnInit {
   }
 
   searchDb(upc){
-   this.sizeFilter$.next(upc); 
+   this.sizeFilter$.next(upc);
+   this.searchForm.reset(); 
   }
 
   searchElectronics(item){
     this.sizeFilter$.next(item); 
+    this.searchForm.reset();
   }
 
   searchCellPhones(item){
-    this.sizeFilter$.next(item); 
+    this.sizeFilter$.next(item);
+    this.searchForm.reset();
   }
 
   searchCondition(condition){
@@ -121,13 +133,20 @@ export class AddProductComponent implements OnInit {
     this.colorFilter$.next(condition);
   }
 
+  //triggered by clicking on name in search suggestion list
+  searchByClick(id, condition){
+    this.sizeFilter$.next(id);
+    this.colorFilter$.next(condition);
+    this.searchForm.reset();
+  }
+
   //debug code
   showDetails(){
     console.log("Product is: "+this.product.details.product_name);
   }
 
   onSubmit(val){
-  	console.log(val.search);
+  	console.log(val);
     this.search_complete = true;
 
     if(this.productType == 'dvd')
@@ -144,6 +163,9 @@ export class AddProductComponent implements OnInit {
 
   setType(val){
     this.productType = val;
+
+    //reset condition filter
+    this.colorFilter$.next(null);
 
     if(val == "electronics")
       this.setElectronics();
@@ -198,13 +220,7 @@ export class AddProductComponent implements OnInit {
   addToCart(item){
     this.cart.addToCart(item);
 
-    this.searchCondition(null);
-
-    if(this.productType == 'dvd')
-      this.searchDb(null);
-    else if(this.productType == 'electronics')
-      this.searchElectronics(null);
-    else if(this.productType == 'cell-phone')
-      this.searchCellPhones(null);
+    this.colorFilter$.next(null);
+    this.sizeFilter$.next(null);
   }
 }
