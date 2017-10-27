@@ -23,6 +23,7 @@ export class AddProductComponent implements OnInit {
 
   product: any;
   searching: boolean = false;
+  search_complete: boolean = false;
   productType: string = 'empty';
   condition: string = '';
   searchTerm = new Subject<string>();
@@ -111,6 +112,15 @@ export class AddProductComponent implements OnInit {
     this.sizeFilter$.next(item); 
   }
 
+  searchCondition(condition){
+    /*
+    var url = 'pricing/categories/' + this.productType;
+
+    this.product = this.afs.collection(url, ref => ref.where('id', '==', item).where('condition', '==', condition)).valueChanges();
+    */
+    this.colorFilter$.next(condition);
+  }
+
   //debug code
   showDetails(){
     console.log("Product is: "+this.product.details.product_name);
@@ -118,6 +128,7 @@ export class AddProductComponent implements OnInit {
 
   onSubmit(val){
   	console.log(val.search);
+    this.search_complete = true;
 
     if(this.productType == 'dvd')
   	  this.searchDb(val.search);
@@ -146,11 +157,11 @@ export class AddProductComponent implements OnInit {
     this.product = Observable.combineLatest(
       this.sizeFilter$,
       this.colorFilter$
-    ).switchMap(([id, color]) => 
+    ).switchMap(([id, condition]) => 
       this.afs.collection('pricing/categories/electronics', ref => {
         let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
         if (id) { query = query.where('id', '==', id) };
-        if (color) { query = query.where('color', '==', color) };
+        if (condition) { query = query.where('condition', '==', condition) };
         return query;
       }).valueChanges()
     );
@@ -160,11 +171,11 @@ export class AddProductComponent implements OnInit {
     this.product = Observable.combineLatest(
       this.sizeFilter$,
       this.colorFilter$
-    ).switchMap(([id, color]) => 
+    ).switchMap(([id, condition]) => 
       this.afs.collection('pricing/categories/cellphones', ref => {
         let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
         if (id) { query = query.where('id', '==', id) };
-        if (color) { query = query.where('color', '==', color) };
+        if (condition) { query = query.where('condition', '==', condition) };
         return query;
       }).valueChanges()
     );
@@ -186,5 +197,14 @@ export class AddProductComponent implements OnInit {
 
   addToCart(item){
     this.cart.addToCart(item);
+
+    this.searchCondition(null);
+
+    if(this.productType == 'dvd')
+      this.searchDb(null);
+    else if(this.productType == 'electronics')
+      this.searchElectronics(null);
+    else if(this.productType == 'cell-phone')
+      this.searchCellPhones(null);
   }
 }

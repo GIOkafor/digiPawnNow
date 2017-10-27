@@ -28,7 +28,7 @@ export class OrderComponent implements OnInit {
 
     //temporarily set item price to $1 
     //in future check list of set prices by admin
-    this.itemPrice = 1;
+    this.getCartValue();
 
     //start interval loop for constantly getting values
     this.constGetRates();
@@ -62,7 +62,16 @@ export class OrderComponent implements OnInit {
     console.log("Currency selected is: "+ orderDetails.payment.currency);
   	console.log("Currency value is: "+ orderDetails.payment.value);
   }
-  
+
+  getCartValue(){
+    var cartTotal = 0;
+
+    for (var i = this.cartItems.length - 1; i >= 0; i--) {
+      cartTotal = cartTotal + this.cartItems[i].price;
+    }
+
+    this.itemPrice = cartTotal;
+  }
 
   //get cart items -- not used atm because cart contents are already 
   // gotten on initialize but there just in case
@@ -73,6 +82,7 @@ export class OrderComponent implements OnInit {
   //remove item from cart
   remove(item){
   	this.cart.remove(item);
+    this.getCartValue();
   }
 
   //format order object and save details to database under user uid

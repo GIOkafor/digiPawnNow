@@ -73,22 +73,24 @@ export class PricingDatabaseService {
   addCellPhone(item){
 	  	console.log(item);
 
-	  	let obj = {id: '', price: '', condition: ''};
+	  	let obj = {id: '', price: '', condition: '', imageUrl: ''};
 
 	  	obj.id = item[0];
 	  	obj.price = item[2];
 	  	obj.condition = item[3];
+	  	obj.imageUrl = item[4];
 
 	  	this.categoriesCollection.collection('cellphones').add(obj);
 
   }
 
   addElectronic(item){
-	  	let obj = {id: '', price: '', condition: ''};
+	  	let obj = {id: '', price: '', condition: '', imageUrl: ''};
 
 	  	obj.id = item[0];
 	  	obj.price = item[2];
 	  	obj.condition = item[3];
+	  	obj.imageUrl = item[4];
 
 	  	this.categoriesCollection.collection('electronics').add(obj);
   }

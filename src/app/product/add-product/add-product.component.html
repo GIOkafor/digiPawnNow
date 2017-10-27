@@ -31,29 +31,29 @@
 
 	<div class="product-info row" *ngIf="product | async; let products">
 			
-		<div class="product" *ngIf="product && !searching">
-			<div class="col-12 col-md-4 image-container">
-				<img [src]="">
+		<div class="product" *ngFor="let prod of products">
+			<div class="col-12 col-md-4 image-container" *ngIf="product && products.length == 1">
+				<img [src]="prod.imageUrl">
 			</div>
 
-			<div class="product-details col-12 col-md-8" *ngFor="let prod of products">
+			<div class="product-details col-12 col-md-8" *ngIf="product">
 				<h5 class="product-name">{{prod.id}}</h5>
 				
 				<div class="condition-container" *ngIf="productType != 'dvd'">
 					<span class="condition-text">Please select item condition</span>
 
-					<md-radio-group class="condition" [(ngModel)]="condition">
-						<md-radio-button class="value" value="good">Good</md-radio-button>		
-						<md-radio-button class="value" value="poor">Poor</md-radio-button>		
-						<md-radio-button class="value" value="faulty">Faulty</md-radio-button>		
+					<md-radio-group class="condition" [(ngModel)]="prod.condition">
+						<md-radio-button class="value" value="good" (click)="searchCondition('good')">Good</md-radio-button>		
+						<md-radio-button class="value" value="poor" (click)="searchCondition('poor')">Poor</md-radio-button>		
+						<md-radio-button class="value" value="faulty" (click)="searchCondition('faulty')">Faulty</md-radio-button>		
 					</md-radio-group>
 
 					<div class="condition-description">
-						<div class="good" *ngIf="condition === 'good'">
+						<div class="good" *ngIf="prod.condition === 'good'">
 							<span class="sec-header">Don’t have a charger, accessories or the original box? Don’t worry: we’ll still buy your phone and the price won’t be affected!</span>
 
 							<ul>
-								<li>Fully functional and complete with working system software..</li>
+								<li>Fully functional and complete with working system software</li>
 								<li>Turns on and off with working LCD</li>
 								<li>All buttons work</li>
 								<li>All features work e.g. touchscreen, Wi-Fi, camera, video etc</li>
@@ -62,7 +62,7 @@
 							</ul>
 						</div>
 
-						<div class="poor" *ngIf="condition === 'poor'">
+						<div class="poor" *ngIf="prod.condition === 'poor'">
 							<span class="sec-header">3 or more of the below faults render it Faulty</span>
 							
 							<ul>
@@ -72,7 +72,7 @@
 							</ul>
 						</div>
 
-						<div class="faulty" *ngIf="condition === 'faulty'">
+						<div class="faulty" *ngIf="prod.condition === 'faulty'">
 							<span class="sec-header">Each device should:</span>
 
 							<ul>
@@ -89,16 +89,18 @@
 					<span>We'll pay you: </span> <span class="payout">${{ prod.price }}</span>
 				</div>
 
-				<button class="btn add-to-cart" (click)="addToCart(product)">ADD TO CART</button>
+				<button class="btn add-to-cart" (click)="addToCart(prod)">ADD TO CART</button>
 			</div>
 		</div>
 	</div>
 
+	<!-- 
 	<div class="steps" *ngIf="!product && !searching">
 		<span>4 Easy Steps</span>
 
 		<img src="assets/steps.png">
 	</div>
+  	-->
 </div>
 
 <router-outlet></router-outlet>

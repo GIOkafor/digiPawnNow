@@ -35,7 +35,7 @@ export class AdminDatabaseComponent implements OnInit {
   		
   		//this only gets called if user hits the save button
   		if(res != undefined){
-  			if(res[4] == true)
+  			if(res[5] == true)
   				this.add(category, res);//add(category, item)
   		}
   	});

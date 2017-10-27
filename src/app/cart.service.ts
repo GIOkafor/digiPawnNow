@@ -20,7 +20,7 @@ export class CartService {
   }
 
   addToCart(item){
-  	console.log("Adding this item: " + item.details.product_name + " to shopping cart");
+  	console.log("Adding this item: " + item.id + " to shopping cart");
   	this.items.push(item);
   	this.openOrderDialog();
     //this.redirect();//change to dialog open

@@ -14,16 +14,21 @@
 
 		<div class="form-group">
 			<label>Price</label>
-			<input type="text" name="price" [(ngModel)]="price" required>
+			<input type="number" name="price" [(ngModel)]="price" required>
 		</div>
 
 		<div class="form-group" *ngIf="type">
 			<label>Condition</label>
-			<input type="text" name="condition" [(ngModel)]="condition" required>
+			<input type="text" name="condition" placeholder="good, poor or faulty" [(ngModel)]="condition" required>
+		</div>
+
+		<div class="form-group" *ngIf="type">
+			<label>Image URL</label>
+			<input type="text" name="image-url" [(ngModel)]="imageUrl" required>
 		</div>
 
 		<div class="save-button-container">
-			<button class="btn" (click)="saveItem([productName, upcCode, price, condition, true])" [disabled]="!f.form.valid">SAVE</button>
+			<button class="btn" (click)="saveItem([productName, upcCode, price, condition, imageUrl, true])" [disabled]="!f.form.valid">SAVE</button>
 		</div>
 	</form>
 </div>

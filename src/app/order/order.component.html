@@ -6,8 +6,8 @@
 			 
 				<div class="item" *ngFor="let item of cartItems">
 					<div class="item-info">
-						<span>{{item.details.product_name}}</span>
-						<span>$1.00</span>
+						<span>{{item.id}} <i>(Condition: {{item.condition}})</i></span>
+						<span>${{item.price}}</span>
 					</div>
 
 					<i class="fa fa-times fa-lg" aria-hidden="true" (click)="remove(item)"></i>
