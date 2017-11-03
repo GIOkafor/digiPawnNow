@@ -1,0 +1,36 @@
+<div class="chat-details-component">
+	<div class="container">
+		<div *ngFor="let msg of messages|async">
+
+			<div *ngIf="msg.from === 'admin'" class="speech-bubble me-speech-bubble">
+				<div class="message">
+					{{msg.message}}
+				</div>
+
+				<div class="message-time">
+					{{msg.timeSent | date:'shortTime'}}
+				</div>
+			</div>
+
+			<div *ngIf="msg.from !== 'admin'" class="speech-bubble other-speech-bubble">
+				<div class="message">
+					{{msg.message}}
+				</div>
+
+				<div class="message-time">
+					{{msg.timeSent | date:'shortTime'}}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="chatbox-container">
+		<form #msgForm="ngForm" (ngSubmit)="sendMessage(msgForm.value);msgForm.reset();" class="chatbox">
+			<input type="text" name="message" ngModel required>
+			<button type="submit" class="btn" [disabled]="msgForm.invalid">
+				<i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+		</form>
+	</div>
+	
+</div>

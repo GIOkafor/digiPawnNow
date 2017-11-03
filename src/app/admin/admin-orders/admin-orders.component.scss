@@ -6,6 +6,13 @@
     	.order-info{
     	    background-color: #ebebeb;
     		padding: 10px;
+    		margin-bottom: 10px;
+
+    		.row1, .order-details{
+    		    display: flex;
+    			justify-content: space-between;
+    			align-items: center;
+    		}
     	}
 	}
 }

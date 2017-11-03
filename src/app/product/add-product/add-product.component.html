@@ -3,13 +3,17 @@
 
 		<form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value);">
 			<nav class="nav">
+		<!--
 			  <a class="nav-link" [class.active]="productType === 'dvd'" (click)="setType('dvd')">DVDs, Blu-Rays, CDs</a>
+		-->
 			  <a class="nav-link" [class.active]="productType === 'cell-phone'" (click)="setType('cell-phone')">Cell Phones</a>
 			  <a class="nav-link" [class.active]="productType === 'electronics'" (click)="setType('electronics')">Electronics</a>
 			</nav>
 
 			<div class="search-container">
-				<span class="help-text">To start selling, just enter a barcode (e.g 1234667890123) without spaces or dashes into the box below</span>
+				<span class="help-text" *ngIf="productType === 'dvd'">To start selling, just enter a barcode (e.g 1234667890123) without spaces or dashes into the box below</span>
+
+				<span class="help-text" *ngIf="productType === 'cell-phone' || productType === 'electronics'">To start selling, just enter product name without spaces or dashes into the box below</span>
 
 				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" autocomplete="off" (keyup)="colorFilter$.next(null);sizeFilter$.next($event.target.value)" [formControl]="searchForm.controls['search']">
 			

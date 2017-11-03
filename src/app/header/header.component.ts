@@ -14,6 +14,7 @@ import * as firebase from 'firebase/app';
 export class HeaderComponent implements OnInit {
 
 	user: Observable<firebase.User>;
+  cartContents: any;
 
   constructor(
   	private router: Router,
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   	private auth: AuthenticationService,
     private cartService: CartService) { 
   		this.user = afAuth.authState;
+      this.cartContents = cartService.items;
   }
 
   ngOnInit() {
@@ -28,7 +30,7 @@ export class HeaderComponent implements OnInit {
   }
 
   redirect(){
-  	this.router.navigate(['home/sell-item', 'dvd']);
+  	this.router.navigate(['home/sell-item', 'cell-phone']);
   }
 
   logout(){

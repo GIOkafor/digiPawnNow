@@ -1,26 +1,50 @@
-<div class="container orders-component">
+<div class="orders-component">
 	
 	<!-- Repeat for all orders --> 
-	<div class="row">
-		<div class="col-12 col-md-4">
-			<img src="//img03.static-nextag.com/image/Bethesda_Softworks_Fallout_4/10/000/074/819/500/7481950083.jpg">
-		</div>
+	<div class="orders" *ngIf="items$ | async; let orders; else loading">
+		<div class="order-container" *ngFor="let order of orders">
 
-		<div class="col-12 col-md-8 order-info-container">
-			<span class="order-name">Avatar Blu-Ray + DVD</span>
+			<div class="row1">
+				
+				<span>{{order.payload.val().dateCreated | date: 'shortDate'}}</span>
 
-			<div class="condition">
-				<span id="text">Item condition</span>
-				<md-radio-button id="value">Good</md-radio-button>
+				<span>{{order.payload.val().status}}</span>
+
+				<button class="btn print-shipping-label" (click)="printShippingLabel();">Print Shipping Label</button>
+			</div>
+
+			
+			<div class="row2" *ngFor="let orderItem of order.payload.val().orderItems">
+				<img [src]="orderItem.imageUrl">
+
+				<span class="order-name">{{orderItem.id}}</span>
+
+				<span class="item-price">${{orderItem.price}}</span>
 			</div>
 
 			<div class="payment-method">
-				<span id="text">Payment Method</span>
-				<md-radio-button id="value">$1.00</md-radio-button>
-				<span id="text">Cash</span>
+				<span id="text">Total Value</span>
+				
+				<span class="value" *ngIf="order.payload.val().payment.currency === 'USD'">${{order.payload.val().payment.value}}</span>
+				<span class="value" *ngIf="order.payload.val().payment.currency === 'BTC'">BTC{{order.payload.val().payment.value}}</span>
+				<span class="value" *ngIf="order.payload.val().payment.currency === 'ETH'">ETH{{order.payload.val().payment.value}}</span>
+				<span class="value" *ngIf="order.payload.val().payment.currency === 'LTC'">LTC{{order.payload.val().payment.value}}</span>
 			</div>
 
-			<button class="btn" (click)="getOrders()">Print Shipping Label</button>
+		</div>
+
+		<div *ngIf="orders.length === 0">
+			<p>You currently have no existing orders, to create one head to the selling page</p>
 		</div>
 	</div>
+
+
+<!--
+	Debug code
+	<div *ngIf="items$ | async; let orders">
+		<span>{{orders | json}}</span>
+	</div>
+
+	<button class="btn"(click)="filterBy();">Filter</button>
+-->
 </div>

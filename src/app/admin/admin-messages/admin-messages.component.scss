@@ -1,0 +1,35 @@
+.admin-messages{
+	.message-summary-container{
+		padding: 15px 20px;
+	    background-color: #ebebeb;
+	    margin-top: 30px;
+	}
+
+	.name-and-date{
+		display: flex;
+    	justify-content: space-between;
+	}
+
+	.sender-name{
+		font-weight: 600;
+	}
+
+	.time{
+		font-size: 13px;
+	}
+
+	.message-summary{
+		cursor: pointer;
+	}
+
+	.message-and-cta{
+		display: flex;
+    	justify-content: space-between;
+
+    	.btn{
+    	    background-color: #176799;
+    		color: #fff;
+    		cursor: pointer;
+    	}
+	}
+}

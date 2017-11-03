@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MessagingService } from '../../services/messaging.service';
+import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
+import { MessagingRTDBService } from '../../services/messaging-rtdb.service';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-messages',
@@ -9,14 +10,45 @@ import { Observable } from 'rxjs/Observable';
 })
 export class AdminMessagesComponent implements OnInit {
 
-	messages: any[];
+	messages$: any[];
 
   constructor(
-  	private msgService: MessagingService) { 
-  		this.messages = msgService.getMessage();
+  	private msgService: MessagingRTDBService,
+    private router: Router) { 
+  		this.messages$ = msgService.allMessages;
   }
 
   ngOnInit() {
   }
 
+  getThreadDetails(msg){
+    
+    var senderUID = this.findSenderUID(msg);
+
+    //console.log("Sender uid is: ", senderUID);
+
+    var url = '/admin/chat-details/' + senderUID;
+
+    this.router.navigate([url]);
+  }
+
+
+  //loop through object and find 'from' value that isn't admin
+  findSenderUID(obj){
+    for (let key in obj){
+      if(obj[key].from !== 'admin')
+        return (obj[key].from);
+    }
+  }
+}
+
+@Pipe({name: 'keys'})
+export class KeysPipe implements PipeTransform {
+  transform(value, args:string[]) : any {
+    let keys = [];
+    for (let key in value) {
+      keys.push(value[key]);
+    }
+    return keys;
+  }
 }

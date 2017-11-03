@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../dashboard/orders/orders.service';
 import { PaymentService } from '../services/payment.service';
+import { AuthenticationService } from '../auth/authentication.service';
 
 @Component({
   selector: 'app-order',
@@ -17,9 +18,11 @@ export class OrderComponent implements OnInit {
   itemPrice: any; //listed price for particular item (in USD) set by admin
   checkingRates: any; //variable for starting and stopping rate checking
 	
-  constructor(private cart: CartService,
+  constructor(
+        private cart: CartService,
   			private orders: OrdersService,
-        private pay: PaymentService) { 
+        private pay: PaymentService,
+        private auth: AuthenticationService) { 
   	//on initialize get cart contents
   	this.cartItems = this.cart.getCart();
 
@@ -87,6 +90,11 @@ export class OrderComponent implements OnInit {
 
   //format order object and save details to database under user uid
   createOrder(){
+    var uid = this.auth.getUserUid();
+
+    var date = new Date();
+    console.log("Date is: "+date);
+
     var tempVal;
 
     this.getRates()
@@ -98,6 +106,9 @@ export class OrderComponent implements OnInit {
           tempVal = this.getConversionRate(this.currency);
 
         var orderDetails = {
+          uid: uid,
+          dateCreated: date.getTime(),
+          status: 'unpaid',
           orderItems: this.cartItems, 
           payment: {
             currency: this.currency,

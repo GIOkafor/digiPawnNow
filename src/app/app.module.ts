@@ -40,6 +40,13 @@ import { UserComponent } from './user/user.component';
 import { AddNewItemDialog, EditItemDialog } from './admin/admin-database/admin-database.component';
 import { ConfirmDeleteDialog } from './admin/admin-database/confirm-delete-dialog.component';
 import { MessagingService } from './services/messaging.service';
+import { BasicComponent } from './dashboard/settings/basic/basic.component';
+import { PaymentComponent } from './dashboard/settings/payment/payment.component';
+import { DisableControlDirective } from './dashboard/settings/payment/payment.component';
+import { ChatComponent } from './chat/chat.component';
+import { MessagingRTDBService } from './services/messaging-rtdb.service';
+import { ChatDetailsComponent } from './admin/admin-messages/chat-details/chat-details.component';
+import { KeysPipe } from './admin/admin-messages/admin-messages.component';
 
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
@@ -48,6 +55,7 @@ const routes: Routes = [
     { path: 'orders', component: AdminOrdersComponent },
     { path: 'payments', component: AdminPaymentsComponent },
     { path: 'messages', component: AdminMessagesComponent },
+    {path: 'chat-details/:id', component: ChatDetailsComponent},
     { path: 'database', component: AdminDatabaseComponent },
     { path: '', redirectTo: '/admin/orders', pathMatch: 'full'}
   ]},
@@ -58,10 +66,15 @@ const routes: Routes = [
     {path: '', component: AddProductComponent},
     {path: 'dashboard', component: DashboardComponent, children: [
       {path: 'orders', component: OrdersComponent},
-      {path: 'settings', component: SettingsComponent},
+      {path: 'settings', component: SettingsComponent, children: [
+        {path: 'basic', component: BasicComponent},
+        {path: 'payment', component: PaymentComponent},
+        {path: '', redirectTo: '/home/dashboard/settings/basic', pathMatch: 'full'}
+      ]},
       {path: '', redirectTo: '/home/dashboard/orders', pathMatch: 'full'}
     ]},
-  	{path: 'sell-item/:id', component: AddProductComponent}
+  	{path: 'sell-item/:id', component: AddProductComponent},
+    {path: 'contact', component: ChatComponent}
   ]},
 
 	{path: '', redirectTo: '/welcome', pathMatch: 'full'}
@@ -88,7 +101,13 @@ const routes: Routes = [
     UserComponent,
     AddNewItemDialog,
     EditItemDialog,
-    ConfirmDeleteDialog
+    ConfirmDeleteDialog,
+    BasicComponent,
+    PaymentComponent,
+    DisableControlDirective,
+    ChatComponent,
+    ChatDetailsComponent,
+    KeysPipe
   ],
   entryComponents: [
   	ErrorComponent,
@@ -123,7 +142,8 @@ const routes: Routes = [
     PaymentService,
     AdminOrdersService,
     PricingDatabaseService,
-    MessagingService
+    MessagingService,
+    MessagingRTDBService
   ],
   bootstrap: [AppComponent]
 })

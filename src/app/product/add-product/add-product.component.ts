@@ -80,7 +80,7 @@ export class AddProductComponent implements OnInit {
 
     //check if productType is default
     if(this.productType == null)
-      this.productType = 'dvd';
+      this.productType = 'cell-phone';
 
     this.setType(this.productType);
   }

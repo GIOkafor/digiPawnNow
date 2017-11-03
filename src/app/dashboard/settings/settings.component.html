@@ -1,3 +1,8 @@
-<p>
-  settings works!
-</p>
+<div class="user-settings">
+	<div class="section-nav container">
+		<a routerLinkActive="active" class="link" routerLink="/home/dashboard/settings/basic">Basic</a>
+		<a routerLinkActive="active" class="link" routerLink="/home/dashboard/settings/payment">Payment</a>
+	</div>
+
+	<router-outlet></router-outlet>
+</div>

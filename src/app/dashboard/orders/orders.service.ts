@@ -27,20 +27,33 @@ export class OrdersService {
   	console.log(this.userLoc);
   }
 
-//Create binding to user portion of db
+//Get all orders from db
   getOrders(){
-  	this.orders = this.db.list(this.auth.getUserUid() + "/orders");
-    //console.log(this.orders);
+  	return this.db.list('/orders').snapshotChanges();
+  }
+
+  //gets a particular user's orders
+  getUserOrders(){
+    var uid = localStorage.getItem('currentUserUID');
+    console.log("getting order for user with uid: "+ uid);
+    return this.db.list('/orders/', ref => ref.orderByKey().equalTo(uid));
   }
 
   createOrder(orderItems){
-    this.getOrders();
+
+    this.orders = this.db.list("/orders/");
+    
     this.orders.push(orderItems)
       .then(_=> {
+        //clear cart contents
         this.cart.clearAll();
+
+        //close cart dialog
         this.cart.closeDialog();
+
+        //show notification
         this.snackBar.open('Order created successfully', '', {duration: 3000});
-        this.router.navigate(['dashboard/orders']);
+        this.router.navigate(['home/dashboard/orders']);
       });
   }
 }

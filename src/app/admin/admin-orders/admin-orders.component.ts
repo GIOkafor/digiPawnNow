@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminOrdersService } from '../services/orders.service';
+//import { AdminOrdersService } from '../services/orders.service';
+import { OrdersService } from '../../dashboard/orders/orders.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -8,12 +9,20 @@ import { AdminOrdersService } from '../services/orders.service';
 })
 export class AdminOrdersComponent implements OnInit {
 	orders: any;
+	showIndex: any;
 
-  constructor(private ordersService: AdminOrdersService) { 
+  constructor(private ordersService: OrdersService) { 
   	this.orders = ordersService.getOrders();
   }
 
   ngOnInit() {
+  }
+
+//show hidden section in div
+  getOrder(order){
+  	//do something
+  	console.log(order);
+  	this.showIndex = order;
   }
 
 }

@@ -52,7 +52,7 @@
 
 			<div class="litecoin">
 				<div class="amount-div">
-					<md-radio-button value="LTC">LTC {{ itemPrice * rates.LTC }}</md-radio-button>
+					<md-radio-button value="LTC">LTC {{ itemPrice * rates.LTC | number }}</md-radio-button>
 				</div>
 
 				<span id="text">Litecoin</span>
@@ -60,7 +60,7 @@
 
 			<div class="ethereum">
 				<div class="amount-div">
-					<md-radio-button value="ETH">ETH {{ itemPrice * rates.ETH }}</md-radio-button>
+					<md-radio-button value="ETH">ETH {{ itemPrice * rates.ETH | number }}</md-radio-button>
 				</div>
 
 				<span id="text">Ethereum</span>
@@ -69,7 +69,7 @@
 
 		<div class="error-message">
 			<div *ngIf="itemPrice < 5">
-				Please note that we cannot process orders less than $5
+				We can only process orders with a total value of at least $5
 			</div>
 
 			<div *ngIf="!currency">

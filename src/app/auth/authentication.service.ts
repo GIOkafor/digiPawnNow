@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 import { MdDialog } from '@angular/material';
 import { ErrorComponent } from './authenticate/error/error.component';
 import { Router } from '@angular/router';
+import { MdSnackBar } from '@angular/material';
 
 @Injectable()
 export class AuthenticationService {
@@ -17,7 +18,8 @@ export class AuthenticationService {
   	private afAuth: AngularFireAuth,
   	private db: AngularFireDatabase,
   	private router: Router,
-  	public dialog: MdDialog
+  	public dialog: MdDialog,
+    private snackBar: MdSnackBar
   	) { 
   		this.user = afAuth.auth.currentUser;
   		//this.profileInfo = db.object('/users');
@@ -28,7 +30,7 @@ export class AuthenticationService {
   		.then(_=> {
   			//add user info to profile
 
-        this.profileInfo = this.db.object(this.afAuth.auth.currentUser.uid);
+        this.profileInfo = this.db.object('/users/'+this.afAuth.auth.currentUser.uid);
   			this.profileInfo.set({userInfo: val});
 
         this.sendEmailVerification();
@@ -42,6 +44,8 @@ export class AuthenticationService {
   emailSignIn(email, password){
   	this.afAuth.auth.signInWithEmailAndPassword(email, password)
   		.then(_=> {
+        var uid = this.afAuth.auth.currentUser.uid;
+        localStorage.setItem('currentUserUID', uid);
         this.redirect();
       })
   		.catch(err => this.handleError(err.message));
@@ -78,7 +82,10 @@ export class AuthenticationService {
 
   logout(){
   	this.afAuth.auth.signOut()
-  		.then(_=> this.router.navigate(['/auth']));
+  		.then(_=> {
+        localStorage.removeItem('currentUserUID');
+        this.router.navigate(['/auth']);
+      });
   }
 
   redirect(){
@@ -102,8 +109,42 @@ export class AuthenticationService {
   }
 
   getUserUid(){
-    //console.log(this.afAuth.auth.currentUser.uid);
-    return this.afAuth.auth.currentUser.uid;
+    var uid = localStorage.getItem('currentUserUID');
+
+    return uid;
+  }
+
+  //searches db for user information
+  getUserInfo(uid){
+    return this.db.list('users/', ref => ref.orderByKey().equalTo(uid)).valueChanges();
+  }
+
+  updatePaymentSettings(val){
+    var uid = this.getUserUid();
+    var dbRef = this.db.object('users/' + uid + '/paymentInfo').update(val)
+      .then(_=> this.snackBar.open('Successfully updated your settings', '', {duration: 3000}));
+  }
+
+  updateUserPassword(val){
+    var currentUser = firebase.auth().currentUser;
+
+    currentUser.updatePassword(val.password)
+      .then(_=>{
+        this.updateUserSettings(val);
+      })
+      .catch(error=>{
+        console.log("Error ", error);
+        this.snackBar.open(error, '', {duration: 3000});
+      })
+  }
+
+  updateUserSettings(val){
+    var uid = this.getUserUid();
+
+    var dbRef = this.db.object('/users/'+ uid);
+    
+    dbRef.set({userInfo: val})
+      .then(_=> this.snackBar.open('Successfully updated your settings', '', {duration: 3000}));
   }
 
 }

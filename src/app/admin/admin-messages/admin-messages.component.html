@@ -1,4 +1,35 @@
 <div class="admin-messages">
-	
-	<span class="message" *ngFor="let msg of messages">{{msg | async}}</span>
+	<div *ngIf="messages$|async; let messages">
+	<!--
+		<div *ngFor="let msgs of messages">
+			<div *ngFor="let msg of msgs | keys">
+				{{msg | json}}
+			</div>
+		</div>
+	-->
+
+		<!-- Repeat this for each message -->
+		<div class="message-summary-container" *ngFor="let messageThread of messages">
+			
+			<!--{{messageThread.messages | json}}-->
+
+			<!-- Repeat this for each message in messages --> 
+			
+			<div class="message-summary" *ngFor="let msg of messageThread.messages | keys; let last = last" (click)="getThreadDetails(messageThread.messages)">
+
+				<div class="name-and-date" *ngIf="last">
+					<span class="sender-name">{{msg.from}}</span>
+					<span class="time">{{msg.timeSent | date: 'short'}}</span>
+				</div>
+
+				<div class="message-and-cta" *ngIf="last">
+					<span class="last-message">{{msg.message}}</span>
+					<button class="btn" (click)="getThreadDetails(messageThread.messages)">View Message</button>
+				</div>
+			</div>
+		
+		</div>
+
+	</div>
+
 </div>

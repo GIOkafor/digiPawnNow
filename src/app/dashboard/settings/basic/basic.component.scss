@@ -1,0 +1,29 @@
+.auth-forms{
+    padding: 20px;
+    background-color: #fff;
+
+    .form-group{
+    	display: flex;
+    	justify-content: space-between;
+
+    	span{
+    	    display: flex;
+		    flex-direction: column;
+		    text-align: start;
+    	}
+
+    	span#two-col{
+    		width: 48%;
+    	}
+    }
+
+    .form-group.single-col {
+	    flex-direction: column;
+	    text-align: start;
+	}
+
+	.btn{
+		background-color: #2076a2;
+		color: #fff;
+	}
+}

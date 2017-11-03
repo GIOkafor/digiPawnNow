@@ -17,9 +17,20 @@
 			<input type="number" name="price" [(ngModel)]="price" required>
 		</div>
 
+	<!--
 		<div class="form-group" *ngIf="type">
 			<label>Condition</label>
 			<input type="text" name="condition" placeholder="good, poor or faulty" [(ngModel)]="condition" required>
+		</div>
+	-->
+
+		<div class="form-group">
+			<label>Condition</label>
+			<select class="form-control" name="condition" [(ngModel)]="condition" required>
+				<option value="good">good</option>
+				<option value="poor">poor</option>
+				<option value="faulty">faulty</option>
+			</select>
 		</div>
 
 		<div class="form-group" *ngIf="type">

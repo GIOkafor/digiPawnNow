@@ -2,11 +2,14 @@
 	<img class="logo" src="assets/logo.jpg" routerLink='/welcome'/>
 
 	<div class="navigation">
-		<i class="fa fa-shopping-cart" aria-hidden="true" (click)="openCart()"></i>
+		<i *ngIf="(user | async)?.uid && cartContents.length == 0" class="fa fa-shopping-cart" aria-hidden="true" (click)="openCart()"></i>
+
+		<img class="cart-contents" (click)="openCart()" *ngIf="(user | async)?.uid && cartContents.length > 0" src="assets/cart-filled-image.png">
+
 		<a routerLink='/home/sell-item' routerLinkActive="active" (click)="redirect();">Sell Item(s)</a>
 		<a routerLink='/how-it-works' routerLinkActive="active">How It Works</a>
 		<a routerLink='/about' routerLinkActive="active">About</a>
-		<a routerLink='/contact' routerLinkActive="active">Contact</a>
+		<a *ngIf="(user | async)?.uid" routerLink='/home/contact' routerLinkActive="active">Contact</a>
 		<a *ngIf="!(user | async)?.uid" routerLink='/auth' routerLinkActive="active">Sign-up/Login</a>
 		<a *ngIf="(user | async)?.uid" routerLink='/home/dashboard' routerLinkActive="active">My Dashboard</a>
 		<a *ngIf="(user | async)?.uid" (click)="logout()" routerLink='/auth'>Logout</a>

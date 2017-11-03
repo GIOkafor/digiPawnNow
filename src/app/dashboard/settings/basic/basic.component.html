@@ -1,0 +1,167 @@
+<div class="container">
+	<div class="auth-forms">
+	<!--
+		<form class="newUser" #signUpForm="ngForm" (ngSubmit)="signUp(signUpForm.value);">
+
+			<div class="form-group name">
+				<span id="two-col">
+					<label>First Name</label>
+					<input type="text" name="first-name" ngModel>
+				</span>
+
+				<span id="two-col">
+					<label>Last Name</label>
+					<input type="text" name="last-name" ngModel>
+				</span>
+			</div>
+
+			<div class="form-group address">
+				<span id="two-col">
+					<label>Street Address</label>
+					<input type="text" name="street-address" ngModel>
+				</span>
+
+				<span id="two-col">
+					<label>Apt/Suite Number</label>
+					<input type="text" name="unit" ngModel>
+				</span>
+			</div>
+
+			<div class="form-group address">
+				<span>
+					<label>City</label>
+					<input type="text" name="city" ngModel>
+				</span>
+
+				<span>
+					<label>State</label>
+					<input type="text" name="state" ngModel>
+				</span>
+
+				<span>
+					<label>Zip Code</label>
+					<input type="text" name="zip" ngModel>
+				</span>
+			</div>
+
+			<div class="form-group">
+				<span id="two-col">
+					<label>D.O.B</label>
+					<input type="date" name="dateOfBirth" placeholder="D.O.B" ngModel>
+				</span>
+
+				<span id="two-col">
+					<label>Gender</label>
+					<input type="text" name="gender" ngModel>
+				</span>
+			</div>
+
+			<div class="form-group single-col">
+				<label>Phone #</label>
+				<input type="tel" name="phoneNumber" ngModel>
+			</div>
+
+			<div class="form-group single-col">
+				<label>Email</label>
+				<input type="email" name="email" ngModel>
+			</div>
+
+			<div class="form-group password">
+				<span id="two-col">
+					<label>Password</label>
+					<input type="password" name="password" ngModel>
+				</span>
+				
+				<span id="two-col">
+					<label>Confirm password</label>
+					<input type="password" name="confirm-password" ngModel>
+				</span>
+			</div>
+
+			<button class="btn" type="submit">SAVE</button>
+
+		</form>
+	-->
+
+		<form *ngIf="userInfo | async; let users" (ngSubmit)="updateUserSettings(users[0].userInfo);">
+				<!-- <span *ngFor="let user of users">{{user | json}}</span> -->
+			<div class="form-group name">
+				<span id="two-col">
+					<label>First Name</label>
+					<input type="text" name="firstName" [(ngModel)]="users[0].userInfo.firstName">
+				</span>
+
+				<span id="two-col">
+					<label>Last Name</label>
+					<input type="text" name="lastName" [(ngModel)]="users[0].userInfo.lastName">
+				</span>
+			</div>
+
+			<div class="form-group address">
+				<span id="two-col">
+					<label>Street Address</label>
+					<input type="text" name="streetAddress" [(ngModel)]="users[0].userInfo.streetAddress">
+				</span>
+
+				<span id="two-col">
+					<label>Apt/Suite Number</label>
+					<input type="text" name="unit" [(ngModel)]="users[0].userInfo.unit">
+				</span>
+			</div>
+
+			<div class="form-group address">
+				<span>
+					<label>City</label>
+					<input type="text" name="city" [(ngModel)]="users[0].userInfo.city">
+				</span>
+
+				<span>
+					<label>State</label>
+					<input type="text" name="state" [(ngModel)]="users[0].userInfo.state">
+				</span>
+
+				<span>
+					<label>Zip Code</label>
+					<input type="text" name="zip" [(ngModel)]="users[0].userInfo.zip">
+				</span>
+			</div>
+
+			<div class="form-group">
+				<span id="two-col">
+					<label>D.O.B</label>
+					<input type="date" name="dateOfBirth" placeholder="D.O.B" [(ngModel)]="users[0].userInfo.dateOfBirth">
+				</span>
+
+				<span id="two-col">
+					<label>Gender</label>
+					<input type="text" name="gender" [(ngModel)]="users[0].userInfo.gender">
+				</span>
+			</div>
+
+			<div class="form-group single-col">
+				<label>Phone #</label>
+				<input type="tel" name="phoneNumber" [(ngModel)]="users[0].userInfo.phoneNumber">
+			</div>
+
+			<div class="form-group single-col">
+				<label>Email</label>
+				<input type="email" name="email" [(ngModel)]="users[0].userInfo.email" disabled="true">
+			</div>
+
+			<div class="form-group password">
+				<span id="two-col">
+					<label>Password</label>
+					<input type="password" name="password" [(ngModel)]="users[0].userInfo.password">
+				</span>
+				
+				<span id="two-col">
+					<label>Confirm password</label>
+					<input type="password" name="confirmPassword" [(ngModel)]="users[0].userInfo.confirmPassword">
+				</span>
+			</div>
+
+			<button class="btn" type="submit">SAVE</button>
+
+		</form>
+	</div>
+</div>

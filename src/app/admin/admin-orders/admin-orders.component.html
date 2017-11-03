@@ -1,10 +1,29 @@
 <div class="admin-orders">
 	<ul class="orders">
-		<li class="order-info" *ngFor="let order of orders | async">
-			<span>{{order.user}}</span>
-			<span>{{order.date}}</span>
-			<span>{{order.amount.currency}} {{order.amount.value}}</span>
-			<span>{{order.status}}</span>
+		<li class="order-info" *ngFor="let order of orders | async; let i = index;" (click)="getOrder(i)">
+			<div class="row1">
+				<span>{{order.payload.val().uid}}</span>
+				<span>{{order.payload.val().dateCreated | date:'shortDate'}}</span>
+				<span>{{order.payload.val().payment.currency}} {{order.payload.val().payment.value}}</span>
+				<span>{{order.payload.val().status}}</span>
+			</div>
+
+			<div class="row2" [hidden]="i != showIndex">
+				<span class="order-items-header">Order Items</span>
+
+				<div class="order-details" *ngFor="let orderItem of order.payload.val().orderItems">
+					<img style="height: 50px;" [src]="orderItem.imageUrl">
+
+					<span class="order-name">{{orderItem.id}}</span>
+
+					<span class="item-price">${{orderItem.price}}</span>
+				</div>
+
+				<div class="user-info">
+					<!-- Populate this section by call get user info. It will have payment info as well -->
+
+				</div>
+			</div>
 		</li>
 	</ul>
 </div>
