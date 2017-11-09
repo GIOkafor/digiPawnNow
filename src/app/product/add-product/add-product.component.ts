@@ -38,6 +38,15 @@ export class AddProductComponent implements OnInit {
   sizeFilter$: BehaviorSubject<string|null>;
   colorFilter$: BehaviorSubject<string|null>;
 
+  //new search
+  itemsCollection: AngularFirestoreCollection<any>;
+  items: Observable<any>;
+
+  //newe search filters
+  nameFilter: BehaviorSubject<string|null>;
+  carrierFilter: BehaviorSubject<string|null>;
+  payoutPrice: number;
+
   constructor(
     private productService: ProductService,
     private cart: CartService,
@@ -45,28 +54,23 @@ export class AddProductComponent implements OnInit {
     private afs: AngularFirestore,
     private fb: FormBuilder
     ) { 
-      this.productService.search(this.searchTerm)
-        .subscribe(results => {
-          this.results = results.result;
-        });
 
-    //unstable code start
-      this.sizeFilter$ = new BehaviorSubject(null);
-      this.colorFilter$ = new BehaviorSubject(null);
-    /*  
-      this.product = Observable.combineLatest(
-        this.sizeFilter$,
-        this.colorFilter$
-      ).switchMap(([id, color]) => 
-        afs.collection('pricing/categories/cellphones', ref => {
-          let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-          if (id) { query = query.where('id', '==', id) };
-          if (color) { query = query.where('color', '==', color) };
-          return query;
-        }).valueChanges()
-      );
-    */
+    this.nameFilter = new BehaviorSubject(null);
+    this.carrierFilter = new BehaviorSubject(null);
 
+/*
+    this.items = Observable.combineLatest(
+      this.nameFilter,
+      this.carrierFilter
+    ).switchMap(([name, carrier]) => 
+      afs.collection('prices/WduAXGTmStYDGEKCArdh/phones', ref => {
+        let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+        if (name) { query = query.where('name', '==', name) };
+        if (carrier) { query = query.where('carrier', '==', carrier) };
+        return query;
+      }).valueChanges()
+    );
+*/
     this.searchForm = fb.group({
       'search': ['']
     });
@@ -83,6 +87,21 @@ export class AddProductComponent implements OnInit {
       this.productType = 'cell-phone';
 
     this.setType(this.productType);
+  }
+
+  filterByName(name){
+    //console.log("Searching for device with name: ", name);
+    this.nameFilter.next(name);
+  }
+
+  filterByCarrier(carrier){
+    //console.log("Searching for carrier with name: ", carrier);
+    this.carrierFilter.next(carrier);
+  }
+
+  clearFilter(){
+    this.filterByName(null);
+    this.filterByCarrier(null);
   }
 
 //get product by UPC
@@ -109,34 +128,15 @@ export class AddProductComponent implements OnInit {
       })
   }
 
-  searchDb(upc){
-   this.sizeFilter$.next(upc);
-   this.searchForm.reset(); 
-  }
 
-  searchElectronics(item){
-    this.sizeFilter$.next(item); 
-    this.searchForm.reset();
-  }
-
-  searchCellPhones(item){
-    this.sizeFilter$.next(item);
-    this.searchForm.reset();
-  }
-
-  searchCondition(condition){
-    /*
-    var url = 'pricing/categories/' + this.productType;
-
-    this.product = this.afs.collection(url, ref => ref.where('id', '==', item).where('condition', '==', condition)).valueChanges();
-    */
-    this.colorFilter$.next(condition);
+  searchCondition(product, condition){
+    this.payoutPrice = product.prices[condition];
   }
 
   //triggered by clicking on name in search suggestion list
-  searchByClick(id, condition){
-    this.sizeFilter$.next(id);
-    this.colorFilter$.next(condition);
+  searchByClick(id){
+    this.nameFilter.next(id);
+    this.search_complete = true;
     this.searchForm.reset();
   }
 
@@ -146,7 +146,11 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit(val){
-  	console.log(val);
+  	//console.log(val);
+    this.filterByName(val.search);
+    this.search_complete = true;
+    //this.searchForm.reset();
+  /*
     this.search_complete = true;
 
     if(this.productType == 'dvd')
@@ -155,6 +159,7 @@ export class AddProductComponent implements OnInit {
       this.searchElectronics(val.search);
     else if(this.productType == 'cell-phone')
       this.searchCellPhones(val.search);
+  */
   }
 
   getPrice(){
@@ -164,45 +169,45 @@ export class AddProductComponent implements OnInit {
   setType(val){
     this.productType = val;
 
-    //reset condition filter
-    this.colorFilter$.next(null);
+    //reset all filters
+    this.clearFilter();
+    this.search_complete = false;
 
     if(val == "electronics")
       this.setElectronics();
     else if (val == "cell-phone")
       this.setCellPhone();
-    else
-      this.setCd();
+
   }
 
   setElectronics(){
-    this.product = Observable.combineLatest(
-      this.sizeFilter$,
-      this.colorFilter$
-    ).switchMap(([id, condition]) => 
-      this.afs.collection('pricing/categories/electronics', ref => {
+    //change query URL to match electronics portion in db
+    this.items = Observable.combineLatest(
+      this.nameFilter
+    ).switchMap(([name]) => 
+      this.afs.collection('prices/WduAXGTmStYDGEKCArdh/electronics', ref => {
         let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-        if (id) { query = query.where('id', '==', id) };
-        if (condition) { query = query.where('condition', '==', condition) };
+        if (name) { query = query.where('name', '==', name) };
         return query;
       }).valueChanges()
     );
   }
 
   setCellPhone(){
-    this.product = Observable.combineLatest(
-      this.sizeFilter$,
-      this.colorFilter$
-    ).switchMap(([id, condition]) => 
-      this.afs.collection('pricing/categories/cellphones', ref => {
+    this.items = Observable.combineLatest(
+      this.nameFilter,
+      this.carrierFilter
+    ).switchMap(([name, carrier]) => 
+      this.afs.collection('prices/WduAXGTmStYDGEKCArdh/phones', ref => {
         let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-        if (id) { query = query.where('id', '==', id) };
-        if (condition) { query = query.where('condition', '==', condition) };
+        if (name) { query = query.where('name', '==', name) };
+        if (carrier) { query = query.where('carrier', '==', carrier) };
         return query;
       }).valueChanges()
     );
   }
 
+/*
   setCd(){
     this.product = Observable.combineLatest(
       this.sizeFilter$,
@@ -216,11 +221,13 @@ export class AddProductComponent implements OnInit {
       }).valueChanges()
     );
   }
+*/
 
   addToCart(item){
     this.cart.addToCart(item);
 
-    this.colorFilter$.next(null);
-    this.sizeFilter$.next(null);
+    this.clearFilter();
+
+    this.search_complete = false;
   }
 }

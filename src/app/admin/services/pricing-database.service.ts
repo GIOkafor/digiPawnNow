@@ -16,7 +16,7 @@ export class PricingDatabaseService {
   		private db: AngularFirestore,
   		private dialog: MdDialog,
   		private snackBar: MdSnackBar) { 
-		  	this.categoriesCollection = db.doc('pricing/categories');
+		  	this.categoriesCollection = db.doc('prices/WduAXGTmStYDGEKCArdh');
 		  	//this.cdCat = this.categoriesCollection.collection('cd').valueChanges();
 		  	//this.phoneCat = this.categoriesCollection.collection('cellphones').valueChanges();
 		  	//this.electronicCat = this.categoriesCollection.collection('electronics').valueChanges();
@@ -29,7 +29,7 @@ export class PricingDatabaseService {
 		      });
 		    });
 
-		  	this.phoneCat = this.categoriesCollection.collection('cellphones').snapshotChanges().map(values => {
+		  	this.phoneCat = this.categoriesCollection.collection('phones').snapshotChanges().map(values => {
 		  		return values.map(a => {
 		  			const data = a.payload.doc.data() as any;
 		  			const id = a.payload.doc.id;
@@ -73,26 +73,27 @@ export class PricingDatabaseService {
   addCellPhone(item){
 	  	console.log(item);
 
-	  	let obj = {id: '', price: '', condition: '', imageUrl: ''};
+	  	let obj = {name: '', carrier: '', prices: '', imageUrl: ''};
 
-	  	obj.id = item[0];
-	  	obj.price = item[2];
-	  	obj.condition = item[3];
+	  	obj.name = item[0];
+	  	obj.carrier = item[2];
+	  	obj.prices = item[3];
 	  	obj.imageUrl = item[4];
 
-	  	this.categoriesCollection.collection('cellphones').add(obj);
+	  	this.db.collection('prices/WduAXGTmStYDGEKCArdh/phones').add(obj);
 
   }
 
   addElectronic(item){
-	  	let obj = {id: '', price: '', condition: '', imageUrl: ''};
+	  	console.log(item);
 
-	  	obj.id = item[0];
-	  	obj.price = item[2];
-	  	obj.condition = item[3];
+	  	let obj = {name: '', prices: '', imageUrl: ''};
+
+	  	obj.name = item[0];
+	  	obj.prices = item[3];
 	  	obj.imageUrl = item[4];
 
-	  	this.categoriesCollection.collection('electronics').add(obj);
+	  	this.db.collection('prices/WduAXGTmStYDGEKCArdh/electronics').add(obj);
   }
 
   add(category, item){
@@ -106,12 +107,16 @@ export class PricingDatabaseService {
   }
 
   editCat(category, item){
+  	console.log("editing item ...");
+  	console.log(item);
+  	console.log("Category is: ", category);
+
   	if (category == 'cd'){
   		this.categoriesCollection.collection('cd').doc(item.id).update(item.data);
   	}else if(category == 'cell-phones'){
-  		this.categoriesCollection.collection('cellphones').doc(item.id).update(item.data);
+  		this.db.collection('prices/WduAXGTmStYDGEKCArdh/phones').doc(item.id).update(item.data);
   	}else if(category == 'electronics'){
-  		this.categoriesCollection.collection('electronics').doc(item.id).update(item.data);
+  		this.db.collection('prices/WduAXGTmStYDGEKCArdh/electronics').doc(item.id).update(item.data);
   	}
   }
 
@@ -120,10 +125,10 @@ export class PricingDatabaseService {
 	  		this.categoriesCollection.collection('cd').doc(item.id).delete()
 	  			.then(_=> this.snackBar.open("Item deleted successfully", "", { duration: 2000 }))
 	  	}else if(category == 'cell-phones'){
-	  		this.categoriesCollection.collection('cellphones').doc(item.id).delete()
+	  		this.db.collection('prices/WduAXGTmStYDGEKCArdh/phones').doc(item.id).delete()
 	  			.then(_=> this.snackBar.open("Item deleted successfully", "", { duration: 2000 }))
 	  	}else if(category == 'electronics'){
-	  		this.categoriesCollection.collection('electronics').doc(item.id).delete()
+	  		this.db.collection('prices/WduAXGTmStYDGEKCArdh/electronics').doc(item.id).delete()
 	  			.then(_=> this.snackBar.open("Item deleted successfully", "", { duration: 2000 }))
 	  	}
   }

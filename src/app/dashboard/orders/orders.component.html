@@ -17,7 +17,7 @@
 			<div class="row2" *ngFor="let orderItem of order.payload.val().orderItems">
 				<img [src]="orderItem.imageUrl">
 
-				<span class="order-name">{{orderItem.id}}</span>
+				<span class="order-name">{{orderItem.name}}</span>
 
 				<span class="item-price">${{orderItem.price}}</span>
 			</div>

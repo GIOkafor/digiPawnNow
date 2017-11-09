@@ -1,12 +1,13 @@
 <div class="dialog">
-	<h2>Editing {{item.data.id}}</h2>
+	<h2>Editing {{item.data.name}}</h2>
 
 	<form #f="ngForm">
 		<div class="form-group">
 			<label>Product Name</label>
-			<input type="text" name="product-name" [(ngModel)]="item.data.id" required>
+			<input type="text" name="product-name" [(ngModel)]="item.data.name" required>
 		</div>
 
+	<!--
 		<div class="form-group">
 			<label>UPC Code</label>
 			<input type="text" name="upc-code" [(ngModel)]="item.data.upc">
@@ -17,12 +18,11 @@
 			<input type="number" name="price" [(ngModel)]="item.data.price" required>
 		</div>
 
-	<!--
 		<div class="form-group" *ngIf="item.data.condition">
 			<label>Condition</label>
 			<input type="text" name="condition" [(ngModel)]="item.data.condition" required>
 		</div>
-	-->
+
 
 		<div class="form-group">
 			<label>Condition</label>
@@ -31,6 +31,32 @@
 				<option value="poor">poor</option>
 				<option value="faulty">faulty</option>
 			</select>
+		</div>
+-->
+
+		<div class="form-group" *ngIf="category === 'cell-phones'">
+			<label>Carrier</label>
+			<input type="text" name="carrier" [(ngModel)]="item.data.carrier">
+		</div>
+	
+		<div class="form-group condition-and-value">
+
+			<div class="condition-container">
+				<label class="condition-subheader">Condition</label>
+				
+				<label>New</label>
+
+				<label>Good</label>
+
+				<label *ngIf="category === 'cell-phones'">Poor</label>
+			</div>
+			
+			<div class="value-container">
+				<label class="value-subheader">Price</label>
+				<input type="number" name="newPrice" [(ngModel)]="item.data.prices.new" required>
+				<input type="number" name="goodPrice" [(ngModel)]="item.data.prices.good" required>
+				<input *ngIf="category === 'cell-phones'" type="number" name="poorPrice" [(ngModel)]="item.data.prices.poor" required>
+			</div>
 		</div>
 
 		<div class="form-group">

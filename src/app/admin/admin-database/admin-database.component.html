@@ -41,6 +41,7 @@
 				<button class="btn" (click)="showDialog('', true, 'cell-phones');">ADD</button>
 			</div>
 
+		<!--
 			<div class="items">
 				<div class="item-info sub-header">
 					<span>Name</span>
@@ -50,8 +51,8 @@
 
 				<div class="item" *ngFor="let cell of cellPhones | async">
 					<div class="item-info">
-						<span>{{cell.data.id}}</span>
-						<span>{{cell.data.condition}}</span>
+						<span>{{cell.data.name}}</span>
+						<span *ngFor="let price of cell.data.prices | keys">{{price}}</span>
 						<span>${{cell.data.price}}</span>
 					</div>
 
@@ -61,6 +62,31 @@
 					</span>
 				</div>
 			</div>
+		-->
+
+			<table class="pricing-table">
+				
+				<tr class="sub-header">
+					<th>Name</th>
+					<th>Carrier</th>
+					<th>New</th>
+					<th>Good</th>
+					<th>Poor</th>
+				</tr>
+
+				<tr *ngFor="let cell of cellPhones | async">
+					<td>{{cell.data.name}}</td>
+					<td>{{cell.data.carrier}}</td>
+					<td >${{cell.data.prices.new}}</td>
+					<td >${{cell.data.prices.good}}</td>
+					<td >${{cell.data.prices.poor}}</td>
+					<td class="actions">
+						<i (click)="editDialog(cell, 'cell-phones')">Edit</i>
+						<i (click)="delete('cell-phones', cell)">Delete</i>
+					</td>
+				</tr>
+			</table>
+
 		</div>
 
 		<div class="category electronics">
@@ -70,6 +96,7 @@
 				<button class="btn" (click)="showDialog('', true, 'electronics');">ADD</button>
 			</div>
 
+<!--
 			<div class="items">
 				<div class="item-info sub-header">
 					<span>Name</span>
@@ -79,7 +106,7 @@
 
 				<div class="item" *ngFor="let elec of electronics | async">
 					<div class="item-info">
-						<span>{{elec.data.id}}</span>
+						<span>{{elec.data.name}}</span>
 						<span>{{elec.data.condition}}</span>
 						<span>${{elec.data.price}}</span>
 					</div>
@@ -90,6 +117,26 @@
 					</span>
 				</div>
 			</div>
+-->
+
+			<table class="pricing-table">
+				
+				<tr class="sub-header">
+					<th>Name</th>
+					<th>New</th>
+					<th>Good</th>
+				</tr>
+
+				<tr *ngFor="let cell of electronics | async">
+					<td>{{cell.data.name}}</td>
+					<td >${{cell.data.prices.new}}</td>
+					<td >${{cell.data.prices.good}}</td>
+					<td class="actions">
+						<i (click)="editDialog(cell, 'electronics')">Edit</i>
+						<i (click)="delete('electronics', cell)">Delete</i>
+					</td>
+				</tr>
+			</table>
 		</div>
 
 	</div>

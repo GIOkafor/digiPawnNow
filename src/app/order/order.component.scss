@@ -71,7 +71,32 @@
 	    	margin: 30px auto;
 	    	width: 200px;
 	    }
+	
+	    .payment-update-div{
+	    	padding: 20px;
+    		background-color: #ececec;
+
+    		p{
+    			margin-bottom: 0px;
+    		}
+
+    		.edit-payment-input-container{
+    			text-align: center;
+    		}
+
+    		.cash-selected{
+
+    			.paypal-update{
+    				text-align: center;
+    			}
+
+    			.banking-info{
+    			
+    			}
+    		}
+	    }
 	}
+
 }
 
 @media screen and (min-width: 768px){

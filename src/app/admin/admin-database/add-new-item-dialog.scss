@@ -8,6 +8,40 @@
 			float: right;
 		}
 
+		.condition-and-value{
+			display: flex;
+    		justify-content: center;
+		
+    		.value-container{
+    			display: flex;
+			    flex-direction: column;
+			    margin-left: 20px;
+			    text-align: center;
+    		
+			    input{
+			    	margin-bottom: 10px;
+			    }
+
+			    .value-subheader{
+			    	font-weight: bold;
+			    }
+    		}
+
+    		.condition-container{
+    			display: flex;
+			    flex-direction: column;
+			    text-align: center;
+
+			    .condition-subheader{
+			    	font-weight: bold;
+			    }
+
+			    label{
+			    	margin-bottom: 10px;
+			    }
+    		}
+		}
+
 		.save-button-container{
 			display: flex;
 			justify-content: space-around;

@@ -17,7 +17,18 @@ export class OrderComponent implements OnInit {
   rates: any; //exchange rates object
   itemPrice: any; //listed price for particular item (in USD) set by admin
   checkingRates: any; //variable for starting and stopping rate checking
-	
+	userPaymentInfo: any; //for checking if selected payment method exists for the user
+  checkingPayments: boolean; //for signaling that selected user payments is being checked to see if it exists
+  paymentDoesNotExist: boolean;
+  //object for updating user bank info
+  bankingInfo = {
+    firstName: '',
+    lastName: '',
+    bank: '',
+    routingNumber: '',
+    accountNumber: ''
+  }
+
   constructor(
         private cart: CartService,
   			private orders: OrdersService,
@@ -29,7 +40,6 @@ export class OrderComponent implements OnInit {
     //get current rates 
     this.getRates();
 
-    //temporarily set item price to $1 
     //in future check list of set prices by admin
     this.getCartValue();
 
@@ -88,12 +98,18 @@ export class OrderComponent implements OnInit {
     this.getCartValue();
   }
 
+  //check if selected payment method exists before letting user place order
+  checkPay(){
+    this.userPaymentInfo = this.auth.getPaymentsInfo(this.currency);
+    this.checkingPayments = true;
+  }
+
   //format order object and save details to database under user uid
   createOrder(){
     var uid = this.auth.getUserUid();
 
     var date = new Date();
-    console.log("Date is: "+date);
+    //console.log("Date is: "+date);
 
     var tempVal;
 
@@ -105,6 +121,10 @@ export class OrderComponent implements OnInit {
         else
           tempVal = this.getConversionRate(this.currency);
 
+        //get payment address info to be included in order details below
+        //console.log(userAdress);
+
+        //create the order details object to be uploaded to db
         var orderDetails = {
           uid: uid,
           dateCreated: date.getTime(),
@@ -116,14 +136,61 @@ export class OrderComponent implements OnInit {
           }
         }
 
-        //charge user based on selected payment via the payment service
-        //then
-        this.orders.createOrder(orderDetails);//save order info to database
+        //check if payment method selected exists
+        this.checkPay();
+        
+        //wait 3 seconds then call function
+        setTimeout(()=>{
+          if(this.auth.paymentInfo !== null){
 
-        //then show success popup
+            //hide loading spinner
+            this.checkingPayments = false;
 
+            this.paymentDoesNotExist = false;
+
+            console.log("Payment method exists, saving...");
+
+            //save order info to database
+            this.orders.createOrder(orderDetails, this.auth.paymentInfo);
+
+            //then show success snackbar
+          }
+          else{
+            //console.log("Payment method doesnt exist");
+
+            //show input field for payment
+            this.paymentDoesNotExist = true;
+
+            //hide loading spinner
+            this.checkingPayments = false;
+          }
+
+          //prompt for info 
+          //save info and process order
+        }, 3000);
+        
+        //clear rate checker function
         clearInterval(this.checkingRates);
       })
+
+  }
+
+  updatePayment(method, val){
+    //console.log("updating payment method ", method);
+    //console.log("To: ", val);
+    this.auth.updatePaymentAddress(method, val)
+      .then(_=> this.createOrder());
+  }
+
+    //update banking info
+  updateBankingInfo(info){
+    console.log(info);
+
+    //not tested
+    //also seperate paypal check from bank check
+    //after updating user banking info create order
+    this.auth.updateBankingInfo(info)
+      .then(_=> this.createOrder());
   }
 
   //get rate in realtime 
@@ -131,7 +198,7 @@ export class OrderComponent implements OnInit {
     return this.pay.getRates()
       .then(res => {
         this.rates = res;
-        console.log(this.rates);    
+        //console.log(this.rates);    
       })
     
   }
@@ -149,6 +216,15 @@ export class OrderComponent implements OnInit {
       return this.rates.LTC
     else if(curr == 'ETH')
       return this.rates.ETH
+  }
+
+  //for hidding payment update for when user selects alternate payment method
+  changePaymentStatus(){
+    //console.log("Reseting payment status");
+    if(this.paymentDoesNotExist == true){
+      console.log("Hiding payment update form");
+      this.paymentDoesNotExist = false;
+    }
   }
 
 }

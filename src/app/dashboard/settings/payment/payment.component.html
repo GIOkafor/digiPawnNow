@@ -21,29 +21,29 @@
 			<div class="form-group two-col-container">
 				<span class="two-col">
 					<label>First</label>
-					<input type="text" name="firstName" [(ngModel)]="settings[0].paymentInfo.firstName" [disableControl]="disable">
+					<input type="text" name="firstName" [(ngModel)]="settings[0].paymentInfo.bankingInfo.firstName" [disableControl]="disable">
 				</span>
 
 				<span class="two-col">
 					<label>Last</label>
-					<input type="text" name="lastName" [(ngModel)]="settings[0].paymentInfo.lastName" [disableControl]="disable">
+					<input type="text" name="lastName" [(ngModel)]="settings[0].paymentInfo.bankingInfo.lastName" [disableControl]="disable">
 				</span>
 			</div>
 
 			<div class="form-group">
 				<label>Bank</label>
-				<input type="text" name="bank" [(ngModel)]="settings[0].paymentInfo.bank" [disableControl]="disable">
+				<input type="text" name="bank" [(ngModel)]="settings[0].paymentInfo.bankingInfo.bank" [disableControl]="disable">
 			</div>
 
 			<div class="form-group two-col-container">
 				<span class="two-col">
 					<label>Routing Number</label>
-					<input type="number" name="routingNumber" [(ngModel)]="settings[0].paymentInfo.routingNumber" [disableControl]="disable">
+					<input type="number" name="routingNumber" [(ngModel)]="settings[0].paymentInfo.bankingInfo.routingNumber" [disableControl]="disable">
 				</span>
 
 				<span class="two-col">
 					<label>Account Number</label>
-					<input type="number" name="accountNumber" [(ngModel)]="settings[0].paymentInfo.accountNumber" [disableControl]="disable">
+					<input type="number" name="accountNumber" [(ngModel)]="settings[0].paymentInfo.bankingInfo.accountNumber" [disableControl]="disable">
 				</span>
 			</div>
 

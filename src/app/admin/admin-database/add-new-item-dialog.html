@@ -11,10 +11,11 @@
 			<label>UPC Code</label>
 			<input type="text" name="upc-code" [(ngModel)]="upcCode">
 		</div>
-
-		<div class="form-group">
-			<label>Price</label>
-			<input type="number" name="price" [(ngModel)]="price" required>
+	
+	
+		<div class="form-group" *ngIf="category === 'cell-phones'">
+			<label>Carrier</label>
+			<input type="text" name="carrier" [(ngModel)]="carrier" required>
 		</div>
 
 	<!--
@@ -24,13 +25,24 @@
 		</div>
 	-->
 
-		<div class="form-group">
-			<label>Condition</label>
-			<select class="form-control" name="condition" [(ngModel)]="condition" required>
-				<option value="good">good</option>
-				<option value="poor">poor</option>
-				<option value="faulty">faulty</option>
-			</select>
+		<div class="form-group condition-and-value">
+
+			<div class="condition-container">
+				<label class="condition-subheader">Condition</label>
+				
+				<label>New</label>
+
+				<label>Good</label>
+
+				<label *ngIf="category === 'cell-phones'">Poor</label>
+			</div>
+			
+			<div class="value-container">
+				<label class="value-subheader">Price</label>
+				<input type="number" name="newPrice" [(ngModel)]="prices.new" required>
+				<input type="number" name="goodPrice" [(ngModel)]="prices.good" required>
+				<input *ngIf="category === 'cell-phones'" type="number" name="poorPrice" [(ngModel)]="prices.poor" required>
+			</div>
 		</div>
 
 		<div class="form-group" *ngIf="type">
@@ -39,7 +51,7 @@
 		</div>
 
 		<div class="save-button-container">
-			<button class="btn" (click)="saveItem([productName, upcCode, price, condition, imageUrl, true])" [disabled]="!f.form.valid">SAVE</button>
+			<button class="btn" (click)="saveItem([productName, upcCode, carrier, prices, imageUrl, true])" [disabled]="!f.form.valid">SAVE</button>
 		</div>
 	</form>
 </div>

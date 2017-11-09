@@ -106,6 +106,7 @@
 
 			.product-details{
 				text-align: left;
+				margin-bottom: 40px;
 
 				.product-name{
 					color: #0076a3;
@@ -118,13 +119,31 @@
 				    margin-top: 15px;
 				    margin-bottom: 15px;
 
-					.value{
-						cursor: pointer;
-						border: 1px solid #cccccc;
-					    padding: 10px 15px 5px;
-					    border-radius: 10px;
-					    width: 30%;
-					}
+					
+				}
+
+				.carrier-container{
+				    display: flex;
+    				flex-direction: column;
+
+    				.condition-text{
+    					margin-bottom: 20px;
+    				}
+				}
+
+				.value, .carrier-value{
+					cursor: pointer;
+					border: 1px solid #cccccc;
+				    padding: 10px 15px 5px;
+				    border-radius: 10px;
+				}
+
+				.value{
+					width: 30%;
+				}
+
+				.electronic-radio-value{
+					width: 48%;
 				}
 
 				.condition-description div{
@@ -146,6 +165,11 @@
 					cursor: pointer;
 					margin-top: 15px;
 				}
+			}
+
+			.condition-text{
+				color: #666;
+				font-weight: bold;
 			}
 		}
 	}

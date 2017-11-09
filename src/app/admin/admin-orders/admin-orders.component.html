@@ -12,16 +12,33 @@
 				<span class="order-items-header">Order Items</span>
 
 				<div class="order-details" *ngFor="let orderItem of order.payload.val().orderItems">
-					<img style="height: 50px;" [src]="orderItem.imageUrl">
+					<img [src]="orderItem.imageUrl">
 
-					<span class="order-name">{{orderItem.id}}</span>
+					<span class="order-name">{{orderItem.name}}</span>
 
 					<span class="item-price">${{orderItem.price}}</span>
 				</div>
 
 				<div class="user-info">
 					<!-- Populate this section by call get user info. It will have payment info as well -->
+					<div class="crypto" *ngIf="order.payload.val().payment.currency !== 'USD'">
+						Wallet Address: {{order.payload.val().payment.paymentAddress}}
+					</div>
+<!-- clear old orders-->
+					<div class="cash" *ngIf="order.payload.val().payment.currency === 'USD' && order.payload.val().payment.paymentAddress">
+						<div class="paypal" *ngIf="order.payload.val().payment.paymentAddress.payPalEmail">
+							Paypal email address: {{order.payload.val().payment.paymentAddress.payPalEmail}}
+						</div>
 
+						<div class="bank-info" *ngIf="!order.payload.val().payment.paymentAddress.payPalEmai">
+							<div>Account Number: {{order.payload.val().payment.paymentAddress.accountNumber}}</div>
+							<div>Bank: {{order.payload.val().payment.paymentAddress.bank}}</div>
+							<div>First Name: {{order.payload.val().payment.paymentAddress.firstName}}</div>
+							<div>Last Name: {{order.payload.val().payment.paymentAddress.lastName}}</div>
+							<div>Routing Number: {{order.payload.val().payment.paymentAddress.routingNumber}}</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</li>

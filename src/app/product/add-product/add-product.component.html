@@ -3,9 +3,9 @@
 
 		<form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value);">
 			<nav class="nav">
-		<!--
+				<!--
 			  <a class="nav-link" [class.active]="productType === 'dvd'" (click)="setType('dvd')">DVDs, Blu-Rays, CDs</a>
-		-->
+				-->
 			  <a class="nav-link" [class.active]="productType === 'cell-phone'" (click)="setType('cell-phone')">Cell Phones</a>
 			  <a class="nav-link" [class.active]="productType === 'electronics'" (click)="setType('electronics')">Electronics</a>
 			</nav>
@@ -15,12 +15,27 @@
 
 				<span class="help-text" *ngIf="productType === 'cell-phone' || productType === 'electronics'">To start selling, just enter product name without spaces or dashes into the box below</span>
 
-				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" autocomplete="off" (keyup)="colorFilter$.next(null);sizeFilter$.next($event.target.value)" [formControl]="searchForm.controls['search']">
+				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" [formControl]="searchForm.controls['search']"
+				(keyup)="nameFilter.next($event.target.value)"  autocomplete="off">
 			
-				<ul [hidden]="searchForm.controls['search'].pristine" *ngIf="product | async; let prods" class="results">
-					<li *ngFor="let result of prods | slice:0:9" (click)="searchByClick(result.id, result.condition)">{{result.id}}<i *ngIf="result.condition">(Condition: {{result.condition}})</i></li>
+			
+				<ul [hidden]="searchForm.controls['search'].pristine" *ngIf="items | async; let prods" class="results">
+					<li *ngFor="let result of prods" (click)="searchByClick(result.name)">
+						{{result.name}}
+						<!--
+							<i *ngIf="result.condition">(Condition: {{result.condition}})</i>
+						-->
+					</li>
 				</ul>
 			
+			<!--
+				<ul>
+					<h3>DB Items</h3>
+					<li *ngFor="let item of items | async">
+						{{item.name}}
+					</li>
+				</ul>
+			-->
 
 				<a class="help-link">Need Help?</a>
 
@@ -34,82 +49,115 @@
 		</div>
 	</div>
 
-	<div class="product-info row" *ngIf="product | async; let products">
+	<div class="product-info row" *ngIf="search_complete && items | async; let products">
 			
 		<div class="product" *ngFor="let prod of products">
-			<div class="col-12 col-md-4 image-container" *ngIf="product && products.length == 1">
+			<div class="col-12 col-md-4 image-container">
 				<img [src]="prod.imageUrl">
 			</div>
 
-			<div class="product-details col-12 col-md-8" *ngIf="product && products.length == 1">
-				<h5 class="product-name">{{prod.id}}</h5>
+			<div class="product-details col-12 col-md-8">
+				<h5 class="product-name">{{prod.name}}</h5>
+
+				<div class="carrier-container" *ngIf="productType == 'cell-phone'">
+					<span class="condition-text">Please select carrier</span>
+
+					<md-radio-group [(ngModel)]="prod.carrier">
+						<md-radio-button class="carrier-value" value="unlocked" (click)="filterByCarrier('unlocked')">UNLOCKED</md-radio-button>
+						<md-radio-button class="carrier-value" value="at&t" (click)="filterByCarrier('at&t')">AT&T</md-radio-button>
+						<md-radio-button class="carrier-value" value="sprint" (click)="filterByCarrier('sprint')">SPRINT</md-radio-button>
+						<md-radio-button class="carrier-value" value="t-mobile" (click)="filterByCarrier('t-mobile')">T-MOBILE</md-radio-button>
+						<md-radio-button class="carrier-value" value="verizon" (click)="filterByCarrier('verizon')">VERIZON</md-radio-button>
+						<md-radio-button class="carrier-value" value="other" (click)="filterByCarrier('other')">OTHER</md-radio-button>
+					</md-radio-group>
+				</div>
 				
 				<div class="condition-container" *ngIf="productType != 'dvd'">
 					<span class="condition-text">Please select item condition</span>
 
 					<md-radio-group class="condition" [(ngModel)]="prod.condition">
-						<md-radio-button class="value" value="good" (click)="searchCondition('good')">Good</md-radio-button>		
-						<md-radio-button class="value" value="poor" (click)="searchCondition('poor')">Poor</md-radio-button>		
-						<md-radio-button class="value" value="faulty" (click)="searchCondition('faulty')">Faulty</md-radio-button>		
+						<md-radio-button class="value" [ngClass]="{'electronic-radio-value': productType == 'electronics'}" value="new" (click)="searchCondition(prod, 'new')">New</md-radio-button>		
+						<md-radio-button class="value" [ngClass]="{'electronic-radio-value': productType == 'electronics'}" value="good" (click)="searchCondition(prod, 'good')">Good</md-radio-button>		
+						<md-radio-button class="value" value="poor" (click)="searchCondition(prod, 'poor')" *ngIf="productType == 'cell-phone'">Poor</md-radio-button>		
 					</md-radio-group>
 
+				 <!-- Description section starts -->
 					<div class="condition-description">
-						<div class="good" *ngIf="prod.condition === 'good'">
-							<span class="sec-header">Don’t have a charger, accessories or the original box? Don’t worry: we’ll still buy your phone and the price won’t be affected!</span>
+						<div class="good" *ngIf="prod.condition === 'new'">
+							<span class="sec-header">New</span>
+
+							<ul>
+								<li>Brand new</li>
+								<li>Sealed in box</li>
+								<li>Not used</li>
+								<li>Complete with all components</li>
+								<li>No defects</li>
+								<li>Fully functional and complete with working system software</li>
+								<li>No damage</li>
+								<li>Not being financed by the carrier</li>
+								<li>Set to factory settings</li>
+							</ul>
+						</div>
+
+						<div class="poor" *ngIf="prod.condition === 'good'">
+							<span class="sec-header">Good</span>
+							
+							<ul>
+								<li>Fully functional and complete with working system software</li>
+								<li>Turns on and off with working LCD</li>
+								<li>All buttons work </li>
+								<li>All features work, such as touchscreen, Wi-Fi, camera, video, etc. </li>
+								<li>Complete with back cover and battery </li>
+								<li>No more than light wear and tear</li>
+								<li>No cracks, dents, water damage or damage to the screen</li>
+								<li>Be removed from all tracking services such as Find My iPhone (not activation locked) </li>
+								<li>Be removed from your online account (iCloud)</li>
+								<li>Not being financed by the carrier </li>
+								<li>It is recommended that the phone is reset to factory settings, but at a minimum, the password must be removed</li>
+								<li>No water damage</li>
+								<li>All ports work </li>
+								<li>Charges properly</li>
+							</ul>
+						</div>
+
+						<div class="faulty" *ngIf="prod.condition === 'poor'">
+							<span class="sec-header">Poor</span>
 
 							<ul>
 								<li>Fully functional and complete with working system software</li>
 								<li>Turns on and off with working LCD</li>
-								<li>All buttons work</li>
-								<li>All features work e.g. touchscreen, Wi-Fi, camera, video etc</li>
-								<li>Complete with back cover and battery</li>
-								<li>No more than light wear and tear, no cracks, water damage or damage to screen</li>
-							</ul>
-						</div>
-
-						<div class="poor" *ngIf="prod.condition === 'poor'">
-							<span class="sec-header">3 or more of the below faults render it Faulty</span>
-							
-							<ul>
-								<li>Fully functional - all parts inc. system software</li>
-								<li>Heavy wear and tear / scratches</li>
-								<li>Liquid damage indicator triggered</li>
-							</ul>
-						</div>
-
-						<div class="faulty" *ngIf="prod.condition === 'faulty'">
-							<span class="sec-header">Each device should:</span>
-
-							<ul>
-								<li>Include its battery</li>
-								<li>Be intact - not bent, crushed or snapped in half</li>
-								<li>Not have any missing parts or components</li>
-								<li>Be removed from Find My iPhone (not activation locked)</li>
-								<li>Examples of faulty phones: Broken / bleeding LCD, water damaged, no power up, blank LCD etc.</li>
+								<li>All buttons work </li>
+								<li>All features work, such as touchscreen, Wi-Fi, camera, video, etc. </li>
+								<li>Complete with back cover and battery </li>
+								<li>Be removed from all tracking services such as Find My iPhone (not activation locked)</li>
+								<li>Be removed from your online account (iCloud</li>
+								<li>Medium to heavy wear and tear (scratches). No large dents. 
+								Potentially could have a cracked screen </li>
+								<li>Not being financed by the carrier </li>
+								<li>It is recommended that the phone is reset to factory settings, but at a minimum, the password must be removed</li>
+								<li>No water damage</li>
+								<li>All ports must work </li>
+								<li>Charges properly </li>
 							</ul>
 						</div>
 					</div>
-				</div>
-				<div>
-					<span>We'll pay you: </span> <span class="payout">${{ prod.price }}</span>
+				 <!-- Description section ends --> 
 				</div>
 
-				<button class="btn add-to-cart" (click)="addToCart(prod)">ADD TO CART</button>
+				<div *ngIf="payoutPrice">
+					<span>We'll pay you: </span> <span class="payout">${{ payoutPrice }}</span>
+				</div>
+
+				<button class="btn add-to-cart" [disabled]="!prod.condition" (click)="addToCart(prod)">ADD TO CART</button>
 			</div>
 		</div>
 
 		<div *ngIf="products.length == 0">
 			No products meet your search criteria, please review your search or try another
+
+			<button class="btn" (click)="clearFilter();">Clear Filter</button>
 		</div>
 	</div>
-
-	<!-- 
-	<div class="steps" *ngIf="!product && !searching">
-		<span>4 Easy Steps</span>
-
-		<img src="assets/steps.png">
-	</div>
-  	-->
 </div>
 
 <router-outlet></router-outlet>

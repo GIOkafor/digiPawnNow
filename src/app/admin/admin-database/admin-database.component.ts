@@ -28,7 +28,7 @@ export class AdminDatabaseComponent implements OnInit {
   showDialog(item, condition, category){
   	let dialogRef = this.dialog.open(AddNewItemDialog, {
   		width: '350px',
-  		data: { condition: condition }
+  		data: { condition: condition, category: category }
   	});
 
   	dialogRef.afterClosed().subscribe(res => {
@@ -45,7 +45,7 @@ export class AdminDatabaseComponent implements OnInit {
   editDialog(item, category){
   	let dialogRef = this.dialog.open(EditItemDialog, {
   		width: '350px',
-  		data: {item: item}
+  		data: {item: item, category: category}
   	});
 
   	//add dialog closed ref action here
@@ -57,7 +57,9 @@ export class AdminDatabaseComponent implements OnInit {
   }
 
   add(category, item){
-  	this.db.add(category, item);
+  	console.log(item);
+
+    this.db.add(category, item);
   }
 
   edit(category, item){
@@ -80,15 +82,22 @@ export class AddNewItemDialog {
 
 	productName: any;
 	upcCode: any;
-	price: any;
-	condition: any;
+  carrier: any;
+	prices: any = {
+    new: '',
+    good: '',
+    poor: ''
+  };
 	type: boolean = false;
 	save: boolean = false;
+  category: any;
 
   constructor(
     public dialogRef: MdDialogRef<AddNewItemDialog>,
     @Inject(MD_DIALOG_DATA) public data: any) { 
   		this.type = data.condition; //condition value injected by parent
+      //console.log("Category passed is: ", data.category);
+      this.category = data.category;
   }
 
   close(): void {
@@ -115,11 +124,14 @@ export class EditItemDialog {
 	type: boolean = false;
 	save: boolean = false;
 	item: any;
+  category: any;
 
   constructor(
     public dialogRef: MdDialogRef<AddNewItemDialog>,
     @Inject(MD_DIALOG_DATA) public data: any) { 
   		this.item = data.item; //condition value injected by parent
+      //console.log("Category passed to dialog is: ", data.category);
+      this.category = data.category;
   }
 
   close(): void {

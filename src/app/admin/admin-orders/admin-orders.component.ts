@@ -21,8 +21,18 @@ export class AdminOrdersComponent implements OnInit {
 //show hidden section in div
   getOrder(order){
   	//do something
-  	console.log(order);
+  	//console.log(order);
   	this.showIndex = order;
+  }
+
+  markAsPaid(order){
+    //mark 
+
+    //apply filter so paid ones are hidden
+  }
+
+  deleteOrder(order){
+
   }
 
 }

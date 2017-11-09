@@ -6,7 +6,7 @@
 			 
 				<div class="item" *ngFor="let item of cartItems">
 					<div class="item-info">
-						<span>{{item.id}} <i *ngIf="item.condition">(Condition: {{item.condition}})</i></span>
+						<span>{{item.name}} <i *ngIf="item.condition">(Condition: {{item.condition}})</i></span>
 						<span>${{item.price}}</span>
 					</div>
 
@@ -35,7 +35,7 @@
 
 		<md-radio-group class="payment-options" [(ngModel)]="currency" *ngIf="rates">
 			<div class="cash">
-				<div class="amount-div">
+				<div class="amount-div" (click)="changePaymentStatus()">
 					<md-radio-button value="USD" name="currency">${{itemPrice}}</md-radio-button>
 				</div>
 
@@ -43,7 +43,7 @@
 			</div>
 
 			<div class="bitcoin">
-				<div class="amount-div">
+				<div class="amount-div" (click)="changePaymentStatus()">
 					<md-radio-button value="BTC">BTC {{ itemPrice * rates.BTC }}</md-radio-button>
 				</div>
 
@@ -51,7 +51,7 @@
 			</div>
 
 			<div class="litecoin">
-				<div class="amount-div">
+				<div class="amount-div" (click)="changePaymentStatus()">
 					<md-radio-button value="LTC">LTC {{ itemPrice * rates.LTC | number }}</md-radio-button>
 				</div>
 
@@ -59,7 +59,7 @@
 			</div>
 
 			<div class="ethereum">
-				<div class="amount-div">
+				<div class="amount-div" (click)="changePaymentStatus()">
 					<md-radio-button value="ETH">ETH {{ itemPrice * rates.ETH | number }}</md-radio-button>
 				</div>
 
@@ -74,6 +74,87 @@
 
 			<div *ngIf="!currency">
 				Please select payment method
+			</div>
+		</div>
+
+		<div>
+			<md-spinner *ngIf="checkingPayments == true"></md-spinner>
+		</div>
+
+		<div *ngIf="paymentDoesNotExist" class="payment-update-div">
+			<p>Selected payment address does not exist, either enter it below or select another method</p>
+
+			<div>
+				<!-- Show this when currency isn't cash -->
+				<div class="edit-payment-input-container" *ngIf="currency !== 'USD'">
+					<input type="string" name="payment" placeholder="New payment address" [(ngModel)]="val">
+					<button class="btn" (click)="updatePayment(currency, val);">Update Payment</button>
+				</div>
+
+				<!-- This is shown only when currency of payout is cash --> 
+				<div class="cash-selected" *ngIf="currency == 'USD'">
+					<div class="form-group">
+						<label>Do you have Paypal?</label>
+
+						<span class="options">
+							
+							<md-radio-group [(ngModel)]="paypalExists">
+								<md-radio-button value="yes">Yes</md-radio-button>
+								<md-radio-button value="no">No</md-radio-button>
+							</md-radio-group>
+							<!--
+								<span>
+									Yes<input type="checkbox" name="paypalYes" [(ngModel)]="paypalYes">
+								</span>
+
+								<span>
+									No<input type="checkbox" name="paypalNo" [(ngModel)]="paypalNo">
+								</span>
+							-->
+						</span>
+					</div>
+
+					<!-- If user selects paypal above --> 
+					<div class="paypal-update" *ngIf="paypalExists == 'yes'">
+						<input type="string" name="paypalEmail" placeholder="Paypal Email Address" [(ngModel)]="paypalEmail">
+						<button class="btn" (click)="updatePayment(currency, paypalEmail);">Update Payment</button>
+					</div>
+
+					<!-- If user doesn't have paypal -->
+					<div class="banking-info" *ngIf="paypalExists == 'no'">
+						
+						<div class="form-group two-col-container">
+							<span class="two-col">
+								<label>First</label>
+								<input type="text" name="firstName" [(ngModel)]="bankingInfo.firstName">
+							</span>
+
+							<span class="two-col">
+								<label>Last</label>
+								<input type="text" name="lastName" [(ngModel)]="bankingInfo.lastName">
+							</span>
+						</div>
+
+						<div class="form-group">
+							<label>Bank</label>
+							<input type="text" name="bank" [(ngModel)]="bankingInfo.bank">
+						</div>
+
+						<div class="form-group two-col-container">
+							<span class="two-col">
+								<label>Routing Number</label>
+								<input type="string" name="routingNumber" [(ngModel)]="bankingInfo.routingNumber">
+							</span>
+
+							<span class="two-col">
+								<label>Account Number</label>
+								<input type="string" name="accountNumber" [(ngModel)]="bankingInfo.accountNumber">
+							</span>
+						</div>
+
+						<button class="btn" (click)="updateBankingInfo(bankingInfo)">Update Banking Info</button>
+					</div>
+				</div>
 			</div>
 		</div>
 
