@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModule, MdButtonModule, MdSidenavModule } from '@angular/material';
+import { MdProgressSpinnerModule, MdDialogModule, MdRadioModule, MdSnackBarModule, MdButtonModule, MdSidenavModule, MdSelectModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -47,6 +47,11 @@ import { ChatComponent } from './chat/chat.component';
 import { MessagingRTDBService } from './services/messaging-rtdb.service';
 import { ChatDetailsComponent } from './admin/admin-messages/chat-details/chat-details.component';
 import { KeysPipe } from './admin/admin-messages/admin-messages.component';
+import { UsernameFilter } from './admin/admin-messages/admin-messages.component';
+import { PaidFilter } from './admin/admin-orders/admin-orders.component';
+
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { OrderDetailsComponent } from './dashboard/orders/order-details/order-details.component';
 
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
@@ -66,6 +71,7 @@ const routes: Routes = [
     {path: '', component: AddProductComponent},
     {path: 'dashboard', component: DashboardComponent, children: [
       {path: 'orders', component: OrdersComponent},
+      {path: 'order-details/:id', component: OrderDetailsComponent},
       {path: 'settings', component: SettingsComponent, children: [
         {path: 'basic', component: BasicComponent},
         {path: 'payment', component: PaymentComponent},
@@ -107,7 +113,10 @@ const routes: Routes = [
     DisableControlDirective,
     ChatComponent,
     ChatDetailsComponent,
-    KeysPipe
+    KeysPipe,
+    PaidFilter,
+    UsernameFilter,
+    OrderDetailsComponent
   ],
   entryComponents: [
   	ErrorComponent,
@@ -132,7 +141,9 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    Ng2SearchPipeModule,
+    MdSelectModule
   ],
   providers: [
   	ProductService,

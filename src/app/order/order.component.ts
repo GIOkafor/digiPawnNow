@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from '../cart.service';
 import { OrdersService } from '../dashboard/orders/orders.service';
 import { PaymentService } from '../services/payment.service';
 import { AuthenticationService } from '../auth/authentication.service';
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-order',
@@ -33,7 +35,9 @@ export class OrderComponent implements OnInit {
         private cart: CartService,
   			private orders: OrdersService,
         private pay: PaymentService,
-        private auth: AuthenticationService) { 
+        private auth: AuthenticationService,
+        private router: Router,
+        private snackBar: MdSnackBar) { 
   	//on initialize get cart contents
   	this.cartItems = this.cart.getCart();
 
@@ -136,6 +140,58 @@ export class OrderComponent implements OnInit {
           }
         }
 
+        //check if user is signed in , if not redirect to auth page
+        this.checkAuth()
+          .then((data) => {
+            //console.log(data);
+
+            //call rest of order stuff here
+            this.checkPay();
+        
+            //wait 3 seconds then call function
+            setTimeout(()=>{
+              if(this.auth.paymentInfo !== null){
+
+                //hide loading spinner
+                this.checkingPayments = false;
+
+                this.paymentDoesNotExist = false;
+
+                console.log("Payment method exists, saving...");
+
+                //save order info to database
+                this.orders.createOrder(orderDetails, this.auth.paymentInfo);
+
+                //then show success snackbar
+              }
+              else{
+                //console.log("Payment method doesnt exist");
+
+                //show input field for payment
+                this.paymentDoesNotExist = true;
+
+                //hide loading spinner
+                this.checkingPayments = false;
+              }
+
+              //prompt for info 
+              //save info and process order
+            }, 3000);
+          },
+          (error) => {
+            //console.log(error);
+
+            var message = "You need to be signed in to place an order, redirecting ...";
+
+            this.snackBar.open(message, '', {duration: 5000});
+
+            this.cart.closeDialog();
+
+            //redirect to auth page
+            this.router.navigate(['auth']);
+          })
+
+        /*
         //check if payment method selected exists
         this.checkPay();
         
@@ -168,6 +224,8 @@ export class OrderComponent implements OnInit {
           //prompt for info 
           //save info and process order
         }, 3000);
+
+        */
         
         //clear rate checker function
         clearInterval(this.checkingRates);
@@ -226,5 +284,30 @@ export class OrderComponent implements OnInit {
       this.paymentDoesNotExist = false;
     }
   }
+
+  checkAuth(): Promise<any>{
+    var uid = this.auth.getUserUid();
+
+    return new Promise((resolve, reject) => {
+      if(uid !== null){
+        resolve('success');
+      }else reject('error');
+    });
+    
+  }
+
+/*
+  checkPayAsync(): Promise<any>{
+    var payInfo = this.auth.paymentInfo;
+
+    return new Promise((resolve, reject) => {
+      console.log(payInfo);
+      if(payInfo !== undefined){
+        resolve('success');
+      }else reject('error');
+    });
+
+  }
+*/
 
 }

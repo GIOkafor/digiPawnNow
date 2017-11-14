@@ -80,7 +80,7 @@ export class AddProductComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     this.productType = id;
 
-    console.log("Product type is: "+this.productType);
+    //console.log("Product type is: "+this.productType);
 
     //check if productType is default
     if(this.productType == null)

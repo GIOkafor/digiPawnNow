@@ -32,11 +32,30 @@ export class OrdersService {
   	return this.db.list('/orders').snapshotChanges();
   }
 
+  /*
+  //return particular order
+  getOrder(key){
+    return this.db.list('/orders', ref => ref.orderByKey().equalTo(key)).snapshotChanges();
+  }
+  */
+
   //gets a particular user's orders
   getUserOrders(){
     var uid = localStorage.getItem('currentUserUID');
     console.log("getting order for user with uid: "+ uid);
     return this.db.list('/orders/', ref => ref.orderByKey().equalTo(uid));
+  }
+
+  //mark order as paid
+  markPaid(order){
+    this.db.object('/orders/'+order.key).update({status: 'paid'})
+      .then(_=> this.snackBar.open('Order Status Updated Successfully', '', {duration: 3000}));
+  }
+
+  //mark order as unpaid
+  markUnpaid(order){
+    this.db.object('/orders/'+order.key).update({status: 'unpaid'})
+      .then(_=> this.snackBar.open('Order Status Updated Successfully', '', {duration: 3000}));
   }
 
   createOrder(orderItems, address){
@@ -76,5 +95,10 @@ export class OrdersService {
         this.router.navigate(['auth']);
       })
   
+  }
+
+  deleteOrder(order){
+    this.db.object('/orders/'+order.key).remove()
+      .then(_=> this.snackBar.open('Order Deleted Successfully', '', {duration: 3000}));
   }
 }

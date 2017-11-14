@@ -2,34 +2,49 @@
 	
 	<!-- Repeat for all orders --> 
 	<div class="orders" *ngIf="items$ | async; let orders; else loading">
-		<div class="order-container" *ngFor="let order of orders">
+		<div class="order-container" *ngFor="let order of orders" (click)="getOrder(order);">
 
-			<div class="row1">
-				
-				<span>{{order.payload.val().dateCreated | date: 'shortDate'}}</span>
+			<span>{{order.payload.val().dateCreated | date: 'shortDate'}}</span>
 
-				<span>{{order.payload.val().status}}</span>
-
-				<button class="btn print-shipping-label" (click)="printShippingLabel();">Print Shipping Label</button>
-			</div>
-
-			
-			<div class="row2" *ngFor="let orderItem of order.payload.val().orderItems">
-				<img [src]="orderItem.imageUrl">
-
-				<span class="order-name">{{orderItem.name}}</span>
-
-				<span class="item-price">${{orderItem.price}}</span>
-			</div>
+			<span>{{order.payload.val().status}}</span>
 
 			<div class="payment-method">
-				<span id="text">Total Value</span>
+				<span id="text">Total Value: </span>
 				
 				<span class="value" *ngIf="order.payload.val().payment.currency === 'USD'">${{order.payload.val().payment.value}}</span>
 				<span class="value" *ngIf="order.payload.val().payment.currency === 'BTC'">BTC{{order.payload.val().payment.value}}</span>
 				<span class="value" *ngIf="order.payload.val().payment.currency === 'ETH'">ETH{{order.payload.val().payment.value}}</span>
 				<span class="value" *ngIf="order.payload.val().payment.currency === 'LTC'">LTC{{order.payload.val().payment.value}}</span>
 			</div>
+			
+			<!--
+				<div class="row1">
+					
+					<span>{{order.payload.val().dateCreated | date: 'shortDate'}}</span>
+
+					<span>{{order.payload.val().status}}</span>
+
+					<button class="btn print-shipping-label" (click)="printShippingLabel();">Print Shipping Label</button>
+				</div>
+
+				
+				<div class="row2" *ngFor="let orderItem of order.payload.val().orderItems">
+					<img [src]="orderItem.imageUrl">
+
+					<span class="order-name">{{orderItem.name}}</span>
+
+					<span class="item-price">${{orderItem.price}}</span>
+				</div>
+
+				<div class="payment-method">
+					<span id="text">Total Value</span>
+					
+					<span class="value" *ngIf="order.payload.val().payment.currency === 'USD'">${{order.payload.val().payment.value}}</span>
+					<span class="value" *ngIf="order.payload.val().payment.currency === 'BTC'">BTC{{order.payload.val().payment.value}}</span>
+					<span class="value" *ngIf="order.payload.val().payment.currency === 'ETH'">ETH{{order.payload.val().payment.value}}</span>
+					<span class="value" *ngIf="order.payload.val().payment.currency === 'LTC'">LTC{{order.payload.val().payment.value}}</span>
+				</div>
+			-->
 
 		</div>
 
@@ -38,13 +53,4 @@
 		</div>
 	</div>
 
-
-<!--
-	Debug code
-	<div *ngIf="items$ | async; let orders">
-		<span>{{orders | json}}</span>
-	</div>
-
-	<button class="btn"(click)="filterBy();">Filter</button>
--->
 </div>

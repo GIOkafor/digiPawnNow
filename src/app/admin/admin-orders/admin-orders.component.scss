@@ -1,5 +1,16 @@
 .admin-orders{
-	.orders{
+	.filters{
+        padding-left: 40px;
+        display: flex;
+        flex-direction: column;
+
+        md-select{
+            align-self: flex-start;
+            padding-top: 0px;
+        }
+    }
+
+    .orders{
 		margin-top: 30px;
     	list-style: none;
 
@@ -17,6 +28,23 @@
             .row2{
                 img{
                     height: 50px;
+                }
+            }
+
+            .user-info{
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+
+                .btn{
+                    align-self: center;
+                    background-color: #176799;
+                    color: #fff;
+                    cursor: pointer;
+                }
+
+                .delete{
+                    background-color: red;
                 }
             }
     	}

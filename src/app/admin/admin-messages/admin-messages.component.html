@@ -15,11 +15,22 @@
 
 			<!-- Repeat this for each message in messages --> 
 			
-			<div class="message-summary" *ngFor="let msg of messageThread.messages | keys; let last = last" (click)="getThreadDetails(messageThread.messages)">
+			<div class="message-summary" *ngFor="let msg of messageThread.messages | keys; let last = last; let user = '';" (click)="getThreadDetails(messageThread.messages)">
 
 				<div class="name-and-date" *ngIf="last">
-					<span class="sender-name">{{msg.from}}</span>
+					<!-- Show this if admin -->
+					<span class="sender-name" *ngIf="msg.from === 'admin'">{{msg.from}}</span>
+					
+					<!-- Show this if user -->
+					<span class="sender-name" *ngIf="msg.from !== 'admin'">{{msg.username}}</span>
+
 					<span class="time">{{msg.timeSent | date: 'short'}}</span>
+
+					<!-- For when user sent the last message in thread -->
+					<!--
+						<span class="sender-name" *ngIf="msg.from !== 'admin'">{{msg.from | usernamePipe}}</span>
+						<span class="time" *ngIf="msg.from !== 'admin'">{{msg.timeSent | date: 'short'}}</span>
+					-->
 				</div>
 
 				<div class="message-and-cta" *ngIf="last">

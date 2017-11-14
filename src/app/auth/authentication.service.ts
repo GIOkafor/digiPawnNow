@@ -3,10 +3,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdSnackBar } from '@angular/material';
 import { ErrorComponent } from './authenticate/error/error.component';
 import { Router } from '@angular/router';
-import { MdSnackBar } from '@angular/material';
 
 @Injectable()
 export class AuthenticationService {
@@ -101,6 +100,7 @@ export class AuthenticationService {
       .then(_=> {
         //TODO: add alert 
         console.log("Email sent");
+        this.snackBar.open('Password reset email sent', '', {duration: 3000});
       }).catch(error => {
         console.log(error);
       })

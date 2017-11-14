@@ -19,7 +19,7 @@ export class ChatDetailsComponent implements OnInit {
 
   ngOnInit() {
   	this.id = this.route.snapshot.paramMap.get('id');
-  	console.log("Getting messages for user with uid: ", this.id);
+  	//console.log("Getting messages for user with uid: ", this.id);
 
   	this.messages = this.msgService.getUserMessages(this.id);
   }

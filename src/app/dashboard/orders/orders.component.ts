@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrdersService } from './orders.service';
 import { AngularFireDatabase, AngularFireAction } from 'angularfire2/database';
 import { AuthenticationService } from '../../auth/authentication.service';
@@ -22,7 +23,8 @@ export class OrdersComponent implements OnInit {
   constructor(
     private ordersService: OrdersService,
     private db: AngularFireDatabase,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private router: Router
     ) { 
     this.size$ = new BehaviorSubject(null);
     this.items$ = this.size$.switchMap(uid =>
@@ -54,7 +56,14 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrder(key){
-    return this.db.list('/orders', ref => ref.orderByKey().equalTo(key)).snapshotChanges();
+    console.log(key.key);
+
+    //redirect with key in param
+    this.router.navigate(['home/dashboard/order-details', key.key]);
+
+    //on init of compnent query db and subscribe to order object
+
+    //return this.db.list('/orders', ref => ref.orderByKey().equalTo(key)).snapshotChanges();
   }
 
 }

@@ -131,7 +131,7 @@
     				}
 				}
 
-				.value, .carrier-value{
+				.carrier-value{
 					cursor: pointer;
 					border: 1px solid #cccccc;
 				    padding: 10px 15px 5px;
@@ -139,6 +139,9 @@
 				}
 
 				.value{
+					cursor: pointer;
+					border: 1px solid #cccccc;
+					border-radius: 10px;
 					width: 30%;
 				}
 
@@ -172,25 +175,18 @@
 				font-weight: bold;
 			}
 		}
+
+		.no_results{
+			display: flex;
+	    	flex-direction: column;
+	    	align-items: center;
+
+	    	.btn{
+	    		margin-top: 20px;
+			    color: #fff;
+			    background-color: #2076a1;
+	    	}
+	    }
 	}
 
-	.steps{
-		display: flex;
-		flex-direction: column;
-		border-top: 7px solid rgb(234,185,47);
-		border-bottom: 7px solid rgb(234,185,47);
-		background-color: #fff;
-
-		span{
-			font-weight: 600;
-			margin: 50px 120px 0px 182px;
-			font-size: larger;
-		}
-
-		img{
-			width: 75%;
-			margin: 0 auto;
-			margin-bottom: 70px;
-		}
-	}
 }

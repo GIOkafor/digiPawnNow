@@ -1,0 +1,59 @@
+.orders{
+
+	background-color: #fff;
+
+	.order-container{
+			flex-direction: column;
+			padding: 10px 60px;
+			padding-bottom: 80px;
+
+			div{
+				margin-bottom: 10px;
+				display: flex;
+			}
+
+			.row1{
+				display: flex;
+				width: 100%;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px;
+			
+				.print-shipping-label{
+					background-color: #0076a3;
+					color: #fff;
+					cursor: pointer;
+				}
+			}
+
+			.row2{
+				display: flex;
+			    align-items: center;
+			    justify-content: space-between;
+			    background-color: #e9ebee;
+			    padding: 5px;
+			    min-height: 60px !important;
+
+			    img{
+			    	height: 50px;
+			    }
+			}
+
+			.payment-method{
+				display: flex;
+	    		justify-content: flex-end;
+	    		align-items: center;
+	    		margin-top: 20px;
+			
+	    		span#text{
+	    			margin-right: 20px;
+	    		}
+
+	    		span.value{
+	    			padding: 5px 10px;
+	    			background-color: #0076a3;
+	    			color: #fff;
+	    		}
+			}
+		}
+}

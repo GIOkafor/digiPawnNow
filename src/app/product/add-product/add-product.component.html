@@ -152,10 +152,10 @@
 			</div>
 		</div>
 
-		<div *ngIf="products.length == 0">
+		<div *ngIf="products.length == 0" class="no_results">
 			No products meet your search criteria, please review your search or try another
 
-			<button class="btn" (click)="clearFilter();">Clear Filter</button>
+			<button class="btn" (click)="clearFilter();">Show All Products</button>
 		</div>
 	</div>
 </div>

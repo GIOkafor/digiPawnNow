@@ -1,7 +1,9 @@
 import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { MessagingRTDBService } from '../../services/messaging-rtdb.service';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../auth/authentication.service';
 
 @Component({
   selector: 'app-admin-messages',
@@ -11,10 +13,13 @@ import { Router } from '@angular/router';
 export class AdminMessagesComponent implements OnInit {
 
 	messages$: any[];
+  user: any;
 
   constructor(
   	private msgService: MessagingRTDBService,
-    private router: Router) { 
+    private router: Router,
+    private auth: AuthenticationService,
+    private db: AngularFireDatabase) { 
   		this.messages$ = msgService.allMessages;
   }
 
@@ -40,6 +45,7 @@ export class AdminMessagesComponent implements OnInit {
         return (obj[key].from);
     }
   }
+
 }
 
 @Pipe({name: 'keys'})
@@ -50,5 +56,32 @@ export class KeysPipe implements PipeTransform {
       keys.push(value[key]);
     }
     return keys;
+  }
+}
+
+@Pipe({
+  name: 'usernamePipe'
+})
+
+export class UsernameFilter implements PipeTransform{
+  
+  constructor(private auth: AuthenticationService){
+
+  }
+
+  transform(uid: any):any {
+
+    //return item if neither filter nor list exists
+    if(!uid){
+      return uid;
+    }
+
+    var user = {};
+
+    this.auth.getUserInfo(uid)
+      .map(res => {
+        user = res;
+        return user[0].userInfo.firstName;
+      })
   }
 }
