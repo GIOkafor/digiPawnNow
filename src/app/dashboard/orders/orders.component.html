@@ -47,10 +47,10 @@
 			-->
 
 		</div>
-
-		<div *ngIf="orders.length === 0">
-			<p>You currently have no existing orders, to create one head to the selling page</p>
-		</div>
 	</div>
+
+	<ng-template #loading>
+		<p>You currently have no existing orders, to create one head to the selling page</p>
+	</ng-template>
 
 </div>

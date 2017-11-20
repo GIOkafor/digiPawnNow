@@ -8,13 +8,13 @@
 
 		<a routerLink='/home/sell-item' routerLinkActive="active" (click)="redirect();">Sell Item(s)</a>
 
-		<!--
-			<a routerLink='/how-it-works' routerLinkActive="active">How It Works</a>
-			<a routerLink='/about' routerLinkActive="active">About</a>
-		-->
-		<a *ngIf="(user | async)?.uid == 'ULUEKLnq7oSvXp4k2yxsDNtMik72' || (user | async)?.uid == 'Sqq5uadc3OMrOuPKTAlXkZ3ueMs2'" class="admin-login" routerLink="/admin">Admin</a>
+		<a routerLink='/home/how-it-works' routerLinkActive="active">How It Works</a>
+		<a routerLink='/home/contact-us' routerLinkActive="active">Contact Us</a>
+		<a routerLink='/home/about' routerLinkActive="active">About</a>
+	
+		<a *ngIf="(user | async)?.uid == 'ULUEKLnq7oSvXp4k2yxsDNtMik72' || (user | async)?.uid == 'Sqq5uadc3OMrOuPKTAlXkZ3ueMs2' || (user | async)?.uid =='KUXx6T5TGffBd3KXw7nJJ6nXHOC3'" class="admin-login" routerLink="/admin">Admin</a>
 
-		<a *ngIf="(user | async)?.uid" routerLink='/home/contact' routerLinkActive="active">Contact</a>
+		<a *ngIf="(user | async)?.uid" routerLink='/home/contact' routerLinkActive="active">Messaging</a>
 		<a *ngIf="!(user | async)?.uid" routerLink='/auth' routerLinkActive="active">Sign-up/Login</a>
 		<a *ngIf="(user | async)?.uid" routerLink='/home/dashboard' routerLinkActive="active">My Dashboard</a>
 		<a *ngIf="(user | async)?.uid" (click)="logout()" routerLink='/auth'>Logout</a>

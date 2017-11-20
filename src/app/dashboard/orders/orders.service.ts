@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar , MdDialog} from '@angular/material';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { CartService } from '../../cart.service';
+import { OrderConfirmDialog } from '../../order/order.component';
 
 @Injectable()
 export class OrdersService {
@@ -16,7 +17,8 @@ export class OrdersService {
     private snackBar: MdSnackBar,
     private db: AngularFireDatabase,
   	private auth: AuthenticationService,
-    private cart: CartService) { 
+    private cart: CartService,
+    private dialog: MdDialog) { 
       //this.getOrders();
   }
 
@@ -27,16 +29,16 @@ export class OrdersService {
   	console.log(this.userLoc);
   }
 
-//Get all orders from db
+  //Get all orders from db
   getOrders(){
-  	return this.db.list('/orders').snapshotChanges();
+  	return this.db.list('/orders', ref => ref.orderByChild('dateCreated')).snapshotChanges().map(arr => {return arr.reverse();});
   }
 
   /*
-  //return particular order
-  getOrder(key){
-    return this.db.list('/orders', ref => ref.orderByKey().equalTo(key)).snapshotChanges();
-  }
+    //return particular order
+    getOrder(key){
+      return this.db.list('/orders', ref => ref.orderByKey().equalTo(key)).snapshotChanges();
+    }
   */
 
   //gets a particular user's orders
@@ -76,7 +78,7 @@ export class OrdersService {
       }
     }
 
-    console.log(order);
+    //console.log(order);
     
     this.orders.push(order)
       .then(_=> {
@@ -87,7 +89,13 @@ export class OrdersService {
         this.cart.closeDialog();
 
         //show notification
-        this.snackBar.open('Order created successfully', '', {duration: 3000});
+        //this.snackBar.open('Order created successfully', '', {duration: 3000});
+        /**/
+          this.dialog.open(OrderConfirmDialog, {
+            height: '200px',
+            width: '600px'
+          });
+        
         this.router.navigate(['home/dashboard/orders']);
       })
       .catch(error => {
@@ -102,3 +110,4 @@ export class OrdersService {
       .then(_=> this.snackBar.open('Order Deleted Successfully', '', {duration: 3000}));
   }
 }
+

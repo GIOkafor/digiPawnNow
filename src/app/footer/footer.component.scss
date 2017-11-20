@@ -4,6 +4,14 @@
 	padding: 20px;
 	border-top: 1px solid #c8ced3;
 
+	a{
+		color: #56514e;
+	}
+
+	a:hover{
+		text-decoration: none;
+	}
+
 	h4{
 		font-weight: 200;
 	}
@@ -16,6 +24,14 @@
 		.items{
 			display: flex;
 			flex-direction: column;
+
+			a{
+				color: #56514e;
+			}
+
+			a:hover{
+				text-decoration: none;
+			}
 		}
 	}
 
@@ -25,6 +41,14 @@
 
 			i{
 				cursor: pointer;
+			}
+
+			a{
+				color: #56514e;
+			}
+
+			a:hover{
+				text-decoration: none;
 			}
 		}
 	}

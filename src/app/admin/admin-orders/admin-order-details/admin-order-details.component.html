@@ -1,0 +1,66 @@
+<div class="admin_order_details">
+	<div class="container order_details_container" *ngIf="order">
+		<span class="order-items-header">Order Items</span>
+
+		<div *ngIf="order.payload.val().orderItems">	
+			<div class="order-details" *ngFor="let orderItem of order.payload.val().orderItems">
+				<img [src]="orderItem.imageUrl">
+
+				<span class="order-name">
+					{{orderItem.name}} 
+				</span>
+
+				<span *ngIf="orderItem.condition">Condition: {{orderItem.condition}}</span>
+
+				<span *ngIf="orderItem.carrier">Carrier: {{orderItem.carrier}}</span>
+
+				<span class="item-price">${{orderItem.price}}</span>
+			</div>
+		</div>
+
+		<div class="user-info">
+			<!-- Populate this section by call get user info. It will have payment info as well -->
+
+			<div>
+				<!-- This section shows if user selects any crypto payment format -->
+				<div class="crypto" *ngIf="order.payload.val().payment.currency !== 'USD'">
+					Wallet Address: {{order.payload.val().payment.paymentAddress}}
+				</div>
+				<!-- Crypto payment section ends --> 
+
+				<!-- Cash payment info section starts -->
+				<div class="cash" *ngIf="order.payload.val().payment.currency === 'USD' && order.payload.val().payment.paymentAddress">
+					<div class="paypal" *ngIf="order.payload.val().payment.paymentAddress">
+						Paypal email address: {{order.payload.val().payment.paymentAddress}}
+					</div>
+
+				<!--
+					<div class="bank-info" *ngIf="order.payload.val().payment.paymentAddress.accountNumber">
+						<div>Account Number: {{order.payload.val().payment.paymentAddress.accountNumber}}</div>
+						<div>Bank: {{order.payload.val().payment.paymentAddress.bank}}</div>
+						<div>First Name: {{order.payload.val().payment.paymentAddress.firstName}}</div>
+						<div>Last Name: {{order.payload.val().payment.paymentAddress.lastName}}</div>
+						<div>Routing Number: {{order.payload.val().payment.paymentAddress.routingNumber}}</div>
+					</div>
+				-->
+				</div>
+				<!-- Cash payment info section ends -->
+
+				<!-- User email so admin can send shipping label -->
+				<div *ngIf="order.payload.val().email">User email: {{order.payload.val().email}}</div>
+
+				<!-- User addrress so admin can send shipping label -->
+				<div *ngIf="order.payload.val().address">User addrress: {{order.payload.val().address}}</div>
+
+			</div>
+			
+			<div class="action-buttons">
+				<div class="btn delete" (click)="deleteOrder(order)">Delete Order</div>
+
+				<button class="btn" *ngIf="order.payload.val().status === 'unpaid'" (click)="markAsPaid(order)">Mark as paid</button>
+				<button class="btn" *ngIf="order.payload.val().status === 'paid'" (click)="markUnpaid(order)">Mark as unpaid</button>
+			</div>
+			
+		</div>
+	</div>
+</div>

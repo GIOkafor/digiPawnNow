@@ -61,7 +61,7 @@ export class PaymentComponent implements OnInit {
   }
 
   updatePayments(value){
-  	console.log("You submitted: ", value);
+  	//console.log("You submitted: ", value);
 
   	this.auth.updatePaymentSettings(value);
   }

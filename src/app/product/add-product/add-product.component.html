@@ -1,7 +1,8 @@
 <div class="add-product">
 	<div class="con">
 
-		<form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value);">
+		<form (ngSubmit)="onSubmit(f.value);" #f="ngForm">
+			<!--[formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value);"-->
 			<nav class="nav">
 				<!--
 			  <a class="nav-link" [class.active]="productType === 'dvd'" (click)="setType('dvd')">DVDs, Blu-Rays, CDs</a>
@@ -15,6 +16,17 @@
 
 				<span class="help-text" *ngIf="productType === 'cell-phone' || productType === 'electronics'">To start selling, just enter product name without spaces or dashes into the box below</span>
 
+				
+				<input type="text" name="search" id="search" placeholder="Enter Product Name" [(ngModel)]="term" autocomplete="off">
+
+				<div *ngIf="items | async; let prods" [hidden]="!term">	
+					<ul class="results">
+						<li *ngFor="let item of prods | filter:term" (click)="searchByClick(item.name); term=''">{{item.name}}</li>
+					</ul>
+				</div>
+
+			<!--
+				Old working code
 				<input type="text" name="search" id="search" placeholder="Enter Barcode, Product Name or UPC" [formControl]="searchForm.controls['search']"
 				(keyup)="nameFilter.next($event.target.value)"  autocomplete="off">
 			
@@ -22,11 +34,9 @@
 				<ul [hidden]="searchForm.controls['search'].pristine" *ngIf="items | async; let prods" class="results">
 					<li *ngFor="let result of prods" (click)="searchByClick(result.name)">
 						{{result.name}}
-						<!--
-							<i *ngIf="result.condition">(Condition: {{result.condition}})</i>
-						-->
 					</li>
 				</ul>
+			-->
 			
 			<!--
 				<ul>
@@ -39,7 +49,9 @@
 
 				<a class="help-link">Need Help?</a>
 
-				<a class="btn search-btn" (click)="onSubmit(searchForm.value);"  [class.disabled]="productType === 'empty'">SEARCH</a>
+				<button class="btn clear_button" *ngIf="search_complete" (click)="term = ''; clearFilter(); search_complete=false;">Start New Search</button>
+
+				<a *ngIf="!search_complete" class="btn search-btn" (click)="onSubmit(f.value);"  [class.disabled]="productType === 'empty'">SEARCH</a>
 			</div>
 
 		</form>

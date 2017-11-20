@@ -56,7 +56,7 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrder(key){
-    console.log(key.key);
+    //console.log(key.key);
 
     //redirect with key in param
     this.router.navigate(['home/dashboard/order-details', key.key]);

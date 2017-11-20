@@ -1,6 +1,10 @@
 .order-component{
 	margin-top: 50px;
 
+	.btn{
+		cursor: pointer;
+	}
+
 	.shopping-cart{
 
 		.item-list{
@@ -68,26 +72,47 @@
 	    .btn{
 	    	color: #ffffff;
 	    	background-color: #0076a3;
-	    	margin: 30px auto;
+	    	margin: 10px auto;
 	    	width: 200px;
 	    }
 	
 	    .payment-update-div{
 	    	padding: 20px;
     		background-color: #ececec;
+    		width: 550px;
+    		text-align: center;
 
     		p{
     			margin-bottom: 0px;
     		}
 
+    		.btn{
+    			cursor: pointer;
+    		}
+
     		.edit-payment-input-container{
     			text-align: center;
+
+    			span{
+    			    display: flex;
+				    flex-direction: column;
+				    margin-top: 10px;
+
+				    input{
+				    	text-align: center;
+				    }
+    			}
     		}
 
     		.cash-selected{
 
     			.paypal-update{
-    				text-align: center;
+    				display: flex;
+    				flex-direction: column;
+
+    				input{
+    					text-align: center;
+    				}
     			}
 
     			.banking-info{

@@ -1,70 +1,108 @@
 <div class="payment-settings">
 	<div class="container">
-		<form class="payment-form" (ngSubmit)="updatePayments(settings[0].paymentInfo)" *ngIf="userInfo | async; let settings">
-			
-			<div class="form-group">
-				<label>Cash</label>
-				<span class="checkbox-and-text"><input type="checkbox" name="paypal" [(ngModel)]="settings[0].paymentInfo.paypal" (click)="disable = true">Paypal <i>Leave unchecked if you don't have paypal</i></span>
-			</div>
+		
+		<div class="forms_container" *ngIf="userInfo | async; let settings">	
+			<!-- Update form, shows up when at least one field of paymentInfo exists -->
+			<form class="payment-form" (ngSubmit)="updatePayments(settings[0].paymentInfo)" *ngIf="settings[0].paymentInfo">
+				
+				<!-- When paymentInfo exists show the info below -->
+				<div>	
+					<!--
+						<div class="form-group">
+							<label>Cash</label>
+							<span class="checkbox-and-text"><input type="checkbox" name="paypal" [(ngModel)]="settings[0].paymentInfo.paypal" (click)="disable = true">Paypal <i>Leave unchecked if you don't have paypal</i></span>
+						</div>
+					-->
 
-			<div class="form-group">
-				<label>Paypal Email Address</label>
-				<input type="text" name="paypalEmail" [(ngModel)]="settings[0].paymentInfo.payPalEmail">
-			<!--				
-				<span class="checkbox-and-text">
-					<input type="checkbox" name="noPaypal" [formControl]="paymentForm.controls['noPaypal']" (click)="disable = false"> I don't have paypal
-				</span>
-			-->
+					<!-- Show if paypal exists -->
+					<div class="form-group" *ngIf="settings[0].paymentInfo.payPalEmail">
+						<label>Paypal Email Address</label>
+						<input type="text" name="paypalEmail" [(ngModel)]="settings[0].paymentInfo.payPalEmail">
+					</div>
 
-			</div>
+					<!--	
+						<div class="form-group two-col-container">
+							<span class="two-col" *ngIf="settings[0].paymentInfo.bankingInfo">
+								<label>First</label>
+								<input type="text" name="firstName" [(ngModel)]="settings[0].paymentInfo.bankingInfo.firstName" [disableControl]="disable">
+							</span>
 
-			<div class="form-group two-col-container">
-				<span class="two-col">
-					<label>First</label>
-					<input type="text" name="firstName" [(ngModel)]="settings[0].paymentInfo.bankingInfo.firstName" [disableControl]="disable">
-				</span>
+							<span class="two-col" *ngIf="settings[0].paymentInfo.bankingInfo">
+								<label>Last</label>
+								<input type="text" name="lastName" [(ngModel)]="settings[0].paymentInfo.bankingInfo.lastName" [disableControl]="disable">
+							</span>
+						</div>
 
-				<span class="two-col">
-					<label>Last</label>
-					<input type="text" name="lastName" [(ngModel)]="settings[0].paymentInfo.bankingInfo.lastName" [disableControl]="disable">
-				</span>
-			</div>
+						<div class="form-group" *ngIf="settings[0].paymentInfo.bankingInfo">
+							<label>Bank</label>
+							<input type="text" name="bank" [(ngModel)]="settings[0].paymentInfo.bankingInfo.bank" [disableControl]="disable">
+						</div>
 
-			<div class="form-group">
-				<label>Bank</label>
-				<input type="text" name="bank" [(ngModel)]="settings[0].paymentInfo.bankingInfo.bank" [disableControl]="disable">
-			</div>
+						<div class="form-group two-col-container" *ngIf="settings[0].paymentInfo.bankingInfo">
+							<span class="two-col">
+								<label>Routing Number</label>
+								<input type="number" name="routingNumber" [(ngModel)]="settings[0].paymentInfo.bankingInfo.routingNumber" [disableControl]="disable">
+							</span>
 
-			<div class="form-group two-col-container">
-				<span class="two-col">
-					<label>Routing Number</label>
-					<input type="number" name="routingNumber" [(ngModel)]="settings[0].paymentInfo.bankingInfo.routingNumber" [disableControl]="disable">
-				</span>
+							<span class="two-col">
+								<label>Account Number</label>
+								<input type="number" name="accountNumber" [(ngModel)]="settings[0].paymentInfo.bankingInfo.accountNumber" [disableControl]="disable">
+							</span>
+						</div>
+					-->
 
-				<span class="two-col">
-					<label>Account Number</label>
-					<input type="number" name="accountNumber" [(ngModel)]="settings[0].paymentInfo.bankingInfo.accountNumber" [disableControl]="disable">
-				</span>
-			</div>
+					<span class="section-header">Crypto</span>
 
-			<span class="section-header">Crypto</span>
+					<!-- If wallet address exists -->
+					<div class="form-group" *ngIf="settings[0].paymentInfo.bitcoinAddress">
+						<label>Bitcoin Address</label>
+						<input type="text" name="bitcoinAddress" [(ngModel)]="settings[0].paymentInfo.bitcoinAddress" [disableControl]="disable">
+					</div>
 
-			<div class="form-group">
-				<label>Bitcoin Address</label>
-				<input type="text" name="bitcoinAddress" [(ngModel)]="settings[0].paymentInfo.bitcoinAddress" [disableControl]="disable">
-			</div>
+					<div class="form-group" *ngIf="settings[0].paymentInfo.litecoinAddress">
+						<label>Litecoin Address</label>
+						<input type="text" name="litecoinAddress" [(ngModel)]="settings[0].paymentInfo.litecoinAddress" [disableControl]="disable">
+					</div>
 
-			<div class="form-group">
-				<label>Litecoin Address</label>
-				<input type="text" name="litecoinAddress" [(ngModel)]="settings[0].paymentInfo.litecoinAddress" [disableControl]="disable">
-			</div>
+					<div class="form-group" *ngIf="settings[0].paymentInfo.ethereumAddress">
+						<label>Ethereum Address</label>
+						<input type="text" name="ethereumAddress" [(ngModel)]="settings[0].paymentInfo.ethereumAddress" [disableControl]="disable">
+					</div>
 
-			<div class="form-group">
-				<label>Ethereum Address</label>
-				<input type="text" name="ethereumAddress" [(ngModel)]="settings[0].paymentInfo.ethereumAddress" [disableControl]="disable">
-			</div>
+					<button class="btn" type="submit">SAVE</button>
+				</div>
 
-			<button class="btn" type="submit">SAVE</button>
-		</form>
+			</form>
+
+			<!-- If paymentInfo doesn't exist, show this instead -->
+			<form class="payment-form" #paymentForm="ngForm" *ngIf="!settings[0].paymentInfo" (ngSubmit)="updatePayments(paymentForm.value)">
+				
+				<div class="form-group">
+					<label>Paypal Email Address</label>
+					<input type="text" name="payPalEmail" ngModel>
+				</div>
+
+				<span class="section-header">Crypto</span>
+
+				<!-- If wallet address exists -->
+				<div class="form-group">
+					<label>Bitcoin Address</label>
+					<input type="text" name="bitcoinAddress" ngModel>
+				</div>
+
+				<div class="form-group">
+					<label>Litecoin Address</label>
+					<input type="text" name="litecoinAddress" ngModel>
+				</div>
+
+				<div class="form-group">
+					<label>Ethereum Address</label>
+					<input type="text" name="ethereumAddress" ngModel>
+				</div>
+
+				<button class="btn" type="submit">SAVE</button>
+
+			</form>
+		</div>
 	</div>
 </div>

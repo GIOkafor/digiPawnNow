@@ -19,7 +19,7 @@ export class OrderDetailsComponent implements OnInit {
 
   ngOnInit() {
   	this.orderKey = this.route.snapshot.paramMap.get('id');
-  	console.log(this.orderKey);
+  	//console.log(this.orderKey);
 
   	this.db.object('/orders/'+this.orderKey).snapshotChanges()
   		.subscribe(res => {

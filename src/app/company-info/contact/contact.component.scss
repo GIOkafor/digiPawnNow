@@ -1,0 +1,14 @@
+.contact-us-component{
+	background-color: #fff;
+    padding: 10px;
+    height: 300px;
+
+    .address_container{
+    	margin-bottom: 20px;
+    }
+    #rest_of_address{
+    	display: flex;
+	    flex-direction: column;
+	    padding-left: 126px;
+    }
+}

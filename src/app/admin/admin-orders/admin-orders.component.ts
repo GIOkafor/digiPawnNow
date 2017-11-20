@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //import { AdminOrdersService } from '../services/orders.service';
 import { OrdersService } from '../../dashboard/orders/orders.service';
 import { Pipe, PipeTransform } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-orders',
@@ -14,18 +15,30 @@ export class AdminOrdersComponent implements OnInit {
   filterArgs = '';
 
   constructor(
-    private ordersService: OrdersService) { 
-  	this.orders = ordersService.getOrders();
+    private ordersService: OrdersService,
+    private router: Router) { 
+  	  //having this appear twice doesn't do shit
+      this.orders = this.ordersService.getOrders();
   }
 
   ngOnInit() {
+    this.orders = this.ordersService.getOrders();
   }
 
-//show hidden section in div
+  /* Old style
+  //show hidden section in div
   getOrder(order){
   	//do something
   	//console.log(order);
   	this.showIndex = order;
+  }
+  */
+
+  getOrder(order){
+    //console.log(order.key);
+
+    //redirect with key in param
+    this.router.navigate(['admin/order-details', order.key]);
   }
 
   markAsPaid(order){

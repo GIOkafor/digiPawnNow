@@ -137,7 +137,7 @@ export class AddProductComponent implements OnInit {
   searchByClick(id){
     this.nameFilter.next(id);
     this.search_complete = true;
-    this.searchForm.reset();
+    //this.searchForm.reset(); old code
   }
 
   //debug code

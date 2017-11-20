@@ -18,6 +18,11 @@
     	    background-color: #ebebeb;
     		padding: 10px;
     		margin-bottom: 10px;
+            cursor: pointer;
+
+            .order-items-header{
+                font-size: 20px;
+            }
 
     		.row1, .order-details{
     		    display: flex;
@@ -26,6 +31,8 @@
     		}
 
             .row2{
+                margin-top: 10px;
+
                 img{
                     height: 50px;
                 }

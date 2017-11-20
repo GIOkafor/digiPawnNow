@@ -4,7 +4,7 @@ import { CartService } from '../cart.service';
 import { OrdersService } from '../dashboard/orders/orders.service';
 import { PaymentService } from '../services/payment.service';
 import { AuthenticationService } from '../auth/authentication.service';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdDialog } from '@angular/material';
 
 @Component({
   selector: 'app-order',
@@ -37,7 +37,8 @@ export class OrderComponent implements OnInit {
         private pay: PaymentService,
         private auth: AuthenticationService,
         private router: Router,
-        private snackBar: MdSnackBar) { 
+        private snackBar: MdSnackBar,
+        private dialog: MdDialog) { 
   	//on initialize get cart contents
   	this.cartItems = this.cart.getCart();
 
@@ -157,7 +158,7 @@ export class OrderComponent implements OnInit {
 
                 this.paymentDoesNotExist = false;
 
-                console.log("Payment method exists, saving...");
+                //console.log("Payment method exists, saving...");
 
                 //save order info to database
                 this.orders.createOrder(orderDetails, this.auth.paymentInfo);
@@ -192,38 +193,38 @@ export class OrderComponent implements OnInit {
           })
 
         /*
-        //check if payment method selected exists
-        this.checkPay();
-        
-        //wait 3 seconds then call function
-        setTimeout(()=>{
-          if(this.auth.paymentInfo !== null){
+          //check if payment method selected exists
+          this.checkPay();
+          
+          //wait 3 seconds then call function
+          setTimeout(()=>{
+            if(this.auth.paymentInfo !== null){
 
-            //hide loading spinner
-            this.checkingPayments = false;
+              //hide loading spinner
+              this.checkingPayments = false;
 
-            this.paymentDoesNotExist = false;
+              this.paymentDoesNotExist = false;
 
-            console.log("Payment method exists, saving...");
+              console.log("Payment method exists, saving...");
 
-            //save order info to database
-            this.orders.createOrder(orderDetails, this.auth.paymentInfo);
+              //save order info to database
+              this.orders.createOrder(orderDetails, this.auth.paymentInfo);
 
-            //then show success snackbar
-          }
-          else{
-            //console.log("Payment method doesnt exist");
+              //then show success snackbar
+            }
+            else{
+              //console.log("Payment method doesnt exist");
 
-            //show input field for payment
-            this.paymentDoesNotExist = true;
+              //show input field for payment
+              this.paymentDoesNotExist = true;
 
-            //hide loading spinner
-            this.checkingPayments = false;
-          }
+              //hide loading spinner
+              this.checkingPayments = false;
+            }
 
-          //prompt for info 
-          //save info and process order
-        }, 3000);
+            //prompt for info 
+            //save info and process order
+          }, 3000);
 
         */
         
@@ -237,7 +238,11 @@ export class OrderComponent implements OnInit {
     //console.log("updating payment method ", method);
     //console.log("To: ", val);
     this.auth.updatePaymentAddress(method, val)
-      .then(_=> this.createOrder());
+      .then(_=> {
+        this.snackBar.open('Payment method successfully updated', '', {duration: 5000});
+        this.paymentDoesNotExist = false;
+        this.checkingPayments = false;
+      });
   }
 
     //update banking info
@@ -310,4 +315,16 @@ export class OrderComponent implements OnInit {
   }
 */
 
+}
+
+
+
+@Component({
+  selector: 'dialog-data-example-dialog',
+  template: `
+  <h2>Order placed successfully</h2>
+  <div>Thank you for your order. You’ll receive an email with your order shipping label within the next 24hours</div>`,
+})
+export class OrderConfirmDialog {
+  constructor() {}
 }

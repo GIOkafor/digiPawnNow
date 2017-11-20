@@ -14,19 +14,19 @@
 				<div class="form-group name">
 					<span id="two-col">
 						<label>First Name</label>
-						<input type="text" name="firstName" ngModel>
+						<input type="text" name="firstName" ngModel required>
 					</span>
 
 					<span id="two-col">
 						<label>Last Name</label>
-						<input type="text" name="lastName" ngModel>
+						<input type="text" name="lastName" ngModel required>
 					</span>
 				</div>
 
 				<div class="form-group address">
 					<span id="two-col">
 						<label>Street Address</label>
-						<input type="text" name="streetAddress" ngModel>
+						<input type="text" name="streetAddress" ngModel required>
 					</span>
 
 					<span id="two-col">
@@ -38,59 +38,67 @@
 				<div class="form-group address">
 					<span>
 						<label>City</label>
-						<input type="text" name="city" ngModel>
+						<input type="text" name="city" ngModel required>
 					</span>
 
 					<span>
 						<label>State</label>
-						<input type="text" name="state" ngModel>
+						<input type="text" name="state" ngModel required>
 					</span>
 
 					<span>
 						<label>Zip Code</label>
-						<input type="text" name="zip" ngModel>
+						<input type="text" name="zip" ngModel required>
 					</span>
 				</div>
 
 				<div class="form-group">
 					<span id="two-col">
 						<label>D.O.B</label>
-						<input type="date" name="dateOfBirth" placeholder="D.O.B" ngModel>
+						<input type="date" name="dateOfBirth" placeholder="D.O.B" ngModel required>
 					</span>
 
 					<span id="two-col">
 						<label>Gender</label>
-						<input type="text" name="gender" ngModel>
+						<input type="text" name="gender" ngModel required>
 					</span>
 				</div>
 
 				<div class="form-group single-col">
 					<label>Phone #</label>
-					<input type="tel" name="phoneNumber" ngModel>
+					<input type="tel" name="phoneNumber" ngModel required>
 				</div>
 
 				<div class="form-group single-col">
 					<label>Email</label>
-					<input type="email" name="email" ngModel>
+					<input type="email" name="email" ngModel required>
 				</div>
 
-				<div class="form-group password">
-					<span id="two-col">
-						<label>Password</label>
-						<input type="password" name="password" ngModel>
-					</span>
-					
-					<span id="two-col">
-						<label>Confirm password</label>
-						<input type="password" name="confirm-password">
-					</span>
+				<div class="password">
+					<div class="form-group">
+						<span id="two-col">
+							<label>Password</label>
+							<input type="password" name="password" ngModel required #password="ngModel">
+						</span>
+						
+						<span id="two-col">
+							<label>Confirm password</label>
+							<input type="password" name="confirmPassword" ngModel required #confirmPassword="ngModel">
+						</span>
+					</div>
+
+					<div class="alert alert-danger" *ngIf="password.dirty && confirmPassword.dirty && signUpForm.form.value.password !== signUpForm.form.value.confirmPassword">
+						Passwords Don't Match
+					</div>
 				</div>
 
-				<button class="btn" type="submit">SIGN UP</button>
+				<button class="btn" type="submit" [disabled]="!signUpForm.form.valid || signUpForm.form.value.password !== signUpForm.form.value.confirmPassword">SIGN UP</button>
 
 				<div class="terms-and-condition">
 					<input type="checkbox" name="termsAndCondition" ngModel required>
-					<label>By Signing up you agree with our terms of Condition and Privacy Policy</label>
+					<label>
+						By Signing up you agree with our <a routerLink="/home/terms-and-condition">Terms & Conditions</a> and <a routerLink="/home/privacy-policy">Privacy Policy</a>
+					</label>
 				</div>
 				
 

@@ -51,3 +51,38 @@ exports.addParticipantInfo = functions.database.ref('/all-messages/{uId}/message
 		}
 		else return;
 	});
+
+
+//Set the username in the orders section
+exports.addOrderInfo = functions.database.ref('/orders/{pushId}')
+	.onWrite(event => {
+		const order = event.data.val();
+
+		if(order.username)
+			return
+
+		const userUid = order.uid;
+
+		//console.log("From UID: ", userUid);
+
+		if(userUid !== 'admin'){
+			admin.database().ref('users/' + userUid + '/userInfo')
+			.once('value')
+			.then(data => {
+				//console.log(data.val());
+
+				var userName = data.val().firstName + ' ' + data.val().lastName;
+				var email = data.val().email;
+				var address = data.val().streetAddress + ' ' + data.val().state;
+
+				//set user email in db
+				event.data.ref.child('email').set(email);
+
+				//set user streetAddess in db
+				event.data.ref.child('address').set(address);
+			
+				return event.data.ref.child('username').set(userName);
+			})
+		}
+		else return;
+	});

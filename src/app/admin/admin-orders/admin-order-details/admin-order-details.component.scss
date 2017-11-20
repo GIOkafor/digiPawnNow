@@ -1,0 +1,39 @@
+.admin_order_details{
+
+    .order_details_container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .order-items-header{
+        font-size: 20px;
+    }
+
+	.order-details{
+	    display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+        img{
+            max-width: 200px;
+            max-height: 200px;
+        }
+	}
+
+    .user-info{
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+
+        .btn{
+            align-self: center;
+            background-color: #176799;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .delete{
+            background-color: red;
+        }
+    }
+}

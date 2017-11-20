@@ -17,6 +17,7 @@ import { environment } from '../environments/environment';
 import { ProductService } from './product/product.service';
 import { AuthenticationService } from './auth/authentication.service';
 import { OrderComponent } from './order/order.component';
+import { OrderConfirmDialog } from './order/order.component';
 import { CartService } from './cart.service';
 import { OrdersService } from './dashboard/orders/orders.service';
 import { PaymentService } from './services/payment.service';
@@ -52,12 +53,19 @@ import { PaidFilter } from './admin/admin-orders/admin-orders.component';
 
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { OrderDetailsComponent } from './dashboard/orders/order-details/order-details.component';
+import { AboutComponent } from './company-info/about/about.component';
+import { ContactComponent } from './company-info/contact/contact.component';
+import { HowItWorksComponent } from './company-info/how-it-works/how-it-works.component';
+import { TermsAndConditionComponent } from './company-info/terms-and-condition/terms-and-condition.component';
+import { PrivacyPolicyComponent } from './company-info/privacy-policy/privacy-policy.component';
+import { AdminOrderDetailsComponent } from './admin/admin-orders/admin-order-details/admin-order-details.component';
 
 const routes: Routes = [
 	{path: 'auth', component: AuthenticateComponent},
 
   {path: 'admin', component: AdminComponent, children: [
     { path: 'orders', component: AdminOrdersComponent },
+    { path: 'order-details/:id', component: AdminOrderDetailsComponent },
     { path: 'payments', component: AdminPaymentsComponent },
     { path: 'messages', component: AdminMessagesComponent },
     {path: 'chat-details/:id', component: ChatDetailsComponent},
@@ -80,7 +88,12 @@ const routes: Routes = [
       {path: '', redirectTo: '/home/dashboard/orders', pathMatch: 'full'}
     ]},
   	{path: 'sell-item/:id', component: AddProductComponent},
-    {path: 'contact', component: ChatComponent}
+    {path: 'contact', component: ChatComponent},
+    {path: 'about', component: AboutComponent},
+    {path: 'contact-us', component: ContactComponent},
+    {path: 'how-it-works', component: HowItWorksComponent},
+    {path: 'terms-and-condition', component: TermsAndConditionComponent},
+    {path: 'privacy-policy', component: PrivacyPolicyComponent}
   ]},
 
 	{path: '', redirectTo: '/welcome', pathMatch: 'full'}
@@ -116,14 +129,22 @@ const routes: Routes = [
     KeysPipe,
     PaidFilter,
     UsernameFilter,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    OrderConfirmDialog,
+    AboutComponent,
+    ContactComponent,
+    HowItWorksComponent,
+    TermsAndConditionComponent,
+    PrivacyPolicyComponent,
+    AdminOrderDetailsComponent
   ],
   entryComponents: [
   	ErrorComponent,
     OrderComponent,
     AddNewItemDialog,
     EditItemDialog,
-    ConfirmDeleteDialog
+    ConfirmDeleteDialog,
+    OrderConfirmDialog
   ],
   imports: [
     BrowserModule,
